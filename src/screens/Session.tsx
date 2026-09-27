@@ -2,9 +2,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import { buildQuestion, correctAnswerText, type Question } from '../exercises/build'
+import FlipCard from '../exercises/FlipCard'
 import QuestionView, { type Given } from '../exercises/QuestionView'
 import { pickExercise, type ExerciseId } from '../srs/queue'
-import { answer, currentTask, finishedCount, startSession, type Finished, type SessionState } from '../srs/session'
+import { answer, answerAllParts, currentTask, finishedCount, markHeld, startSession, type Finished, type SessionState } from '../srs/session'
 import { nextStage } from '../srs/engine'
 import { STAGES, type Stage } from '../srs/stages'
 import { useStore } from '../state/store'
@@ -30,7 +31,7 @@ export interface Summary {
 const AUTO_ADVANCE_MS = 650
 
 export default function Session({ items, mode, onExit, onComplete, onFinished }: Props) {
-  const { progress, logAnswer } = useStore()
+  const { progress, settings, logAnswer } = useStore()
   const [state, setState] = useState<SessionState>(() => startSession(items))
   const [given, setGiven] = useState<Given | null>(null)
   const lastEx = useRef<ExerciseId | undefined>(undefined)
@@ -60,7 +61,10 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   }, [task])
 
   function advance(correct: boolean) {
-    const r = answer(state, correct)
+    apply(answer(state, correct))
+  }
+
+  function apply(r: { state: SessionState; finished?: Finished }) {
     if (r.finished) onFinished?.(r.finished)
     setGiven(null)
     setState(r.state)
@@ -85,6 +89,8 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
 
   if (!task || !item || !question) return <div className={ui.screen} />
 
+  const flip = mode === 'review' && settings.flipMode && stage >= 7 && !state.held.includes(item.id)
+
   const done = finishedCount(state)
   const pct = state.total ? (done / state.total) * 100 : 0
   const miss = given && !given.correct
@@ -100,11 +106,27 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
       </div>
       <div className={s.meta}>
         <span className={`${ui.pill} ${item.kind === 'vocab' ? ui.pillVocab : ui.pillGrammar}`}>{item.kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
-        <span className={ui.pill}>{question.tag}</span>
+        <span className={ui.pill}>{flip ? 'Recall' : question.tag}</span>
         {mode === 'review' && <span className={s.stage}>{STAGES[current].name}</span>}
       </div>
 
-      <QuestionView key={state.answered} question={question} given={given} onAnswer={onAnswer} />
+      {flip ? (
+        <FlipCard
+          key={state.answered}
+          item={item}
+          onKnew={() => {
+            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: true })
+            apply(answerAllParts(state))
+          }}
+          onMissed={() => {
+            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: false })
+            advance(false)
+          }}
+          onChoices={() => setState(markHeld(state, item.id))}
+        />
+      ) : (
+        <QuestionView key={state.answered} question={question} given={given} onAnswer={onAnswer} />
+      )}
 
       {given && (
         <div className={`${s.feedback} ${given.correct ? s.ok : s.bad}`}>

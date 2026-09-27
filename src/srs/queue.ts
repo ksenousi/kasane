@@ -52,6 +52,8 @@ export type Part = 'meaning' | 'reading' | 'connection'
 export type ExerciseId =
   | 'V1' | 'V2' | 'V3' | 'V5' | 'V6' | 'V7' | 'V10'
   | 'G1' | 'G2' | 'G3' | 'G5' | 'G6' | 'G7'
+  /** Recall card (flip mode), logged for stats only. */
+  | 'RC'
 
 export function partsFor(item: Item): Part[] {
   return item.kind === 'vocab' ? ['meaning', 'reading'] : ['meaning', 'connection']

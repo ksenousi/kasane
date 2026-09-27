@@ -15,6 +15,7 @@ const SECTIONS: { ja: string; en: string; exercises: ExerciseId[] }[] = [
   { ja: '文法形式の判断', en: 'Pick the grammar', exercises: ['G1', 'G3', 'G7'] },
   { ja: '文の組み立て', en: 'Sentence order ★', exercises: ['G2'] },
   { ja: '文法の意味', en: 'Grammar meaning & errors', exercises: ['G5', 'G6'] },
+  { ja: '思い出す', en: 'Recall cards', exercises: ['RC'] },
 ]
 
 export default function WeakSpots() {
