@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyReview, completeLesson, holdReview, isDue, newProgress, nextStage } from '../src/srs/engine'
+import { applyReview, completeLesson, holdReview, isDue, newProgress, nextStage, type Progress } from '../src/srs/engine'
 
 const HOUR = 3_600_000
 const NOW = Date.UTC(2026, 8, 27, 12)
@@ -40,7 +40,7 @@ describe('review lifecycle', () => {
   })
 
   it('records passedAt the first time Guru is reached and keeps it after a drop', () => {
-    let p = { ...completeLesson(newProgress('v1'), NOW), stage: 4 as const }
+    let p: Progress = { ...completeLesson(newProgress('v1'), NOW), stage: 4 }
     p = applyReview(p, 0, NOW)
     expect(p.stage).toBe(5)
     expect(p.passedAt).toBe(NOW)
