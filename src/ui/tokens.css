@@ -1,0 +1,75 @@
+/* Tsuki theme — chosen on the design canvas. Dark only. */
+:root {
+  color-scheme: dark;
+
+  --bg: #161618;
+  --s1: #1f1f22;
+  --s2: #2a2a2d;
+  --line: #36363a;
+  --text: #f5f5f7;
+  --muted: #98989f;
+
+  --accent: #2f6fe0;
+  --on-accent: #ffffff;
+  --accent-text: #6ea3ff;
+
+  --vocab: #6ea3ff;
+  --grammar: #f5b94f;
+  --vocab-bg: #1d2c4a;
+  --grammar-bg: #3a2f16;
+
+  --ok: #34c77b;
+  --ok-bg: #12281c;
+  --bad: #ff6b61;
+  --bad-bg: #2e1614;
+
+  /* SRS stage groups: Apprentice → Burned */
+  --st-apprentice: #ff9f43;
+  --st-guru: #bf8cff;
+  --st-master: #6ea3ff;
+  --st-enlightened: #5ac8fa;
+  --st-burned: #48484a;
+
+  --font: 'M PLUS 2', 'Hiragino Sans', system-ui, sans-serif;
+  --radius: 14px;
+  --radius-lg: 18px;
+  --tap: 44px;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+a {
+  color: var(--accent-text);
+}

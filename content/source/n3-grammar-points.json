@@ -1,0 +1,730 @@
+[
+ {
+  "pattern": "上げる（あげる）",
+  "romaji": "ageru"
+ },
+ {
+  "pattern": "あまり",
+  "romaji": "amari"
+ },
+ {
+  "pattern": "あまりにも",
+  "romaji": "amari ni mo"
+ },
+ {
+  "pattern": "合う（あう）",
+  "romaji": "au"
+ },
+ {
+  "pattern": "ばいい",
+  "romaji": "ba ii"
+ },
+ {
+  "pattern": "ばよかった",
+  "romaji": "ba yokatta"
+ },
+ {
+  "pattern": "ば～ほど",
+  "romaji": "ba~hodo"
+ },
+ {
+  "pattern": "ば～のに",
+  "romaji": "ba~noni"
+ },
+ {
+  "pattern": "ばかりで",
+  "romaji": "bakari de"
+ },
+ {
+  "pattern": "ばかりでなく",
+  "romaji": "bakari denaku"
+ },
+ {
+  "pattern": "べきだ",
+  "romaji": "beki da"
+ },
+ {
+  "pattern": "べきではない",
+  "romaji": "beki dewa nai"
+ },
+ {
+  "pattern": "別に～ない（べつに～ない）",
+  "romaji": "betsu ni~nai"
+ },
+ {
+  "pattern": "ぶりに",
+  "romaji": "buri ni"
+ },
+ {
+  "pattern": "中（ちゅう）",
+  "romaji": "chuu / juu"
+ },
+ {
+  "pattern": "だけ",
+  "romaji": "dake"
+ },
+ {
+  "pattern": "だけでなく",
+  "romaji": "dake de naku"
+ },
+ {
+  "pattern": "だけど",
+  "romaji": "dakedo"
+ },
+ {
+  "pattern": "だらけ",
+  "romaji": "darake"
+ },
+ {
+  "pattern": "どんなに～ても",
+  "romaji": "donna ni~temo"
+ },
+ {
+  "pattern": "どうしても",
+  "romaji": "doushitemo"
+ },
+ {
+  "pattern": "ふりをする",
+  "romaji": "furi o suru"
+ },
+ {
+  "pattern": "ふと",
+  "romaji": "futo"
+ },
+ {
+  "pattern": "がち",
+  "romaji": "gachi"
+ },
+ {
+  "pattern": "がたい",
+  "romaji": "gatai"
+ },
+ {
+  "pattern": "気味（ぎみ）",
+  "romaji": "gimi"
+ },
+ {
+  "pattern": "ごとに",
+  "romaji": "goto ni"
+ },
+ {
+  "pattern": "ほど",
+  "romaji": "hodo"
+ },
+ {
+  "pattern": "ほど～ない",
+  "romaji": "hodo~nai"
+ },
+ {
+  "pattern": "一度に（いちどに）",
+  "romaji": "ichido ni"
+ },
+ {
+  "pattern": "いくら～ても",
+  "romaji": "ikura~temo"
+ },
+ {
+  "pattern": "一方だ（いっぽうだ）",
+  "romaji": "ippou da"
+ },
+ {
+  "pattern": "一体（いったい）",
+  "romaji": "ittai"
+ },
+ {
+  "pattern": "じゃない",
+  "romaji": "janai"
+ },
+ {
+  "pattern": "か何か（かなにか）",
+  "romaji": "ka nani ka"
+ },
+ {
+  "pattern": "かける",
+  "romaji": "kakeru"
+ },
+ {
+  "pattern": "から〜にかけて",
+  "romaji": "kara~ni kakete"
+ },
+ {
+  "pattern": "代わりに（かわりに）",
+  "romaji": "kawari ni"
+ },
+ {
+  "pattern": "結果（けっか）",
+  "romaji": "kekka"
+ },
+ {
+  "pattern": "結局（けっきょく）",
+  "romaji": "kekkyoku"
+ },
+ {
+  "pattern": "決して～ない（けっして～ない）",
+  "romaji": "kesshite~nai"
+ },
+ {
+  "pattern": "切れない（きれない）",
+  "romaji": "kirenai"
+ },
+ {
+  "pattern": "きり",
+  "romaji": "kiri"
+ },
+ {
+  "pattern": "切る（きる）",
+  "romaji": "kiru"
+ },
+ {
+  "pattern": "っけ",
+  "romaji": "kke"
+ },
+ {
+  "pattern": "込む（こむ）",
+  "romaji": "komu"
+ },
+ {
+  "pattern": "こそ",
+  "romaji": "koso"
+ },
+ {
+  "pattern": "こと",
+  "romaji": "koto"
+ },
+ {
+  "pattern": "ことから",
+  "romaji": "koto kara"
+ },
+ {
+  "pattern": "ことになっている",
+  "romaji": "koto ni natteiru"
+ },
+ {
+  "pattern": "ことはない",
+  "romaji": "koto wa nai"
+ },
+ {
+  "pattern": "ことは～が",
+  "romaji": "koto wa~ga"
+ },
+ {
+  "pattern": "くらい / ぐらい",
+  "romaji": "kurai / gurai"
+ },
+ {
+  "pattern": "くせに",
+  "romaji": "kuse ni"
+ },
+ {
+  "pattern": "まるで",
+  "romaji": "maru de"
+ },
+ {
+  "pattern": "まさか",
+  "romaji": "masaka"
+ },
+ {
+  "pattern": "めったに～ない",
+  "romaji": "metta ni~nai"
+ },
+ {
+  "pattern": "も～ば～も",
+  "romaji": "mo~ba~mo"
+ },
+ {
+  "pattern": "もしかしたら",
+  "romaji": "moshika shitara"
+ },
+ {
+  "pattern": "もしも〜たら",
+  "romaji": "moshimo~tara"
+ },
+ {
+  "pattern": "向け（むけ）",
+  "romaji": "muke"
+ },
+ {
+  "pattern": "向き（むき）",
+  "romaji": "muki"
+ },
+ {
+  "pattern": "むしろ",
+  "romaji": "mushiro"
+ },
+ {
+  "pattern": "ながらも",
+  "romaji": "nagara mo"
+ },
+ {
+  "pattern": "ないことはない",
+  "romaji": "nai koto wa nai"
+ },
+ {
+  "pattern": "ないと",
+  "romaji": "naito"
+ },
+ {
+  "pattern": "なかなか",
+  "romaji": "nakanaka"
+ },
+ {
+  "pattern": "なんか / なんて / など",
+  "romaji": "nanka / nante / nado"
+ },
+ {
+  "pattern": "直す（なおす）",
+  "romaji": "naosu"
+ },
+ {
+  "pattern": "なるべく",
+  "romaji": "naru beku"
+ },
+ {
+  "pattern": "なぜなら",
+  "romaji": "nazenara"
+ },
+ {
+  "pattern": "んだって",
+  "romaji": "ndatte"
+ },
+ {
+  "pattern": "に違いない（にちがいない）",
+  "romaji": "ni chigai nai"
+ },
+ {
+  "pattern": "に反して（にはんして）",
+  "romaji": "ni hanshite"
+ },
+ {
+  "pattern": "にかけて",
+  "romaji": "ni kakete"
+ },
+ {
+  "pattern": "に関する / に関して（にかんする / にかんして）",
+  "romaji": "ni kan suru / ni kan shite"
+ },
+ {
+  "pattern": "にかわって / にかわり",
+  "romaji": "ni kawatte / ni kawari"
+ },
+ {
+  "pattern": "に比べて（にくらべて）",
+  "romaji": "ni kurabete"
+ },
+ {
+  "pattern": "に慣れる（になれる）",
+  "romaji": "ni nareru"
+ },
+ {
+  "pattern": "において / における",
+  "romaji": "ni oite / ni okeru"
+ },
+ {
+  "pattern": "にしたがって",
+  "romaji": "ni shitagatte"
+ },
+ {
+  "pattern": "にしても",
+  "romaji": "ni shite mo"
+ },
+ {
+  "pattern": "にしては",
+  "romaji": "ni shite wa"
+ },
+ {
+  "pattern": "に対して（にたいして）",
+  "romaji": "ni taishite"
+ },
+ {
+  "pattern": "にとって",
+  "romaji": "ni totte"
+ },
+ {
+  "pattern": "について",
+  "romaji": "ni tsuite"
+ },
+ {
+  "pattern": "につれて",
+  "romaji": "ni tsurete"
+ },
+ {
+  "pattern": "には",
+  "romaji": "ni wa"
+ },
+ {
+  "pattern": "によると /によれば",
+  "romaji": "ni yoru to/ni yoreba"
+ },
+ {
+  "pattern": "によって / による",
+  "romaji": "ni yotte / ni yoru"
+ },
+ {
+  "pattern": "のでしょうか",
+  "romaji": "no deshou ka"
+ },
+ {
+  "pattern": "を中心に（をちゅうしんに）",
+  "romaji": "o chuushin ni"
+ },
+ {
+  "pattern": "をはじめ",
+  "romaji": "o hajime"
+ },
+ {
+  "pattern": "を込めて（をこめて）",
+  "romaji": "o komete"
+ },
+ {
+  "pattern": "を通じて / を通して（をつうじて / をとおして）",
+  "romaji": "o tsuujite / o tooshite"
+ },
+ {
+  "pattern": "おかげで",
+  "romaji": "okage de"
+ },
+ {
+  "pattern": "っぱなし",
+  "romaji": "ppanashi"
+ },
+ {
+  "pattern": "っぽい",
+  "romaji": "ppoi"
+ },
+ {
+  "pattern": "さえ",
+  "romaji": "sae"
+ },
+ {
+  "pattern": "さえ～ば",
+  "romaji": "sae~ba"
+ },
+ {
+  "pattern": "際に（さいに）",
+  "romaji": "sai ni"
+ },
+ {
+  "pattern": "最中に（さいちゅうに）",
+  "romaji": "saichuu ni"
+ },
+ {
+  "pattern": "さらに",
+  "romaji": "sara ni"
+ },
+ {
+  "pattern": "さて",
+  "romaji": "sate"
+ },
+ {
+  "pattern": "せいで",
+  "romaji": "sei de"
+ },
+ {
+  "pattern": "せいぜい",
+  "romaji": "seizei"
+ },
+ {
+  "pattern": "しばらく",
+  "romaji": "shibaraku"
+ },
+ {
+  "pattern": "しかない",
+  "romaji": "shikanai"
+ },
+ {
+  "pattern": "そのために",
+  "romaji": "sono tame ni"
+ },
+ {
+  "pattern": "それとも",
+  "romaji": "soretomo"
+ },
+ {
+  "pattern": "そうもない /そうにない",
+  "romaji": "sou mo nai /sou ni nai"
+ },
+ {
+  "pattern": "すでに",
+  "romaji": "sude ni"
+ },
+ {
+  "pattern": "すなわち",
+  "romaji": "sunawachi"
+ },
+ {
+  "pattern": "数量 + は（すうりょう + は）",
+  "romaji": "suuryou + wa"
+ },
+ {
+  "pattern": "たものだ",
+  "romaji": "ta mono da"
+ },
+ {
+  "pattern": "たとたん",
+  "romaji": "ta totan"
+ },
+ {
+  "pattern": "たびに",
+  "romaji": "tabi ni"
+ },
+ {
+  "pattern": "ために",
+  "romaji": "tame ni"
+ },
+ {
+  "pattern": "確かに（たしかに）",
+  "romaji": "tashika ni"
+ },
+ {
+  "pattern": "たて",
+  "romaji": "tate"
+ },
+ {
+  "pattern": "たとえ～ても",
+  "romaji": "tatoe~temo"
+ },
+ {
+  "pattern": "例えば（たとえば）",
+  "romaji": "tatoeba"
+ },
+ {
+  "pattern": "たって",
+  "romaji": "tatte"
+ },
+ {
+  "pattern": "てばかりいる",
+  "romaji": "te bakari iru"
+ },
+ {
+  "pattern": "てごらん",
+  "romaji": "te goran"
+ },
+ {
+  "pattern": "てはじめて",
+  "romaji": "te hajimete"
+ },
+ {
+  "pattern": "てからでないと",
+  "romaji": "te kara de nai to"
+ },
+ {
+  "pattern": "てしょうがない・てしかたがない",
+  "romaji": "te shou ga nai/te shikata ga nai"
+ },
+ {
+  "pattern": "て済む（てすむ）",
+  "romaji": "te sumu"
+ },
+ {
+  "pattern": "てはいけないから",
+  "romaji": "te wa ikenai kara"
+ },
+ {
+  "pattern": "ている場合じゃない（ているばあいじゃない）",
+  "romaji": "teiru baai janai"
+ },
+ {
+  "pattern": "的（てき）",
+  "romaji": "teki"
+ },
+ {
+  "pattern": "ても始まらない（てもはじまらない）",
+  "romaji": "temo hajimaranai"
+ },
+ {
+  "pattern": "ても構わない（てもかまわない）",
+  "romaji": "temo kamawanai"
+ },
+ {
+  "pattern": "てもしょうがない / てもしかたがない",
+  "romaji": "temo shou ga nai / temo shikata ga nai"
+ },
+ {
+  "pattern": "と言えば（といえば）",
+  "romaji": "to ieba"
+ },
+ {
+  "pattern": "といい / たらいい",
+  "romaji": "to ii / tara ii"
+ },
+ {
+  "pattern": "といっても",
+  "romaji": "to ittemo"
+ },
+ {
+  "pattern": "ということだ",
+  "romaji": "to iu koto da"
+ },
+ {
+  "pattern": "というのは",
+  "romaji": "to iu nowa"
+ },
+ {
+  "pattern": "と言うと（というと）",
+  "romaji": "to iu to"
+ },
+ {
+  "pattern": "というより",
+  "romaji": "to iu yori"
+ },
+ {
+  "pattern": "とみえる / とみえて",
+  "romaji": "to mieru / to miete"
+ },
+ {
+  "pattern": "とすれば・としたら・とすると",
+  "romaji": "to sureba / to shitara / to suru to"
+ },
+ {
+  "pattern": "と共に（とともに）",
+  "romaji": "to tomo ni"
+ },
+ {
+  "pattern": "途中で/途中に（とちゅうで/とちゅうに）",
+  "romaji": "tochuu de / tochuu ni"
+ },
+ {
+  "pattern": "ところで",
+  "romaji": "tokoro de"
+ },
+ {
+  "pattern": "ところが",
+  "romaji": "tokoro ga"
+ },
+ {
+  "pattern": "とおりに",
+  "romaji": "toori ni"
+ },
+ {
+  "pattern": "通す（とおす）",
+  "romaji": "toosu"
+ },
+ {
+  "pattern": "として",
+  "romaji": "toshite"
+ },
+ {
+  "pattern": "とても～ない",
+  "romaji": "totemo~nai"
+ },
+ {
+  "pattern": "とは限らない（とはかぎらない）",
+  "romaji": "towa kagiranai"
+ },
+ {
+  "pattern": "つい",
+  "romaji": "tsui"
+ },
+ {
+  "pattern": "ついに",
+  "romaji": "tsui ni"
+ },
+ {
+  "pattern": "ついでに",
+  "romaji": "tsuide ni"
+ },
+ {
+  "pattern": "つまり",
+  "romaji": "tsumari"
+ },
+ {
+  "pattern": "つもりだった",
+  "romaji": "tsumori datta"
+ },
+ {
+  "pattern": "つもりで",
+  "romaji": "tsumori de"
+ },
+ {
+  "pattern": "うちに",
+  "romaji": "uchi ni"
+ },
+ {
+  "pattern": "上で（うえで）",
+  "romaji": "ue de"
+ },
+ {
+  "pattern": "上に（うえに）",
+  "romaji": "ue ni"
+ },
+ {
+  "pattern": "は別として（はべつとして）",
+  "romaji": "wa betsu toshite"
+ },
+ {
+  "pattern": "はもちろん",
+  "romaji": "wa mochiron"
+ },
+ {
+  "pattern": "は～で有名（は～でゆうめい）",
+  "romaji": "wa~de yuumei"
+ },
+ {
+  "pattern": "わけだ",
+  "romaji": "wake da"
+ },
+ {
+  "pattern": "わけではない",
+  "romaji": "wake dewa nai"
+ },
+ {
+  "pattern": "わけがない",
+  "romaji": "wake ga nai"
+ },
+ {
+  "pattern": "わけにはいかない",
+  "romaji": "wake niwa ikanai"
+ },
+ {
+  "pattern": "割に（わりに）",
+  "romaji": "wari ni"
+ },
+ {
+  "pattern": "わざと",
+  "romaji": "wazato"
+ },
+ {
+  "pattern": "わざわざ",
+  "romaji": "wazawaza"
+ },
+ {
+  "pattern": "よりも",
+  "romaji": "yorimo"
+ },
+ {
+  "pattern": "ようがない",
+  "romaji": "you ga nai"
+ },
+ {
+  "pattern": "ような気がする（ようなきがする）",
+  "romaji": "you na ki ga suru"
+ },
+ {
+  "pattern": "ように",
+  "romaji": "you ni"
+ },
+ {
+  "pattern": "ように見える（ようにみえる）",
+  "romaji": "you ni mieru"
+ },
+ {
+  "pattern": "ようとしない",
+  "romaji": "you to shinai"
+ },
+ {
+  "pattern": "ようとする",
+  "romaji": "you to suru"
+ },
+ {
+  "pattern": "ずに",
+  "romaji": "zuni"
+ },
+ {
+  "pattern": "ずにはいられない",
+  "romaji": "zuni wa irarenai"
+ },
+ {
+  "pattern": "ずつ",
+  "romaji": "zutsu"
+ }
+]
