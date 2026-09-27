@@ -30,6 +30,8 @@ export interface VocabItem extends ItemBase {
     /** Similar-looking or similar-meaning Japanese words. */
     words: string[]
   }
+  /** Same-form words that clearly don't fit the example's blank (fill-in-the-blank options). */
+  contextWrong: string[]
   /** Kana chunks for the tile builder, e.g. ['しゅ','う','しょ','く']. */
   tiles?: string[]
   tileDecoys?: string[]

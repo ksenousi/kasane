@@ -95,7 +95,7 @@ export function supports(item: Item, ex: ExerciseId): boolean {
   if (item.kind === 'vocab') {
     switch (ex) {
       case 'V3': return !!item.tiles?.length
-      case 'V5': return item.examples.some((e) => e.ja.includes('＿'))
+      case 'V5': return item.examples.some((e) => e.ja.includes('＿')) && item.contextWrong.length >= 3
       case 'V6': return !!item.paraphrase
       case 'V7': return !!item.usage
       case 'V10': return item.examples.length > 0 || item.distractors.readings.length >= 3

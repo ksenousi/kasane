@@ -11,6 +11,7 @@ function vocab(id: string, level: number, extra: Partial<VocabItem> = {}): Vocab
   return {
     id, level, kind: 'vocab', word: id, reading: id, meanings: [id], pos: 'noun', examples: [],
     distractors: { readings: ['a', 'b', 'c'], meanings: ['x', 'y', 'z'], words: ['p', 'q', 'r'] },
+    contextWrong: ['k', 'l', 'm'],
     ...extra,
   }
 }
