@@ -1,6 +1,9 @@
-// Pulls your WaniKani vocabulary progress so Kasane can skip words you already know there.
-// Usage: WANIKANI_API_KEY=... node scripts/wanikani.mjs
-// Writes content/source/wanikani-known.json. The key is only read from the environment, never saved.
+// Pulls WaniKani vocabulary so Kasane can skip words WaniKani covers.
+// Usage: WANIKANI_API_KEY=... [WANIKANI_UP_TO=35] node scripts/wanikani.mjs
+// Writes (both gitignored):
+//   content/source/wanikani-known.json   vocab you've started, with your SRS stage
+//   content/source/wanikani-upto35.json  all vocab WaniKani teaches up to the target level
+// The key is only read from the environment, never saved.
 import { writeFileSync } from 'node:fs'
 
 const KEY = process.env.WANIKANI_API_KEY
@@ -24,6 +27,7 @@ async function all(url) {
 }
 
 const TYPES = 'vocabulary,kana_vocabulary'
+const UP_TO = Number(process.env.WANIKANI_UP_TO ?? 35)
 const [assignments, subjects] = await Promise.all([
   all(`https://api.wanikani.com/v2/assignments?subject_types=${TYPES}&started=true`),
   all(`https://api.wanikani.com/v2/subjects?types=${TYPES}`),
@@ -49,5 +53,14 @@ writeFileSync(
   'content/source/wanikani-known.json',
   JSON.stringify({ fetchedAt: new Date().toISOString().slice(0, 10), words }, null, 1) + '\n',
 )
+const upTo = subjects
+  .filter((s) => s.data.level <= UP_TO)
+  .map((s) => ({ word: s.data.characters, readings: (s.data.readings ?? []).map((r) => r.reading), wkLevel: s.data.level }))
+  .sort((a, b) => a.wkLevel - b.wkLevel)
+writeFileSync(
+  `content/source/wanikani-upto${UP_TO}.json`,
+  JSON.stringify({ fetchedAt: new Date().toISOString().slice(0, 10), upToLevel: UP_TO, words: upTo }, null, 1) + '\n',
+)
+console.log(`${upTo.length} vocab in WaniKani levels 1-${UP_TO}`)
 const passed = words.filter((w) => w.passed).length
 console.log(`${words.length} started WaniKani vocab (${passed} passed Guru) out of ${subjects.length} vocab subjects`)

@@ -10,4 +10,4 @@ There has been no official JLPT vocab or grammar list since 2010, so these are c
 
 All lists were downloaded on 2026-09-27. The grammar lists disagree a lot (they share only 91 points), so the overlap is treated as the reliable core.
 
-`wanikani-known.json` (gitignored) is your own WaniKani progress from `scripts/wanikani.mjs`. Kasane skips any vocab you've started there.
+`wanikani-known.json` and `wanikani-upto35.json` (both gitignored) come from `scripts/wanikani.mjs`: your WaniKani progress, and every vocab item WaniKani teaches up to level 35. Kasane skips both, since you plan to reach WaniKani 35. That leaves about 1,100 N3 words for Kasane.

@@ -3,4 +3,4 @@ dist/
 .DS_Store
 *.log
 .env*
-content/source/wanikani-known.json
+content/source/wanikani-*.json

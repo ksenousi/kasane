@@ -58,11 +58,12 @@ describe('content', () => {
   })
 })
 
-// Local-only guard: scripts/wanikani.mjs writes this file (gitignored, so CI skips it).
-const WK_FILE = new URL('../content/source/wanikani-known.json', import.meta.url)
-describe.runIf(existsSync(WK_FILE))('WaniKani overlap', () => {
-  it('has no vocab you have already started on WaniKani', () => {
-    const known = new Set<string>(JSON.parse(readFileSync(WK_FILE, 'utf-8')).words.map((w: { word: string }) => w.word))
-    expect(vocab.filter((v) => v.kind === 'vocab' && known.has(v.word)).map((v) => v.kind === 'vocab' && v.word)).toEqual([])
+// Local-only guards: scripts/wanikani.mjs writes these files (gitignored, so CI skips them).
+// Kasane skips vocab you've started on WaniKani and everything WaniKani teaches up to level 35.
+const WK_FILES = ['wanikani-known.json', 'wanikani-upto35.json'].map((f) => new URL(`../content/source/${f}`, import.meta.url))
+describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split('/').pop()!, f] as const))('WaniKani overlap (%s)', (_, file) => {
+  it('has no Kasane vocab that WaniKani covers', () => {
+    const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.map((w: { word: string }) => w.word))
+    expect(vocab.flatMap((v) => (v.kind === 'vocab' && known.has(v.word) ? [v.word] : []))).toEqual([])
   })
 })
