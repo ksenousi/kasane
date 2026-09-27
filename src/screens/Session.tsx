@@ -4,7 +4,7 @@ import type { Item } from '../content/schema'
 import { buildQuestion, correctAnswerText, type Question } from '../exercises/build'
 import FlipCard from '../exercises/FlipCard'
 import QuestionView, { type Given } from '../exercises/QuestionView'
-import { pickExercise, type ExerciseId } from '../srs/queue'
+import { pickExercise, type ExerciseId, type Part } from '../srs/queue'
 import { answer, answerAllParts, currentTask, finishedCount, markHeld, startSession, type Finished, type SessionState } from '../srs/session'
 import { nextStage } from '../srs/engine'
 import { STAGES, type Stage } from '../srs/stages'
@@ -130,7 +130,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
                 <div className={s.row}><span className={s.k}>You picked</span><span className={s.gave} lang="ja">{given.value}</span></div>
                 <div className={s.row}><span className={s.k}>Correct</span><span className={s.ans} lang="ja">{correctAnswerText(question)}</span></div>
               </div>
-              <Explain item={item} question={question} />
+              <Explain item={item} question={question} part={task.part} />
               {drop !== null && (
                 <div className={s.stageMove}>
                   <span>{STAGES[current].name}</span>
@@ -156,11 +156,13 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   )
 }
 
-function Explain({ item, question }: { item: Item; question: Question }) {
+function Explain({ item, question, part }: { item: Item; question: Question; part: Part }) {
   const head =
     item.kind === 'vocab'
       ? `${item.word} · ${item.reading} · ${item.meanings.join(', ')}`
       : `${item.pattern} · ${item.meaning}`
+  // The hook for the part that was missed (connection misses already show the connection rule).
+  const hook = part === 'reading' ? item.mnemonic?.reading : part === 'meaning' ? item.mnemonic?.meaning : undefined
   const fix = question.ex === 'G5' && item.kind === 'grammar' && item.errorSpot ? `Should be ${item.errorSpot.fix}.` : null
   return (
     <div className={s.explain}>
@@ -169,6 +171,7 @@ function Explain({ item, question }: { item: Item; question: Question }) {
       {fix && <span className={s.note} lang="ja">{fix}</span>}
       {question.kind === 'order' && <span className={s.note}>{question.en}</span>}
       {item.note && <span className={s.note} lang="ja">{item.note}</span>}
+      {hook && <span className={s.hook} lang="ja">{hook}</span>}
     </div>
   )
 }

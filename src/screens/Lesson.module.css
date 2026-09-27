@@ -88,6 +88,31 @@
   font-size: 16px;
 }
 
+.mnemonics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.hook {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--s1);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.hookLabel {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
 .connect {
   font-size: 16px;
   line-height: 1.6;

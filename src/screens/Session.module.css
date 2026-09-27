@@ -128,3 +128,10 @@
   display: flex;
   gap: 10px;
 }
+
+.hook {
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  font-size: 14px;
+  line-height: 1.5;
+}

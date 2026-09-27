@@ -13,6 +13,11 @@ interface ItemBase {
   level: number
   /** One-line explanation shown after a wrong answer. */
   note?: string
+  /**
+   * Memory hooks shown in lessons and after a miss. `meaning` ties the meaning to the kanji
+   * (or the sound, for kana words and grammar); `reading` is for vocab written with kanji.
+   */
+  mnemonic?: { meaning: string; reading?: string }
 }
 
 export interface VocabItem extends ItemBase {

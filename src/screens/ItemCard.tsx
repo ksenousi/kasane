@@ -26,6 +26,14 @@ export default function ItemCard({ item }: { item: Item }) {
             <Section label="How it connects"><span className={s.connect} lang="ja">{item.connection}</span></Section>
           </>
         )}
+        {item.mnemonic && (
+          <Section label="Remember it">
+            <div className={s.mnemonics}>
+              <Hook label="Meaning" text={item.mnemonic.meaning} />
+              {item.mnemonic.reading && <Hook label="Reading" text={item.mnemonic.reading} />}
+            </div>
+          </Section>
+        )}
         {item.examples.map((e) => (
           <div key={e.full} className={`${ui.card} ${s.example}`}>
             <span className={s.ja} lang="ja">{e.full}</span>
@@ -35,6 +43,15 @@ export default function ItemCard({ item }: { item: Item }) {
         {item.note && <p className={s.note} lang="ja">{item.note}</p>}
       </div>
     </>
+  )
+}
+
+function Hook({ label, text }: { label: string; text: string }) {
+  return (
+    <p className={s.hook} lang="ja">
+      <span className={s.hookLabel}>{label}</span>
+      {text}
+    </p>
   )
 }
 

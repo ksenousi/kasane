@@ -13,6 +13,11 @@ function distinct(xs: string[]) {
 }
 
 describe('content', () => {
+  it('gives every item a meaning hook, and a reading hook when the word has kanji', () => {
+    const missing = ITEMS.filter((i) => !i.mnemonic?.meaning || (i.kind === 'vocab' && hasKanji(i.word) && !i.mnemonic.reading))
+    expect(missing.map((i) => i.id)).toEqual([])
+  })
+
   it('has a meaning for every kanji in words with two or more kanji', () => {
     const missing = ITEMS.flatMap((i) => (i.kind === 'vocab' ? kanjiBreakdown(i.word) : []))
       .filter((p) => !p.meaning)
