@@ -80,9 +80,9 @@ export default function Settings() {
 
       <section className={ui.card}>
         <span className={ui.label}>Backup</span>
-        <p className={s.hint}>Your progress lives only on this phone. Save a backup now and then (Files, iCloud Drive…).</p>
+        <p className={s.hint}>Your progress lives only on this phone. Save a backup now and then (Files, iCloud Drive…). The same file can be shared for a progress check-up.</p>
         <div className={s.buttons}>
-          <button className={ui.btnGhost} onClick={() => void doExport()}>Save backup</button>
+          <button className={ui.btnGhost} onClick={() => void doExport()}>Save backup / export</button>
           <button className={ui.btnGhost} onClick={() => file.current?.click()}>Restore…</button>
         </div>
         <input ref={file} type="file" accept="application/json,.json" hidden onChange={(e) => e.target.files?.[0] && void doImport(e.target.files[0])} />

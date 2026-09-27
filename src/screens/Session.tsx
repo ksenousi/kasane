@@ -79,7 +79,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
 
   function next() {
     if (!given || !task || !question) return
-    logAnswer({ itemId: task.itemId, part: task.part, exercise: question.ex, correct: given.correct })
+    logAnswer({ itemId: task.itemId, part: task.part, exercise: question.ex, correct: given.correct, given: given.value, mode })
     advance(given.correct)
   }
 
@@ -118,11 +118,11 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
           key={state.answered}
           item={item}
           onKnew={() => {
-            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: true })
+            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: true, mode })
             apply(answerAllParts(state))
           }}
           onMissed={() => {
-            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: false })
+            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: false, mode })
             advance(false)
           }}
           onChoices={() => setState(markHeld(state, item.id))}

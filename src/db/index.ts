@@ -9,6 +9,10 @@ export interface Answer {
   part: Part
   exercise: ExerciseId
   correct: boolean
+  /** What was picked or built, for spotting which wrong options catch you out. */
+  given?: string
+  /** Session type the answer came from. */
+  mode?: 'review' | 'quiz' | 'drill'
   at: number
 }
 
