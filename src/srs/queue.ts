@@ -1,3 +1,4 @@
+import { hasKanji } from '../content'
 import type { Item } from '../content/schema'
 import { isDue, type Progress } from './engine'
 import { stageGroup, type Stage, type StageGroup } from './stages'
@@ -56,7 +57,9 @@ export type ExerciseId =
   | 'RC'
 
 export function partsFor(item: Item): Part[] {
-  return item.kind === 'vocab' ? ['meaning', 'reading'] : ['meaning', 'connection']
+  if (item.kind === 'grammar') return ['meaning', 'connection']
+  // Kana-only words have nothing to read, so they're asked about meaning only.
+  return hasKanji(item.word) ? ['meaning', 'reading'] : ['meaning']
 }
 
 type Tier = 'apprentice' | 'guru' | 'master'

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { GrammarItem, Item, VocabItem } from '../src/content/schema'
 import { newProgress, type Progress } from '../src/srs/engine'
-import { forecast, pickExercise, reviewQueue, stageCounts } from '../src/srs/queue'
+import { forecast, partsFor, pickExercise, reviewQueue, stageCounts, supports } from '../src/srs/queue'
 import type { Stage } from '../src/srs/stages'
 import { currentLevel, isUnlocked, lessonItems, passedFraction } from '../src/srs/unlock'
 
@@ -119,5 +119,16 @@ describe('pickExercise', () => {
 
   it('returns null when nothing fits', () => {
     expect(pickExercise(grammar('g', 1, []), 'connection', 3)).toBeNull()
+  })
+})
+
+describe('kana-only vocab', () => {
+  const kana = vocab('k', 1, { word: 'うっかり', reading: 'うっかり', examples: [{ ja: '＿忘れた。', full: 'うっかり忘れた。', en: 'I carelessly forgot.' }] })
+  it('is asked about meaning only, never reading', () => {
+    expect(partsFor(kana)).toEqual(['meaning'])
+    expect(partsFor(vocab('j', 1, { word: '状況' }))).toEqual(['meaning', 'reading'])
+  })
+  it('never gets kanji-tile questions', () => {
+    expect(supports(kana, 'V4')).toBe(false)
   })
 })

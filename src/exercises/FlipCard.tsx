@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { itemLabel } from '../content'
+import { hasKanji, itemLabel } from '../content'
 import type { Item } from '../content/schema'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
@@ -22,10 +22,10 @@ export default function FlipCard({ item, onKnew, onMissed, onChoices }: Props) {
     <div className={s.wrap}>
       <button className={s.card} onClick={() => setShown(true)} disabled={shown} aria-label={shown ? undefined : 'Show answer'}>
         <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
-        {!shown && <span className={s.hint}>{item.kind === 'vocab' ? 'Recall the reading and meaning, then tap' : 'Recall the meaning and how it connects, then tap'}</span>}
+        {!shown && <span className={s.hint}>{item.kind === 'vocab' ? (hasKanji(item.word) ? 'Recall the reading and meaning, then tap' : 'Recall the meaning, then tap') : 'Recall the meaning and how it connects, then tap'}</span>}
         {shown && (
           <>
-            {item.kind === 'vocab' && <span className={s.reading} lang="ja">{item.reading}</span>}
+            {item.kind === 'vocab' && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
             <span className={s.rule} />
             <span className={s.meaning}>{item.kind === 'vocab' ? item.meanings.join('; ') : item.meaning}</span>
             {item.kind === 'grammar' && <span className={s.sub} lang="ja">{item.connection}</span>}

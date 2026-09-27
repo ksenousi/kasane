@@ -8,6 +8,11 @@ export const ITEMS: Item[] = LEVELS.flatMap((l) => l.items)
 
 export const ITEMS_BY_ID: ReadonlyMap<string, Item> = new Map(ITEMS.map((i) => [i.id, i]))
 
+/** True when the word contains kanji, so it can be asked about its reading. */
+export function hasKanji(word: string): boolean {
+  return /[\u4e00-\u9fff]/.test(word)
+}
+
 export function itemLabel(item: Item): string {
   return item.kind === 'vocab' ? item.word : item.pattern
 }

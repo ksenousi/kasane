@@ -3,7 +3,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import plan from '../content/plan.json'
-import { ITEMS, ITEMS_BY_ID, LEVELS } from '../src/content'
+import { ITEMS, ITEMS_BY_ID, LEVELS, hasKanji } from '../src/content'
 
 const vocab = ITEMS.filter((i) => i.kind === 'vocab')
 const grammar = ITEMS.filter((i) => i.kind === 'grammar')
@@ -22,7 +22,8 @@ describe('content', () => {
     if (v.kind !== 'vocab') return
     expect(v.reading).toMatch(/^[ぁ-ゖー]+$/)
     expect(v.meanings.length).toBeGreaterThan(0)
-    expect(v.distractors.readings).toHaveLength(3)
+    if (hasKanji(v.word)) expect(v.distractors.readings).toHaveLength(3)
+    else expect(v.word).toBe(v.reading)
     expect(v.distractors.meanings).toHaveLength(3)
     expect(v.distractors.words).toHaveLength(3)
     expect(v.contextWrong).toHaveLength(3)

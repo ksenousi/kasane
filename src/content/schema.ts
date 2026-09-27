@@ -17,7 +17,10 @@ interface ItemBase {
 
 export interface VocabItem extends ItemBase {
   kind: 'vocab'
+  /** How the word is normally written. Kana-only words have no kanji and skip reading questions. */
   word: string
+  /** Rare kanji spelling of a word normally written in kana (e.g. 寧ろ for むしろ), shown for reference. */
+  kanji?: string
   reading: string
   meanings: string[]
   pos: string

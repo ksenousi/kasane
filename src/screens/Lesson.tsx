@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { itemLabel } from '../content'
+import { hasKanji, itemLabel } from '../content'
 import type { Item } from '../content/schema'
 import { useStore } from '../state/store'
 import * as I from '../ui/icons'
@@ -67,9 +67,8 @@ export default function Lesson({ onExit }: Props) {
 
       <div className={s.band}>
         <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
-        {item.kind === 'vocab' && (
-          <span className={s.reading} lang="ja">{item.reading}</span>
-        )}
+        {item.kind === 'vocab' && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
+        {item.kind === 'vocab' && item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
       </div>
 
       <div className={s.body}>
