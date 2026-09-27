@@ -1,0 +1,125 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding: 6px 0;
+}
+
+.row + .row {
+  border-top: 1px solid var(--line);
+}
+
+.text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hint {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.toggle {
+  appearance: none;
+  flex-shrink: 0;
+  width: 51px;
+  height: 31px;
+  border-radius: 16px;
+  background: var(--s2);
+  position: relative;
+  transition: background 0.2s;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.toggle:checked {
+  background: var(--ok);
+}
+
+.toggle:checked::after {
+  transform: translateX(20px);
+}
+
+.seg {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--s2);
+}
+
+.seg button {
+  min-width: 44px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.seg .segOn {
+  background: var(--s1);
+  color: var(--text);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.buttons button {
+  min-height: 48px;
+}
+
+.danger {
+  margin-top: 12px;
+  min-height: 44px;
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--bad);
+  font-size: 15px;
+}
+
+.msg {
+  margin: 0;
+  font-size: 14px;
+  color: var(--accent-text);
+  text-align: center;
+}
+
+.about {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}

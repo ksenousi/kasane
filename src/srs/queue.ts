@@ -50,7 +50,7 @@ export function stageCounts(progress: Iterable<Progress>): Record<StageGroup, nu
 export type Part = 'meaning' | 'reading' | 'connection'
 
 export type ExerciseId =
-  | 'V1' | 'V2' | 'V3' | 'V5' | 'V6' | 'V7' | 'V8' | 'V10'
+  | 'V1' | 'V2' | 'V3' | 'V5' | 'V6' | 'V7' | 'V10'
   | 'G1' | 'G2' | 'G3' | 'G5' | 'G6' | 'G7'
 
 export function partsFor(item: Item): Part[] {
@@ -68,7 +68,7 @@ function tier(stage: Stage): Tier {
 /** Harder formats as the item climbs. Canvas: "Exercise types" page. */
 const POOLS: Record<Part, Record<Tier, ExerciseId[]>> = {
   meaning: {
-    apprentice: ['V1', 'V2', 'V8'],
+    apprentice: ['V1', 'V2'],
     guru: ['V5', 'V1', 'V2'],
     master: ['V6', 'V7', 'V5'],
   },
@@ -99,7 +99,7 @@ export function supports(item: Item, ex: ExerciseId): boolean {
       case 'V6': return !!item.paraphrase
       case 'V7': return !!item.usage
       case 'V10': return item.examples.length > 0 || item.distractors.readings.length >= 3
-      case 'V1': case 'V2': case 'V8': return true
+      case 'V1': case 'V2': return true
       default: return false
     }
   }

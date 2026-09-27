@@ -100,7 +100,7 @@ describe('pickExercise', () => {
   })
 
   it('uses easy formats for Apprentice items', () => {
-    for (let i = 0; i < 20; i++) expect(['V1', 'V2', 'V8']).toContain(pickExercise(rich, 'meaning', 2, Math.random))
+    for (let i = 0; i < 20; i++) expect(['V1', 'V2']).toContain(pickExercise(rich, 'meaning', 2, Math.random))
   })
 
   it('uses hard formats for Master items that have the data', () => {

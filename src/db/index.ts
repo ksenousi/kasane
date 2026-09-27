@@ -16,10 +16,9 @@ export interface Settings {
   /** Master+ items use flip-and-swipe recall cards instead of questions. */
   flipMode: boolean
   lessonBatch: number
-  autoplayAudio: boolean
 }
 
-export const DEFAULT_SETTINGS: Settings = { flipMode: false, lessonBatch: 5, autoplayAudio: false }
+export const DEFAULT_SETTINGS: Settings = { flipMode: false, lessonBatch: 5 }
 
 interface SettingRow {
   key: keyof Settings

@@ -1,0 +1,112 @@
+import { useEffect, useState } from 'react'
+import { itemLabel } from '../content'
+import type { Item } from '../content/schema'
+import { useStore } from '../state/store'
+import * as I from '../ui/icons'
+import ui from '../ui/ui.module.css'
+import s from './Lesson.module.css'
+import Session from './Session'
+
+interface Props {
+  onExit: () => void
+}
+
+/** Learn a batch of new items card by card, then a short quiz; passing it starts them in the SRS. */
+export default function Lesson({ onExit }: Props) {
+  const { lessons, settings, completeLessons } = useStore()
+  const [batch] = useState<Item[]>(() => lessons.slice(0, settings.lessonBatch))
+  const [index, setIndex] = useState(0)
+  const [phase, setPhase] = useState<'learn' | 'quiz' | 'done'>('learn')
+
+  useEffect(() => {
+    if (batch.length === 0) onExit()
+  }, [batch, onExit])
+
+  if (batch.length === 0) return null
+
+  if (phase === 'quiz') {
+    return (
+      <Session
+        items={batch}
+        mode="quiz"
+        onExit={() => setPhase('learn')}
+        onComplete={async () => {
+          await completeLessons(batch.map((i) => i.id))
+          setPhase('done')
+        }}
+      />
+    )
+  }
+
+  if (phase === 'done') {
+    return (
+      <div className={`${ui.screen} ${s.done}`}>
+        <span className={s.doneTitle}>Lesson done</span>
+        <p className={s.doneText}>{batch.length} new items are now at Apprentice 1. Your first review is in 4 hours.</p>
+        <div className={s.chips} lang="ja">{batch.map((i) => <span key={i.id} className={s.chip}>{itemLabel(i)}</span>)}</div>
+        <button className={ui.btn} onClick={onExit}>Back to home</button>
+      </div>
+    )
+  }
+
+  const item = batch[index]
+  const last = index === batch.length - 1
+
+  return (
+    <div className={ui.screen}>
+      <div className={ui.topbar}>
+        <button className={ui.iconBtn} onClick={onExit} aria-label="Close lesson"><I.Close /></button>
+        <span className={s.step}>Lesson · {index + 1} of {batch.length}</span>
+        <span className={`${ui.pill} ${item.kind === 'vocab' ? ui.pillVocab : ui.pillGrammar}`}>{item.kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
+      </div>
+
+      <div className={s.band}>
+        <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
+        {item.kind === 'vocab' && (
+          <span className={s.reading} lang="ja">{item.reading}</span>
+        )}
+      </div>
+
+      <div className={s.body}>
+        {item.kind === 'vocab' ? (
+          <>
+            <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
+          </>
+        ) : (
+          <>
+            <Section label="Meaning"><span className={s.meaning}>{item.meaning}</span></Section>
+            <Section label="How it connects"><span className={s.connect} lang="ja">{item.connection}</span></Section>
+          </>
+        )}
+        {item.examples.map((e) => (
+          <div key={e.full} className={`${ui.card} ${s.example}`}>
+            <span className={s.ja} lang="ja">{e.full}</span>
+            <span className={s.small}>{e.en}</span>
+          </div>
+        ))}
+        {item.note && <p className={s.note} lang="ja">{item.note}</p>}
+      </div>
+
+      <div className={s.footer}>
+        <div className={s.chips} lang="ja">
+          {batch.map((b, i) => (
+            <button key={b.id} className={`${s.chip} ${i === index ? s.chipOn : ''}`} onClick={() => setIndex(i)}>{itemLabel(b)}</button>
+          ))}
+        </div>
+        <div className={s.nav}>
+          <button className={ui.btnGhost} style={{ width: 120 }} disabled={index === 0} onClick={() => setIndex(index - 1)}>Back</button>
+          <button className={ui.btn} onClick={() => (last ? setPhase('quiz') : setIndex(index + 1))}>{last ? 'Start quiz' : 'Next'}</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Section({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className={s.section}>
+      <span className={ui.label}>{label}</span>
+      {children}
+    </div>
+  )
+}
