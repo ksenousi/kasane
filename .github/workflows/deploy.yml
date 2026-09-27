@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # Docs-only changes don't touch the app, so don't redeploy (which would reload it on your phone).
+    paths-ignore: ['README.md', 'docs/**']
   workflow_dispatch:
 
 permissions:
