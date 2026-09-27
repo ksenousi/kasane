@@ -6,6 +6,7 @@ import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './Lesson.module.css'
 import Session from './Session'
+import MatchPairs from '../exercises/MatchPairs'
 
 interface Props {
   onExit: () => void
@@ -16,13 +17,17 @@ export default function Lesson({ onExit }: Props) {
   const { lessons, settings, completeLessons } = useStore()
   const [batch] = useState<Item[]>(() => lessons.slice(0, settings.lessonBatch))
   const [index, setIndex] = useState(0)
-  const [phase, setPhase] = useState<'learn' | 'quiz' | 'done'>('learn')
+  const [phase, setPhase] = useState<'learn' | 'match' | 'quiz' | 'done'>('learn')
 
   useEffect(() => {
     if (batch.length === 0) onExit()
   }, [batch, onExit])
 
   if (batch.length === 0) return null
+
+  if (phase === 'match') {
+    return <MatchPairs items={batch} onDone={() => setPhase('quiz')} onExit={() => setPhase('learn')} />
+  }
 
   if (phase === 'quiz') {
     return (
@@ -95,7 +100,7 @@ export default function Lesson({ onExit }: Props) {
         </div>
         <div className={s.nav}>
           <button className={ui.btnGhost} style={{ width: 120 }} disabled={index === 0} onClick={() => setIndex(index - 1)}>Back</button>
-          <button className={ui.btn} onClick={() => (last ? setPhase('quiz') : setIndex(index + 1))}>{last ? 'Start quiz' : 'Next'}</button>
+          <button className={ui.btn} onClick={() => (last ? setPhase(batch.length > 1 ? 'match' : 'quiz') : setIndex(index + 1))}>{last ? 'Start quiz' : 'Next'}</button>
         </div>
       </div>
     </div>
