@@ -1,7 +1,8 @@
 import type { Item, Level } from './schema'
 import level01 from './levels/level-01.json'
+import level02 from './levels/level-02.json'
 
-export const LEVELS: Level[] = [level01 as Level]
+export const LEVELS: Level[] = [level01 as Level, level02 as Level]
 
 export const ITEMS: Item[] = LEVELS.flatMap((l) => l.items)
 
