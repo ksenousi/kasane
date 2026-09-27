@@ -1,5 +1,6 @@
 // Guards the hand-written content: every question built from it must have
 // exactly one right answer among distinct options.
+import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { ITEMS, ITEMS_BY_ID, LEVELS } from '../src/content'
 
@@ -54,5 +55,14 @@ describe('content', () => {
     if (g.order) expect(g.order.star).toBeLessThan(g.order.chunks.length)
     if (g.errorSpot) expect(g.errorSpot.wrong).toBeLessThan(g.errorSpot.chunks.length)
     if (g.situation) expect(distinct([g.situation.answer, ...g.situation.wrong])).toBe(true)
+  })
+})
+
+// Local-only guard: scripts/wanikani.mjs writes this file (gitignored, so CI skips it).
+const WK_FILE = new URL('../content/source/wanikani-known.json', import.meta.url)
+describe.runIf(existsSync(WK_FILE))('WaniKani overlap', () => {
+  it('has no vocab you have already started on WaniKani', () => {
+    const known = new Set<string>(JSON.parse(readFileSync(WK_FILE, 'utf-8')).words.map((w: { word: string }) => w.word))
+    expect(vocab.filter((v) => v.kind === 'vocab' && known.has(v.word)).map((v) => v.kind === 'vocab' && v.word)).toEqual([])
   })
 })

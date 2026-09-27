@@ -1,267 +1,30 @@
 {
   "level": 2,
   "items": [
-    {
-      "id": "v-inshou", "kind": "vocab", "level": 2,
-      "word": "印象", "reading": "いんしょう", "meanings": ["impression"], "pos": "noun",
-      "note": "象 is しょう here, with a long vowel. 第一印象 = first impression.",
-      "examples": [{ "ja": "彼女の第一＿はとてもよかった。", "full": "彼女の第一印象はとてもよかった。", "en": "My first impression of her was very good." }],
-      "distractors": { "readings": ["いんぞう", "いんしょ", "いしょう"], "meanings": ["rumor", "schedule", "secret"], "words": ["印刷", "対象", "気象"] },
-      "contextWrong": ["成功", "協力", "集中"],
-      "tiles": ["い", "ん", "しょ", "う"], "tileDecoys": ["ぞ", "しゅ", "よ"]
-    },
-    {
-      "id": "v-kouka", "kind": "vocab", "level": 2,
-      "word": "効果", "reading": "こうか", "meanings": ["effect", "effectiveness"], "pos": "noun",
-      "note": "効果がある = to be effective. 高価 (expensive) is also read こうか.",
-      "examples": [{ "ja": "この薬はすぐに＿が出る。", "full": "この薬はすぐに効果が出る。", "en": "This medicine takes effect quickly." }],
-      "distractors": { "readings": ["こうが", "こか", "ごうか"], "meanings": ["cause", "price", "danger"], "words": ["結果", "高価", "成果"] },
-      "contextWrong": ["感謝", "賛成", "環境"],
-      "tiles": ["こ", "う", "か"], "tileDecoys": ["が", "ご", "お"]
-    },
-    {
-      "id": "v-kaiketsu", "kind": "vocab", "level": 2,
-      "word": "解決", "reading": "かいけつ", "meanings": ["solution", "settling (a problem)"], "pos": "noun, する verb",
-      "note": "問題を解決する = solve a problem. 決 is けつ here (not けち or げつ).",
-      "examples": [{ "ja": "話し合って、問題を＿した。", "full": "話し合って、問題を解決した。", "en": "We talked it over and solved the problem." }],
-      "distractors": { "readings": ["かいけち", "かいげつ", "かけつ"], "meanings": ["question", "reason", "accident"], "words": ["解散", "決心", "対決"] },
-      "contextWrong": ["感謝", "成功", "希望"],
-      "tiles": ["か", "い", "け", "つ"], "tileDecoys": ["げ", "ち", "っ"]
-    },
-    {
-      "id": "v-sansei", "kind": "vocab", "level": 2,
-      "word": "賛成", "reading": "さんせい", "meanings": ["agreement", "approval"], "pos": "noun, する verb",
-      "note": "〜に賛成する = agree with or support. The opposite is 反対 (はんたい).",
-      "examples": [{ "ja": "私はその意見に＿です。", "full": "私はその意見に賛成です。", "en": "I agree with that opinion." }],
-      "distractors": { "readings": ["さんせ", "ざんせい", "さんぜい"], "meanings": ["complaint", "question", "silence"], "words": ["反対", "完成", "成功"] },
-      "contextWrong": ["環境", "効果", "目的"],
-      "tiles": ["さ", "ん", "せ", "い"], "tileDecoys": ["ざ", "ぜ", "う"]
-    },
-    {
-      "id": "v-kansha", "kind": "vocab", "level": 2,
-      "word": "感謝", "reading": "かんしゃ", "meanings": ["gratitude", "thanks"], "pos": "noun, する verb",
-      "note": "〜に感謝する = be grateful to someone. 謝 is しゃ (unvoiced).",
-      "examples": [{ "ja": "手伝ってくれた友達に＿している。", "full": "手伝ってくれた友達に感謝している。", "en": "I'm grateful to my friend for helping me." }],
-      "distractors": { "readings": ["かんじゃ", "がんしゃ", "かんしょ"], "meanings": ["apology", "envy", "surprise"], "words": ["感動", "感心", "謝罪"] },
-      "contextWrong": ["解決", "環境", "目的"],
-      "tiles": ["か", "ん", "しゃ"], "tileDecoys": ["じゃ", "しょ", "さ"]
-    },
-    {
-      "id": "v-chigai", "kind": "vocab", "level": 2,
-      "word": "違い", "reading": "ちがい", "meanings": ["difference"], "pos": "noun",
-      "note": "From 違う (to differ). Don't confuse with 近い (ちかい, near).",
-      "examples": [{ "ja": "この二つの言葉の＿がわからない。", "full": "この二つの言葉の違いがわからない。", "en": "I don't understand the difference between these two words." }],
-      "distractors": { "readings": ["ちかい", "ぢがい", "ちがえ"], "meanings": ["similarity", "connection", "order"], "words": ["間違い", "違反", "地下"] },
-      "contextWrong": ["賛成", "感謝", "集中"],
-      "tiles": ["ち", "が", "い"], "tileDecoys": ["か", "ぢ", "え"]
-    },
-    {
-      "id": "v-kyouryoku", "kind": "vocab", "level": 2,
-      "word": "協力", "reading": "きょうりょく", "meanings": ["cooperation", "working together"], "pos": "noun, する verb",
-      "note": "Both halves have small ょ: きょう・りょく. 強力 (powerful) is read the same way.",
-      "examples": [{ "ja": "みんなの＿のおかげで、無事に終わった。", "full": "みんなの協力のおかげで、無事に終わった。", "en": "Thanks to everyone's cooperation, it finished without any problems." }],
-      "distractors": { "readings": ["きょうりき", "きょりょく", "きょうりょう"], "meanings": ["competition", "conflict", "rest"], "words": ["努力", "強力", "能力"] },
-      "contextWrong": ["違い", "表情", "印象"],
-      "tiles": ["きょ", "う", "りょ", "く"], "tileDecoys": ["き", "りょう", "ゆ"]
-    },
-    {
-      "id": "v-teian", "kind": "vocab", "level": 2,
-      "word": "提案", "reading": "ていあん", "meanings": ["proposal", "suggestion"], "pos": "noun, する verb",
-      "note": "提案する = propose or suggest. 案 on its own means a plan or idea.",
-      "examples": [{ "ja": "会議で新しい計画を＿した。", "full": "会議で新しい計画を提案した。", "en": "I proposed a new plan at the meeting." }],
-      "distractors": { "readings": ["てあん", "ていえん", "でいあん"], "meanings": ["complaint", "promise", "excuse"], "words": ["提出", "案内", "答案"] },
-      "contextWrong": ["違い", "環境", "印象"],
-      "tiles": ["て", "い", "あ", "ん"], "tileDecoys": ["で", "え", "う"]
-    },
-    {
-      "id": "v-mokuteki", "kind": "vocab", "level": 2,
-      "word": "目的", "reading": "もくてき", "meanings": ["purpose", "aim"], "pos": "noun",
-      "note": "目 is もく here, not め. 目的地 (もくてきち) = destination.",
-      "examples": [{ "ja": "旅行の＿は、日本の文化を知ることだ。", "full": "旅行の目的は、日本の文化を知ることだ。", "en": "The purpose of the trip is to learn about Japanese culture." }],
-      "distractors": { "readings": ["もくでき", "めてき", "もくてい"], "meanings": ["result", "method", "schedule"], "words": ["目次", "的確", "注目"] },
-      "contextWrong": ["感謝", "協力", "表情"],
-      "tiles": ["も", "く", "て", "き"], "tileDecoys": ["で", "め", "い"]
-    },
-    {
-      "id": "v-hyoujou", "kind": "vocab", "level": 2,
-      "word": "表情", "reading": "ひょうじょう", "meanings": ["facial expression", "look (on one's face)"], "pos": "noun",
-      "note": "Both halves are long: ひょう・じょう. 情 is voiced here (じょう).",
-      "examples": [{ "ja": "母は心配そうな＿をしていた。", "full": "母は心配そうな表情をしていた。", "en": "My mother had a worried look on her face." }],
-      "distractors": { "readings": ["ひょうしょう", "ひょじょう", "ひょうせい"], "meanings": ["voice", "clothing", "habit"], "words": ["表現", "感情", "事情"] },
-      "contextWrong": ["解決", "効果", "目的"],
-      "tiles": ["ひょ", "う", "じょ", "う"], "tileDecoys": ["しょ", "よ", "ゆ"]
-    },
-    {
-      "id": "v-tasukaru", "kind": "vocab", "level": 2,
-      "word": "助かる", "reading": "たすかる", "meanings": ["to be a help", "to be saved"], "pos": "verb (godan, intransitive)",
-      "note": "助かる = be helped (it's a relief). 助ける = help someone.",
-      "examples": [{ "ja": "手伝ってもらえると、とても＿。", "full": "手伝ってもらえると、とても助かる。", "en": "It'd be a big help if you could give me a hand." }],
-      "distractors": { "readings": ["だすかる", "たすける", "たすかう"], "meanings": ["to hurry", "to give up", "to borrow"], "words": ["助ける", "足りる", "預かる"] },
-      "contextWrong": ["過ごす", "届く", "減る"],
-      "tiles": ["た", "す", "か", "る"], "tileDecoys": ["だ", "け", "う"],
-      "usage": { "correct": "手伝ってくれて、本当に助かったよ。", "wrong": ["友達を助かった。", "毎朝、公園を助かる。", "この本はとても助かるな本だ。"] }
-    },
-    {
-      "id": "v-sugosu", "kind": "vocab", "level": 2,
-      "word": "過ごす", "reading": "すごす", "meanings": ["to spend (time)"], "pos": "verb (godan, transitive)",
-      "note": "過ごす = spend time. 過ぎる (すぎる) = time passes by.",
-      "examples": [{ "ja": "週末は家で家族と＿つもりだ。", "full": "週末は家で家族と過ごすつもりだ。", "en": "I plan to spend the weekend at home with my family." }],
-      "distractors": { "readings": ["すこす", "すごう", "すぎす"], "meanings": ["to waste", "to wait", "to borrow"], "words": ["過ぎる", "起こす", "残す"] },
-      "contextWrong": ["助かる", "信じる", "慌てる"],
-      "tiles": ["す", "ご", "す"], "tileDecoys": ["こ", "ぎ", "う"]
-    },
-    {
-      "id": "v-tokui", "kind": "vocab", "level": 2,
-      "word": "得意", "reading": "とくい", "meanings": ["good at", "strong point"], "pos": "な adjective, noun",
-      "note": "〜が得意 = good at. The opposite is 苦手 (にがて).",
-      "examples": [{ "ja": "兄は料理が＿だ。", "full": "兄は料理が得意だ。", "en": "My older brother is good at cooking." }],
-      "distractors": { "readings": ["どくい", "とっい", "とくえ"], "meanings": ["bad at", "tired of", "afraid of"], "words": ["苦手", "注意", "用意"] },
-      "contextWrong": ["環境", "印象", "表情"],
-      "tiles": ["と", "く", "い"], "tileDecoys": ["ど", "っ", "え"],
-      "paraphrase": { "sentence": "兄は料理が【得意】だ。", "answer": "上手", "wrong": ["下手", "嫌い", "苦手"] }
-    },
-    {
-      "id": "v-kibou", "kind": "vocab", "level": 2,
-      "word": "希望", "reading": "きぼう", "meanings": ["hope", "wish"], "pos": "noun, する verb",
-      "note": "希望する = to hope for or want. Watch 規模 (きぼ, scale), which has no long vowel.",
-      "examples": [{ "ja": "将来は海外で働くことを＿している。", "full": "将来は海外で働くことを希望している。", "en": "I hope to work abroad in the future." }],
-      "distractors": { "readings": ["きもう", "きぼ", "ぎぼう"], "meanings": ["fear", "memory", "rule"], "words": ["失望", "規模", "貿易"] },
-      "contextWrong": ["環境", "表情", "違い"],
-      "tiles": ["き", "ぼ", "う"], "tileDecoys": ["ぎ", "ほ", "も"]
-    },
-    {
-      "id": "v-seikou", "kind": "vocab", "level": 2,
-      "word": "成功", "reading": "せいこう", "meanings": ["success"], "pos": "noun, する verb",
-      "note": "The opposite is 失敗 (しっぱい). 成功する = succeed.",
-      "examples": [{ "ja": "何度も失敗したが、ついに実験が＿した。", "full": "何度も失敗したが、ついに実験が成功した。", "en": "I failed many times, but the experiment finally succeeded." }],
-      "distractors": { "readings": ["せいご", "せこう", "ぜいこう"], "meanings": ["failure", "effort", "luck"], "words": ["失敗", "成長", "性格"] },
-      "contextWrong": ["賛成", "感謝", "提案"],
-      "tiles": ["せ", "い", "こ", "う"], "tileDecoys": ["ぜ", "ご", "よ"]
-    },
-    {
-      "id": "v-kankyou", "kind": "vocab", "level": 2,
-      "word": "環境", "reading": "かんきょう", "meanings": ["environment", "surroundings"], "pos": "noun",
-      "note": "境 is きょう with a long vowel. 環境問題 = environmental issues.",
-      "examples": [{ "ja": "この町は自然が多くて、子育てにいい＿だ。", "full": "この町は自然が多くて、子育てにいい環境だ。", "en": "This town has lots of nature and is a good environment for raising children." }],
-      "distractors": { "readings": ["かんきょ", "がんきょう", "かんけい"], "meanings": ["economy", "history", "weather"], "words": ["関係", "状況", "感情"] },
-      "contextWrong": ["賛成", "感謝", "成功"],
-      "tiles": ["か", "ん", "きょ", "う"], "tileDecoys": ["が", "け", "い"]
-    },
-    {
-      "id": "v-shinjiru", "kind": "vocab", "level": 2,
-      "word": "信じる", "reading": "しんじる", "meanings": ["to believe", "to trust"], "pos": "verb (ichidan)",
-      "note": "〜を信じる = believe or trust. Its opposite in feeling is 疑う (うたがう).",
-      "examples": [{ "ja": "彼の話は本当だと＿。", "full": "彼の話は本当だと信じる。", "en": "I believe his story is true." }],
-      "distractors": { "readings": ["しんしる", "しじる", "じんじる"], "meanings": ["to doubt", "to forget", "to explain"], "words": ["感じる", "通じる", "疑う"] },
-      "contextWrong": ["過ごす", "助かる", "届く"],
-      "tiles": ["し", "ん", "じ", "る"], "tileDecoys": ["ち", "い", "じゅ"]
-    },
-    {
-      "id": "v-awateru", "kind": "vocab", "level": 2,
-      "word": "慌てる", "reading": "あわてる", "meanings": ["to panic", "to be in a rush"], "pos": "verb (ichidan)",
-      "note": "慌てて = in a hurry, flustered. The opposite is 落ち着く (to calm down).",
-      "examples": [{ "ja": "地震が起きても、＿必要はない。", "full": "地震が起きても、慌てる必要はない。", "en": "Even if an earthquake happens, there's no need to panic." }],
-      "distractors": { "readings": ["あわでる", "あわってる", "あらてる"], "meanings": ["to calm down", "to be late", "to get angry"], "words": ["慣れる", "荒れる", "当てる"] },
-      "contextWrong": ["過ごす", "届く", "減る"],
-      "tiles": ["あ", "わ", "て", "る"], "tileDecoys": ["で", "ら", "っ"]
-    },
-    {
-      "id": "v-nayamu", "kind": "vocab", "level": 2,
-      "word": "悩む", "reading": "なやむ", "meanings": ["to worry", "to be troubled"], "pos": "verb (godan)",
-      "note": "〜で悩む / 〜に悩む = worry about something. 悩み = a worry or problem.",
-      "examples": [{ "ja": "一人で＿より、誰かに相談したほうがいい。", "full": "一人で悩むより、誰かに相談したほうがいい。", "en": "Rather than worrying alone, it's better to talk to someone." }],
-      "distractors": { "readings": ["なよむ", "なやぶ", "なあむ"], "meanings": ["to decide", "to rest", "to laugh"], "words": ["休む", "読む", "住む"] },
-      "contextWrong": ["届く", "減る", "助かる"],
-      "tiles": ["な", "や", "む"], "tileDecoys": ["よ", "ぶ", "あ"]
-    },
-    {
-      "id": "v-shuuchuu", "kind": "vocab", "level": 2,
-      "word": "集中", "reading": "しゅうちゅう", "meanings": ["concentration", "focus"], "pos": "noun, する verb",
-      "note": "Both halves are long: しゅう・ちゅう. 〜に集中する = concentrate on.",
-      "examples": [{ "ja": "静かな部屋のほうが、勉強に＿できる。", "full": "静かな部屋のほうが、勉強に集中できる。", "en": "I can concentrate on studying better in a quiet room." }],
-      "distractors": { "readings": ["しゅちゅう", "しゅうちゅ", "じゅうちゅう"], "meanings": ["relaxation", "repetition", "preparation"], "words": ["集合", "中心", "途中"] },
-      "contextWrong": ["環境", "表情", "目的"],
-      "tiles": ["しゅ", "う", "ちゅ", "う"], "tileDecoys": ["じゅ", "ちょ", "よ"],
-      "usage": { "correct": "テレビを消して、宿題に集中した。", "wrong": ["集中な部屋で勉強する。", "友達を集中して待った。", "朝ご飯に集中を食べた。"] }
-    },
-
-    {
-      "id": "g-seide", "kind": "grammar", "level": 2,
-      "pattern": "〜せいで", "meaning": "because of (a bad result); due to", "connection": "Plain form (な-adj + な / N + の) + せいで",
-      "note": "せいで blames a cause for a bad result. For good results use おかげで.",
-      "requires": ["v-shuuchuu"],
-      "examples": [
-        { "ja": "雨の＿、試合が中止になった。", "full": "雨のせいで、試合が中止になった。", "en": "Because of the rain, the game was cancelled." },
-        { "ja": "隣の部屋がうるさい＿、勉強に集中できない。", "full": "隣の部屋がうるさいせいで、勉強に集中できない。", "en": "Because the next room is noisy, I can't concentrate on studying." }
-      ],
-      "confusables": ["〜おかげで", "〜うちに", "〜とおりに"],
-      "forms": { "base": "寝不足", "sentence": "＿せいで、頭が痛い。", "answer": "寝不足の", "wrong": ["寝不足", "寝不足な", "寝不足で"] },
-      "order": { "before": "寝坊した", "chunks": ["せいで", "大事な", "会議に", "遅れた"], "star": 2, "after": "。", "en": "Because I overslept, I was late for an important meeting." },
-      "translate": { "sentence": "私のせいで、みんなが遅れてしまった。", "answer": "Because of me, everyone ended up being late.", "wrong": ["Thanks to me, everyone arrived on time.", "Everyone was late, but it wasn't my fault."] },
-      "errorSpot": { "chunks": ["先生の", "せいで", "試験に", "合格", "できた。"], "wrong": 1, "fix": "おかげで" },
-      "situation": { "prompt": "You explain that you slept badly because the neighbors were noisy.", "sentence": "隣がうるさかった＿、よく眠れなかった。", "answer": "せいで", "wrong": ["おかげで", "うちに", "ついでに"] }
-    },
-    {
-      "id": "g-tabini", "kind": "grammar", "level": 2,
-      "pattern": "〜たびに", "meaning": "every time; whenever", "connection": "V-dictionary / N + の + たびに",
-      "note": "たびに follows the dictionary form (not the た form), even for past habits.",
-      "requires": ["v-inshou"],
-      "examples": [
-        { "ja": "母は私に会う＿、「元気？」と聞く。", "full": "母は私に会うたびに、「元気？」と聞く。", "en": "Every time my mother sees me, she asks, \"Are you well?\"" },
-        { "ja": "会う＿、彼の印象が変わる。", "full": "会うたびに、彼の印象が変わる。", "en": "Every time I meet him, my impression of him changes." }
-      ],
-      "confusables": ["〜せいで", "〜うちに", "〜とおりに"],
-      "forms": { "base": "旅行", "sentence": "＿たびに、写真をたくさん撮る。", "answer": "旅行の", "wrong": ["旅行", "旅行な", "旅行で"] },
-      "order": { "before": "彼は", "chunks": ["会う", "たびに", "違う", "服を"], "star": 2, "after": "着ている。", "en": "Every time I see him, he's wearing different clothes." },
-      "translate": { "sentence": "この写真を見るたびに、祖母を思い出す。", "answer": "Every time I see this photo, I think of my grandmother.", "wrong": ["When I saw this photo once, I thought of my grandmother.", "I look at this photo so that I won't forget my grandmother."] },
-      "errorSpot": { "chunks": ["この店に", "来た", "たびに", "ケーキを", "買う。"], "wrong": 1, "fix": "来る" },
-      "situation": { "prompt": "You say that whenever you go to Kyoto, you visit the same temple.", "sentence": "京都へ行く＿、同じお寺に行く。", "answer": "たびに", "wrong": ["せいで", "うちに", "とおりに"] }
-    },
-    {
-      "id": "g-tebakariiru", "kind": "grammar", "level": 2,
-      "pattern": "〜てばかりいる", "meaning": "do nothing but; always (doing something)", "connection": "V-て + ばかりいる",
-      "note": "Usually a complaint: someone keeps doing one thing and nothing else.",
-      "requires": ["v-awateru"],
-      "examples": [
-        { "ja": "弟は毎日ゲームをし＿。", "full": "弟は毎日ゲームをしてばかりいる。", "en": "My little brother does nothing but play games every day." },
-        { "ja": "彼はいつも慌て＿。", "full": "彼はいつも慌ててばかりいる。", "en": "He's always in a panic." }
-      ],
-      "confusables": ["〜ばかりでなく", "〜ところだ", "〜たびに"],
-      "forms": { "base": "寝る", "sentence": "週末は＿ばかりいる。", "answer": "寝て", "wrong": ["寝た", "寝る", "寝ない"] },
-      "translate": { "sentence": "文句を言ってばかりいないで、手伝ってよ。", "answer": "Stop doing nothing but complain, and help me.", "wrong": ["Don't complain, but you don't have to help.", "You only complained once, so please help."] },
-      "errorSpot": { "chunks": ["兄は", "毎日", "寝た", "ばかりいる。"], "wrong": 2, "fix": "寝て" },
-      "situation": { "prompt": "Your roommate eats snacks all day and does nothing else. You complain to a friend.", "sentence": "ルームメイトはお菓子を食べ＿。", "answer": "てばかりいる", "wrong": ["たばかりだ", "てもいい", "たところだ"] }
-    },
-    {
-      "id": "g-toorini", "kind": "grammar", "level": 2,
-      "pattern": "〜とおりに", "meaning": "just as; in the way that", "connection": "V-plain + とおりに / N + の + とおりに (or N + どおりに)",
-      "note": "Do it the way something was said, shown or planned. After a noun it's also written どおりに.",
-      "requires": ["v-teian"],
-      "examples": [
-        { "ja": "先生が言った＿、やってみてください。", "full": "先生が言ったとおりに、やってみてください。", "en": "Please try doing it just as the teacher said." },
-        { "ja": "彼が提案した＿、計画を変えた。", "full": "彼が提案したとおりに、計画を変えた。", "en": "We changed the plan just as he proposed." }
-      ],
-      "confusables": ["〜たびに", "〜せいで", "〜ばかりに"],
-      "forms": { "base": "予定", "sentence": "＿とおりに、会議が始まった。", "answer": "予定の", "wrong": ["予定", "予定な", "予定で"] },
-      "order": { "before": "私が", "chunks": ["言う", "とおりに", "この紙を", "折って"], "star": 2, "after": "ください。", "en": "Fold this paper just as I tell you." },
-      "translate": { "sentence": "思ったとおりに、テストは簡単だった。", "answer": "Just as I thought, the test was easy.", "wrong": ["Contrary to what I thought, the test was hard.", "I thought the test would be easy, but it wasn't."] },
-      "errorSpot": { "chunks": ["地図の", "とおりで", "行ったら", "駅に", "着いた。"], "wrong": 1, "fix": "とおりに" },
-      "situation": { "prompt": "You followed the recipe exactly and the cake came out well.", "sentence": "レシピの＿作ったら、おいしくできた。", "answer": "とおりに", "wrong": ["せいで", "たびに", "ばかりで"] }
-    },
-    {
-      "id": "g-tsuideni", "kind": "grammar", "level": 2,
-      "pattern": "〜ついでに", "meaning": "while you're at it; on the way", "connection": "V-dictionary / V-た / N + の + ついでに",
-      "note": "Do a second, smaller thing while you're already doing the first.",
-      "requires": ["v-tasukaru"],
-      "examples": [
-        { "ja": "買い物の＿、郵便局に寄った。", "full": "買い物のついでに、郵便局に寄った。", "en": "While I was out shopping, I stopped by the post office." },
-        { "ja": "コンビニに行く＿、牛乳を買ってきてくれると助かる。", "full": "コンビニに行くついでに、牛乳を買ってきてくれると助かる。", "en": "If you could pick up some milk while you're at the convenience store, that'd help." }
-      ],
-      "confusables": ["〜せいで", "〜とおりに", "〜ばかりで"],
-      "forms": { "base": "出張", "sentence": "大阪への＿ついでに、友達に会った。", "answer": "出張の", "wrong": ["出張", "出張な", "出張で"] },
-      "order": { "before": "部屋を", "chunks": ["掃除した", "ついでに", "窓も", "ふいた"], "star": 2, "after": "。", "en": "While cleaning the room, I wiped the windows too." },
-      "translate": { "sentence": "駅へ行くついでに、この手紙を出してくれない？", "answer": "Could you mail this letter on your way to the station?", "wrong": ["Could you go to the station instead of mailing this letter?", "Because you're going to the station, you can't mail this letter."] },
-      "situation": { "prompt": "You're going to the store anyway, so you offer to buy your friend a drink too.", "sentence": "店に行く＿、飲み物を買ってこようか？", "answer": "ついでに", "wrong": ["せいで", "たびに", "とおりに"] }
-    }
+    {"id": "v-inshou", "kind": "vocab", "level": 2, "word": "印象", "reading": "いんしょう", "meanings": ["impression"], "pos": "noun", "note": "象 is しょう here, with a long vowel. 第一印象 = first impression.", "examples": [{"ja": "彼女の第一＿はとてもよかった。", "full": "彼女の第一印象はとてもよかった。", "en": "My first impression of her was very good."}], "distractors": {"readings": ["いんぞう", "いんしょ", "いしょう"], "meanings": ["rumor", "schedule", "secret"], "words": ["印刷", "対象", "気象"]}, "contextWrong": ["成功", "協力", "集中"], "tiles": ["い", "ん", "しょ", "う"], "tileDecoys": ["ぞ", "しゅ", "よ"]},
+    {"id": "v-kouka", "kind": "vocab", "level": 2, "word": "効果", "reading": "こうか", "meanings": ["effect", "effectiveness"], "pos": "noun", "note": "効果がある = to be effective. 高価 (expensive) is also read こうか.", "examples": [{"ja": "この薬はすぐに＿が出る。", "full": "この薬はすぐに効果が出る。", "en": "This medicine takes effect quickly."}], "distractors": {"readings": ["こうが", "こか", "ごうか"], "meanings": ["cause", "price", "danger"], "words": ["結果", "高価", "成果"]}, "contextWrong": ["感謝", "賛成", "環境"], "tiles": ["こ", "う", "か"], "tileDecoys": ["が", "ご", "お"]},
+    {"id": "v-eikyou", "kind": "vocab", "level": 2, "word": "影響", "reading": "えいきょう", "meanings": ["influence", "effect"], "pos": "noun, する verb", "note": "〜の影響で = because of the effects of. 影響を受ける = be influenced.", "examples": [{"ja": "台風の＿で、電車が止まった。", "full": "台風の影響で、電車が止まった。", "en": "Because of the typhoon, the trains stopped."}], "distractors": {"readings": ["えいこう", "えきょう", "えいきょ"], "meanings": ["weather", "noise", "schedule"], "words": ["撮影", "反響", "印象"]}, "contextWrong": ["賛成", "得意", "環境"], "tiles": ["え", "い", "きょ", "う"], "tileDecoys": ["こ", "き", "よ"]},
+    {"id": "v-sansei", "kind": "vocab", "level": 2, "word": "賛成", "reading": "さんせい", "meanings": ["agreement", "approval"], "pos": "noun, する verb", "note": "〜に賛成する = agree with or support. The opposite is 反対 (はんたい).", "examples": [{"ja": "私はその意見に＿です。", "full": "私はその意見に賛成です。", "en": "I agree with that opinion."}], "distractors": {"readings": ["さんせ", "ざんせい", "さんぜい"], "meanings": ["complaint", "question", "silence"], "words": ["反対", "完成", "成功"]}, "contextWrong": ["環境", "効果", "目的"], "tiles": ["さ", "ん", "せ", "い"], "tileDecoys": ["ざ", "ぜ", "う"]},
+    {"id": "v-hikaku", "kind": "vocab", "level": 2, "word": "比較", "reading": "ひかく", "meanings": ["comparison"], "pos": "noun, する verb", "note": "比較する = compare (formal). In everyday speech, 比べる.", "examples": [{"ja": "去年と＿すると、今年は雨が多い。", "full": "去年と比較すると、今年は雨が多い。", "en": "Compared with last year, this year has more rain."}], "distractors": {"readings": ["ひがく", "ひこう", "びかく"], "meanings": ["repetition", "choice", "count"], "words": ["比率", "価格", "規則"]}, "contextWrong": ["賛成", "提案", "違い"], "tiles": ["ひ", "か", "く"], "tileDecoys": ["び", "が", "こ"]},
+    {"id": "v-chigai", "kind": "vocab", "level": 2, "word": "違い", "reading": "ちがい", "meanings": ["difference"], "pos": "noun", "note": "From 違う (to differ). Don't confuse with 近い (ちかい, near).", "examples": [{"ja": "この二つの言葉の＿がわからない。", "full": "この二つの言葉の違いがわからない。", "en": "I don't understand the difference between these two words."}], "distractors": {"readings": ["ちかい", "ぢがい", "ちがえ"], "meanings": ["similarity", "connection", "order"], "words": ["間違い", "違反", "地下"]}, "contextWrong": ["賛成", "感謝", "集中"], "tiles": ["ち", "が", "い"], "tileDecoys": ["か", "ぢ", "え"]},
+    {"id": "v-hyougen", "kind": "vocab", "level": 2, "word": "表現", "reading": "ひょうげん", "meanings": ["expression (in words or art)"], "pos": "noun, する verb", "note": "表現 = expressing something in words or art. 表情 = the look on your face.", "examples": [{"ja": "気持ちを言葉で＿するのは難しい。", "full": "気持ちを言葉で表現するのは難しい。", "en": "It's hard to express feelings in words."}], "distractors": {"readings": ["ひょうけん", "ひょげん", "ひょうがん"], "meanings": ["facial expression", "voice", "opinion"], "words": ["表情", "発表", "実現"]}, "contextWrong": ["環境", "印象", "違い"], "tiles": ["ひょ", "う", "げ", "ん"], "tileDecoys": ["け", "よ", "が"]},
+    {"id": "v-teian", "kind": "vocab", "level": 2, "word": "提案", "reading": "ていあん", "meanings": ["proposal", "suggestion"], "pos": "noun, する verb", "note": "提案する = propose or suggest. 案 on its own means a plan or idea.", "examples": [{"ja": "会議で新しい計画を＿した。", "full": "会議で新しい計画を提案した。", "en": "I proposed a new plan at the meeting."}], "distractors": {"readings": ["てあん", "ていえん", "でいあん"], "meanings": ["complaint", "promise", "excuse"], "words": ["提出", "案内", "答案"]}, "contextWrong": ["違い", "環境", "印象"], "tiles": ["て", "い", "あ", "ん"], "tileDecoys": ["で", "え", "う"]},
+    {"id": "v-sekinin", "kind": "vocab", "level": 2, "word": "責任", "reading": "せきにん", "meanings": ["responsibility"], "pos": "noun", "note": "責任がある = be responsible. 責任を取る = take responsibility.", "examples": [{"ja": "失敗の＿は私にある。", "full": "失敗の責任は私にある。", "en": "The responsibility for the failure lies with me."}], "distractors": {"readings": ["せっきにん", "せきいん", "ぜきにん"], "meanings": ["reward", "freedom", "promise"], "words": ["担任", "面積", "任務"]}, "contextWrong": ["印象", "得意", "環境"], "tiles": ["せ", "き", "に", "ん"], "tileDecoys": ["ぜ", "っ", "い"]},
+    {"id": "v-enki", "kind": "vocab", "level": 2, "word": "延期", "reading": "えんき", "meanings": ["postponement"], "pos": "noun, する verb", "note": "延期 = moved to a later date. 中止 (ちゅうし) = cancelled.", "examples": [{"ja": "雨のため、試合は来週に＿された。", "full": "雨のため、試合は来週に延期された。", "en": "Because of the rain, the match was postponed until next week."}], "distractors": {"readings": ["えんご", "えんぎ", "いんき"], "meanings": ["cancellation", "invitation", "rehearsal"], "words": ["期限", "延長", "中止"]}, "contextWrong": ["違い", "印象", "得意"], "tiles": ["え", "ん", "き"], "tileDecoys": ["ぎ", "い", "ご"]},
+    {"id": "v-kioku", "kind": "vocab", "level": 2, "word": "記憶", "reading": "きおく", "meanings": ["memory (of the past)"], "pos": "noun, する verb", "note": "記憶 = what you remember. 記録 (きろく) = a written record.", "examples": [{"ja": "子どものころの＿は、あまりない。", "full": "子どものころの記憶は、あまりない。", "en": "I don't have many memories from my childhood."}], "distractors": {"readings": ["きよく", "きおう", "ぎおく"], "meanings": ["dream", "diary", "promise"], "words": ["記録", "記念", "意見"]}, "contextWrong": ["賛成", "得意", "延期"], "tiles": ["き", "お", "く"], "tileDecoys": ["よ", "ぎ", "う"]},
+    {"id": "v-sugosu", "kind": "vocab", "level": 2, "word": "過ごす", "reading": "すごす", "meanings": ["to spend (time)"], "pos": "verb (godan, transitive)", "note": "過ごす = spend time. 過ぎる (すぎる) = time passes by.", "examples": [{"ja": "週末は家で家族と＿つもりだ。", "full": "週末は家で家族と過ごすつもりだ。", "en": "I plan to spend the weekend at home with my family."}], "distractors": {"readings": ["すこす", "すごう", "すぎす"], "meanings": ["to waste", "to wait", "to borrow"], "words": ["過ぎる", "起こす", "残す"]}, "contextWrong": ["助かる", "信じる", "慌てる"], "tiles": ["す", "ご", "す"], "tileDecoys": ["こ", "ぎ", "う"]},
+    {"id": "v-tokui", "kind": "vocab", "level": 2, "word": "得意", "reading": "とくい", "meanings": ["good at", "strong point"], "pos": "な adjective, noun", "note": "〜が得意 = good at. The opposite is 苦手 (にがて).", "examples": [{"ja": "兄は料理が＿だ。", "full": "兄は料理が得意だ。", "en": "My older brother is good at cooking."}], "distractors": {"readings": ["どくい", "とっい", "とくえ"], "meanings": ["bad at", "tired of", "afraid of"], "words": ["苦手", "注意", "用意"]}, "contextWrong": ["環境", "印象", "表情"], "tiles": ["と", "く", "い"], "tileDecoys": ["ど", "っ", "え"], "paraphrase": {"sentence": "兄は料理が【得意】だ。", "answer": "上手", "wrong": ["下手", "嫌い", "苦手"]}},
+    {"id": "v-tsuukin", "kind": "vocab", "level": 2, "word": "通勤", "reading": "つうきん", "meanings": ["commuting to work"], "pos": "noun, する verb", "note": "通勤 = commute to work. 通学 (つうがく) = commute to school.", "examples": [{"ja": "毎朝、電車で＿している。", "full": "毎朝、電車で通勤している。", "en": "I commute to work by train every morning."}], "distractors": {"readings": ["つきん", "つうぎん", "とうきん"], "meanings": ["overtime", "vacation", "moving house"], "words": ["通学", "勤務", "交通"]}, "contextWrong": ["賛成", "感謝", "比較"], "tiles": ["つ", "う", "き", "ん"], "tileDecoys": ["と", "ぎ", "っ"]},
+    {"id": "v-fusegu", "kind": "vocab", "level": 2, "word": "防ぐ", "reading": "ふせぐ", "meanings": ["to prevent", "to protect against"], "pos": "verb (godan)", "note": "防ぐ = stop something bad from happening. The noun is 防止 (ぼうし).", "examples": [{"ja": "手を洗って、病気を＿。", "full": "手を洗って、病気を防ぐ。", "en": "Wash your hands to prevent illness."}], "distractors": {"readings": ["ぼうぐ", "ふさぐ", "ふせく"], "meanings": ["to cause", "to spread", "to cure"], "words": ["注ぐ", "急ぐ", "稼ぐ"]}, "contextWrong": ["過ごす", "慌てる", "悩む"], "tiles": ["ふ", "せ", "ぐ"], "tileDecoys": ["ぶ", "さ", "く"]},
+    {"id": "v-kankyou", "kind": "vocab", "level": 2, "word": "環境", "reading": "かんきょう", "meanings": ["environment", "surroundings"], "pos": "noun", "note": "境 is きょう with a long vowel. 環境問題 = environmental issues.", "examples": [{"ja": "この町は自然が多くて、子育てにいい＿だ。", "full": "この町は自然が多くて、子育てにいい環境だ。", "en": "This town has lots of nature and is a good environment for raising children."}], "distractors": {"readings": ["かんきょ", "がんきょう", "かんけい"], "meanings": ["economy", "history", "weather"], "words": ["関係", "状況", "感情"]}, "contextWrong": ["賛成", "感謝", "成功"], "tiles": ["か", "ん", "きょ", "う"], "tileDecoys": ["が", "け", "い"]},
+    {"id": "v-yurusu", "kind": "vocab", "level": 2, "word": "許す", "reading": "ゆるす", "meanings": ["to forgive", "to allow"], "pos": "verb (godan)", "note": "許す = forgive, or allow. 許可 (きょか) = permission.", "examples": [{"ja": "今回だけは、君の失敗を＿。", "full": "今回だけは、君の失敗を許す。", "en": "Just this once, I'll forgive your mistake."}], "distractors": {"readings": ["ゆうす", "ゆるず", "ようす"], "meanings": ["to punish", "to blame", "to forget"], "words": ["済ます", "探す", "返す"]}, "contextWrong": ["慌てる", "悩む", "過ごす"], "tiles": ["ゆ", "る", "す"], "tileDecoys": ["う", "よ", "ず"]},
+    {"id": "v-awateru", "kind": "vocab", "level": 2, "word": "慌てる", "reading": "あわてる", "meanings": ["to panic", "to be in a rush"], "pos": "verb (ichidan)", "note": "慌てて = in a hurry, flustered. The opposite is 落ち着く (to calm down).", "examples": [{"ja": "地震が起きても、＿必要はない。", "full": "地震が起きても、慌てる必要はない。", "en": "Even if an earthquake happens, there's no need to panic."}], "distractors": {"readings": ["あわでる", "あわってる", "あらてる"], "meanings": ["to calm down", "to be late", "to get angry"], "words": ["慣れる", "荒れる", "当てる"]}, "contextWrong": ["過ごす", "届く", "減る"], "tiles": ["あ", "わ", "て", "る"], "tileDecoys": ["で", "ら", "っ"]},
+    {"id": "v-nayamu", "kind": "vocab", "level": 2, "word": "悩む", "reading": "なやむ", "meanings": ["to worry", "to be troubled"], "pos": "verb (godan)", "note": "〜で悩む / 〜に悩む = worry about something. 悩み = a worry or problem.", "examples": [{"ja": "一人で＿より、誰かに相談したほうがいい。", "full": "一人で悩むより、誰かに相談したほうがいい。", "en": "Rather than worrying alone, it's better to talk to someone."}], "distractors": {"readings": ["なよむ", "なやぶ", "なあむ"], "meanings": ["to decide", "to rest", "to laugh"], "words": ["休む", "読む", "住む"]}, "contextWrong": ["届く", "減る", "助かる"], "tiles": ["な", "や", "む"], "tileDecoys": ["よ", "ぶ", "あ"]},
+    {"id": "v-kakusu", "kind": "vocab", "level": 2, "word": "隠す", "reading": "かくす", "meanings": ["to hide (something)"], "pos": "verb (godan, transitive)", "note": "隠す = hide something. 隠れる (かくれる) = hide yourself.", "examples": [{"ja": "母へのプレゼントを、ベッドの下に＿。", "full": "母へのプレゼントを、ベッドの下に隠す。", "en": "I hide Mom's present under the bed."}], "distractors": {"readings": ["かぐす", "かくる", "いんす"], "meanings": ["to find", "to show", "to throw away"], "words": ["隠れる", "探す", "残す"]}, "contextWrong": ["慌てる", "悩む", "防ぐ"], "tiles": ["か", "く", "す"], "tileDecoys": ["が", "ぐ", "る"]},
+    {"id": "g-seide", "kind": "grammar", "level": 2, "pattern": "〜せいで", "meaning": "because of (a bad result); due to", "connection": "Plain form (な-adj + な / N + の) + せいで", "note": "せいで blames a cause for a bad result. For good results use おかげで.", "requires": [], "examples": [{"ja": "雨の＿、試合が中止になった。", "full": "雨のせいで、試合が中止になった。", "en": "Because of the rain, the game was cancelled."}, {"ja": "隣の部屋がうるさい＿、勉強に集中できない。", "full": "隣の部屋がうるさいせいで、勉強に集中できない。", "en": "Because the next room is noisy, I can't concentrate on studying."}], "confusables": ["〜おかげで", "〜うちに", "〜とおりに"], "forms": {"base": "寝不足", "sentence": "＿せいで、頭が痛い。", "answer": "寝不足の", "wrong": ["寝不足", "寝不足な", "寝不足で"]}, "order": {"before": "寝坊した", "chunks": ["せいで", "大事な", "会議に", "遅れた"], "star": 2, "after": "。", "en": "Because I overslept, I was late for an important meeting."}, "translate": {"sentence": "私のせいで、みんなが遅れてしまった。", "answer": "Because of me, everyone ended up being late.", "wrong": ["Thanks to me, everyone arrived on time.", "Everyone was late, but it wasn't my fault."]}, "errorSpot": {"chunks": ["先生の", "せいで", "試験に", "合格", "できた。"], "wrong": 1, "fix": "おかげで"}, "situation": {"prompt": "You explain that you slept badly because the neighbors were noisy.", "sentence": "隣がうるさかった＿、よく眠れなかった。", "answer": "せいで", "wrong": ["おかげで", "うちに", "ついでに"]}},
+    {"id": "g-tabini", "kind": "grammar", "level": 2, "pattern": "〜たびに", "meaning": "every time; whenever", "connection": "V-dictionary / N + の + たびに", "note": "たびに follows the dictionary form (not the た form), even for past habits.", "requires": ["v-inshou"], "examples": [{"ja": "母は私に会う＿、「元気？」と聞く。", "full": "母は私に会うたびに、「元気？」と聞く。", "en": "Every time my mother sees me, she asks, \"Are you well?\""}, {"ja": "会う＿、彼の印象が変わる。", "full": "会うたびに、彼の印象が変わる。", "en": "Every time I meet him, my impression of him changes."}], "confusables": ["〜せいで", "〜うちに", "〜とおりに"], "forms": {"base": "旅行", "sentence": "＿たびに、写真をたくさん撮る。", "answer": "旅行の", "wrong": ["旅行", "旅行な", "旅行で"]}, "order": {"before": "彼は", "chunks": ["会う", "たびに", "違う", "服を"], "star": 2, "after": "着ている。", "en": "Every time I see him, he's wearing different clothes."}, "translate": {"sentence": "この写真を見るたびに、祖母を思い出す。", "answer": "Every time I see this photo, I think of my grandmother.", "wrong": ["When I saw this photo once, I thought of my grandmother.", "I look at this photo so that I won't forget my grandmother."]}, "errorSpot": {"chunks": ["この店に", "来た", "たびに", "ケーキを", "買う。"], "wrong": 1, "fix": "来る"}, "situation": {"prompt": "You say that whenever you go to Kyoto, you visit the same temple.", "sentence": "京都へ行く＿、同じお寺に行く。", "answer": "たびに", "wrong": ["せいで", "うちに", "とおりに"]}},
+    {"id": "g-tebakariiru", "kind": "grammar", "level": 2, "pattern": "〜てばかりいる", "meaning": "do nothing but; always (doing something)", "connection": "V-て + ばかりいる", "note": "Usually a complaint: someone keeps doing one thing and nothing else.", "requires": ["v-awateru"], "examples": [{"ja": "弟は毎日ゲームをし＿。", "full": "弟は毎日ゲームをしてばかりいる。", "en": "My little brother does nothing but play games every day."}, {"ja": "彼はいつも慌て＿。", "full": "彼はいつも慌ててばかりいる。", "en": "He's always in a panic."}], "confusables": ["〜ばかりでなく", "〜ところだ", "〜たびに"], "forms": {"base": "寝る", "sentence": "週末は＿ばかりいる。", "answer": "寝て", "wrong": ["寝た", "寝る", "寝ない"]}, "translate": {"sentence": "文句を言ってばかりいないで、手伝ってよ。", "answer": "Stop doing nothing but complain, and help me.", "wrong": ["Don't complain, but you don't have to help.", "You only complained once, so please help."]}, "errorSpot": {"chunks": ["兄は", "毎日", "寝た", "ばかりいる。"], "wrong": 2, "fix": "寝て"}, "situation": {"prompt": "Your roommate eats snacks all day and does nothing else. You complain to a friend.", "sentence": "ルームメイトはお菓子を食べ＿。", "answer": "てばかりいる", "wrong": ["たばかりだ", "てもいい", "たところだ"]}},
+    {"id": "g-toorini", "kind": "grammar", "level": 2, "pattern": "〜とおりに", "meaning": "just as; in the way that", "connection": "V-plain + とおりに / N + の + とおりに (or N + どおりに)", "note": "Do it the way something was said, shown or planned. After a noun it's also written どおりに.", "requires": ["v-teian"], "examples": [{"ja": "先生が言った＿、やってみてください。", "full": "先生が言ったとおりに、やってみてください。", "en": "Please try doing it just as the teacher said."}, {"ja": "彼が提案した＿、計画を変えた。", "full": "彼が提案したとおりに、計画を変えた。", "en": "We changed the plan just as he proposed."}], "confusables": ["〜たびに", "〜せいで", "〜ばかりに"], "forms": {"base": "予定", "sentence": "＿とおりに、会議が始まった。", "answer": "予定の", "wrong": ["予定", "予定な", "予定で"]}, "order": {"before": "私が", "chunks": ["言う", "とおりに", "この紙を", "折って"], "star": 2, "after": "ください。", "en": "Fold this paper just as I tell you."}, "translate": {"sentence": "思ったとおりに、テストは簡単だった。", "answer": "Just as I thought, the test was easy.", "wrong": ["Contrary to what I thought, the test was hard.", "I thought the test would be easy, but it wasn't."]}, "errorSpot": {"chunks": ["地図の", "とおりで", "行ったら", "駅に", "着いた。"], "wrong": 1, "fix": "とおりに"}, "situation": {"prompt": "You followed the recipe exactly and the cake came out well.", "sentence": "レシピの＿作ったら、おいしくできた。", "answer": "とおりに", "wrong": ["せいで", "たびに", "ばかりで"]}},
+    {"id": "g-tsuideni", "kind": "grammar", "level": 2, "pattern": "〜ついでに", "meaning": "while you're at it; on the way", "connection": "V-dictionary / V-た / N + の + ついでに", "note": "Do a second, smaller thing while you're already doing the first.", "requires": [], "examples": [{"ja": "買い物の＿、郵便局に寄った。", "full": "買い物のついでに、郵便局に寄った。", "en": "While I was out shopping, I stopped by the post office."}, {"ja": "コンビニに行く＿、牛乳を買ってきてくれると助かる。", "full": "コンビニに行くついでに、牛乳を買ってきてくれると助かる。", "en": "If you could pick up some milk while you're at the convenience store, that'd help."}], "confusables": ["〜せいで", "〜とおりに", "〜ばかりで"], "forms": {"base": "出張", "sentence": "大阪への＿ついでに、友達に会った。", "answer": "出張の", "wrong": ["出張", "出張な", "出張で"]}, "order": {"before": "部屋を", "chunks": ["掃除した", "ついでに", "窓も", "ふいた"], "star": 2, "after": "。", "en": "While cleaning the room, I wiped the windows too."}, "translate": {"sentence": "駅へ行くついでに、この手紙を出してくれない？", "answer": "Could you mail this letter on your way to the station?", "wrong": ["Could you go to the station instead of mailing this letter?", "Because you're going to the station, you can't mail this letter."]}, "situation": {"prompt": "You're going to the store anyway, so you offer to buy your friend a drink too.", "sentence": "店に行く＿、飲み物を買ってこようか？", "answer": "ついでに", "wrong": ["せいで", "たびに", "とおりに"]}}
   ]
 }
