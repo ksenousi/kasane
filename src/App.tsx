@@ -51,7 +51,7 @@ export default function App() {
   }
 
   return (
-    <div className={ui.screen}>
+    <div className={`${ui.screen} ${ui.tabScreen}`}>
       {screen.name === 'home' && <Home onLessons={() => setScreen({ name: 'lesson' })} onReviews={() => setScreen({ name: 'review' })} />}
       {screen.name === 'levels' && <Levels
           onOpen={(item) => {

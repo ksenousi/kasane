@@ -6,6 +6,12 @@
   padding-bottom: var(--safe-bottom);
 }
 
+/* Tab screens: the tab bar pads itself for the home indicator, so the screen mustn't too
+   (that left an empty strip under the bar at the end of a page). */
+.tabScreen {
+  padding-bottom: 0;
+}
+
 .topbar {
   display: flex;
   align-items: center;
