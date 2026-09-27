@@ -1,0 +1,3007 @@
+{
+ "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-35, ordered by JPDB frequency (rank <= 20000, kanji words only). Grammar: the 91 points JLPT Sensei and Bunpro both call N3, in Bunpro lesson order. Levels 1-2 were written before this plan and keep their original grammar.",
+ "perLevel": 30,
+ "levels": [
+  {
+   "level": 1,
+   "vocab": [
+    {
+     "word": "我慢",
+     "reading": "がまん",
+     "rank": 907
+    },
+    {
+     "word": "想像",
+     "reading": "そうぞう",
+     "rank": 659
+    },
+    {
+     "word": "節約",
+     "reading": "せつやく",
+     "rank": 11144
+    },
+    {
+     "word": "冷ます",
+     "reading": "さます",
+     "rank": 14131
+    },
+    {
+     "word": "渋滞",
+     "reading": "じゅうたい",
+     "rank": 18648
+    },
+    {
+     "word": "手術",
+     "reading": "しゅじゅつ",
+     "rank": 5209
+    },
+    {
+     "word": "瞬間",
+     "reading": "しゅんかん",
+     "rank": 540
+    },
+    {
+     "word": "順調",
+     "reading": "じゅんちょう",
+     "rank": 2684
+    },
+    {
+     "word": "休憩",
+     "reading": "きゅうけい",
+     "rank": 2357
+    },
+    {
+     "word": "偶然",
+     "reading": "ぐうぜん",
+     "rank": 1134
+    },
+    {
+     "word": "帰宅",
+     "reading": "きたく",
+     "rank": 4230
+    },
+    {
+     "word": "無駄",
+     "reading": "むだ",
+     "rank": 1418
+    },
+    {
+     "word": "化粧",
+     "reading": "けしょう",
+     "rank": 4515
+    },
+    {
+     "word": "交換",
+     "reading": "こうかん",
+     "rank": 2545
+    },
+    {
+     "word": "合格",
+     "reading": "ごうかく",
+     "rank": 4560
+    },
+    {
+     "word": "飽きる",
+     "reading": "あきる",
+     "rank": 2628
+    },
+    {
+     "word": "扱う",
+     "reading": "あつかう",
+     "rank": 1169
+    },
+    {
+     "word": "叫ぶ",
+     "reading": "さけぶ",
+     "rank": 724
+    },
+    {
+     "word": "避ける",
+     "reading": "さける",
+     "rank": 806
+    },
+    {
+     "word": "黙る",
+     "reading": "だまる",
+     "rank": 570
+    },
+    {
+     "word": "揚げる",
+     "reading": "あげる",
+     "rank": 191
+    },
+    {
+     "word": "実は",
+     "reading": "じつは",
+     "rank": 595
+    },
+    {
+     "word": "自身",
+     "reading": "じしん",
+     "rank": 658
+    },
+    {
+     "word": "食う",
+     "reading": "くう",
+     "rank": 785
+    },
+    {
+     "word": "奪う",
+     "reading": "うばう",
+     "rank": 808
+    },
+    {
+     "word": "繰り返す",
+     "reading": "くりかえす",
+     "rank": 827
+    },
+    {
+     "word": "本人",
+     "reading": "ほんにん",
+     "rank": 873
+    },
+    {
+     "word": "覚悟",
+     "reading": "かくご",
+     "rank": 898
+    },
+    {
+     "word": "人物",
+     "reading": "じんぶつ",
+     "rank": 913
+    },
+    {
+     "word": "無視",
+     "reading": "むし",
+     "rank": 975
+    }
+   ],
+   "grammar": [
+    "〜うちに",
+    "〜ために",
+    "〜に違いない",
+    "〜わけではない",
+    "〜おかげで"
+   ]
+  },
+  {
+   "level": 2,
+   "vocab": [
+    {
+     "word": "印象",
+     "reading": "いんしょう",
+     "rank": 1877
+    },
+    {
+     "word": "延期",
+     "reading": "えんき",
+     "rank": 13855
+    },
+    {
+     "word": "記憶",
+     "reading": "きおく",
+     "rank": 613
+    },
+    {
+     "word": "慌てる",
+     "reading": "あわてる",
+     "rank": 1317
+    },
+    {
+     "word": "慎重",
+     "reading": "しんちょう",
+     "rank": 2147
+    },
+    {
+     "word": "信頼",
+     "reading": "しんらい",
+     "rank": 1253
+    },
+    {
+     "word": "活躍",
+     "reading": "かつやく",
+     "rank": 2539
+    },
+    {
+     "word": "興奮",
+     "reading": "こうふん",
+     "rank": 1542
+    },
+    {
+     "word": "後悔",
+     "reading": "こうかい",
+     "rank": 1114
+    },
+    {
+     "word": "検討",
+     "reading": "けんとう",
+     "rank": 2972
+    },
+    {
+     "word": "契約",
+     "reading": "けいやく",
+     "rank": 2173
+    },
+    {
+     "word": "滞在",
+     "reading": "たいざい",
+     "rank": 4851
+    },
+    {
+     "word": "到着",
+     "reading": "とうちゃく",
+     "rank": 1217
+    },
+    {
+     "word": "徹夜",
+     "reading": "てつや",
+     "rank": 6743
+    },
+    {
+     "word": "引越し",
+     "reading": "ひっこし",
+     "rank": 28185
+    },
+    {
+     "word": "眺める",
+     "reading": "ながめる",
+     "rank": 1341
+    },
+    {
+     "word": "握る",
+     "reading": "にぎる",
+     "rank": 741
+    },
+    {
+     "word": "頼る",
+     "reading": "たよる",
+     "rank": 1208
+    },
+    {
+     "word": "溜まる",
+     "reading": "たまる",
+     "rank": 2701
+    },
+    {
+     "word": "嫌う",
+     "reading": "きらう",
+     "rank": 1634
+    },
+    {
+     "word": "一瞬",
+     "reading": "いっしゅん",
+     "rank": 602
+    },
+    {
+     "word": "抱える",
+     "reading": "かかえる",
+     "rank": 940
+    },
+    {
+     "word": "輝く",
+     "reading": "かがやく",
+     "rank": 1011
+    },
+    {
+     "word": "願う",
+     "reading": "ねがう",
+     "rank": 1035
+    },
+    {
+     "word": "戻す",
+     "reading": "もどす",
+     "rank": 1038
+    },
+    {
+     "word": "今後",
+     "reading": "こんご",
+     "rank": 1082
+    },
+    {
+     "word": "相当",
+     "reading": "そうとう",
+     "rank": 1107
+    },
+    {
+     "word": "超える",
+     "reading": "こえる",
+     "rank": 1123
+    },
+    {
+     "word": "確実",
+     "reading": "かくじつ",
+     "rank": 1128
+    },
+    {
+     "word": "当時",
+     "reading": "とうじ",
+     "rank": 1129
+    }
+   ],
+   "grammar": [
+    "〜せいで",
+    "〜たびに",
+    "〜てばかりいる",
+    "〜とおりに",
+    "〜ついでに"
+   ]
+  },
+  {
+   "level": 3,
+   "vocab": [
+    {
+     "word": "描く",
+     "reading": "えがく",
+     "rank": 855
+    },
+    {
+     "word": "抱く",
+     "reading": "いだく",
+     "rank": 971
+    },
+    {
+     "word": "一方",
+     "reading": "いっぽう",
+     "rank": 1127
+    },
+    {
+     "word": "流れ",
+     "reading": "ながれ",
+     "rank": 1132
+    },
+    {
+     "word": "伸びる",
+     "reading": "のびる",
+     "rank": 1138
+    },
+    {
+     "word": "成長",
+     "reading": "せいちょう",
+     "rank": 1155
+    },
+    {
+     "word": "切り",
+     "reading": "きり",
+     "rank": 1158
+    },
+    {
+     "word": "中心",
+     "reading": "ちゅうしん",
+     "rank": 1181
+    },
+    {
+     "word": "唯一",
+     "reading": "ゆいいつ",
+     "rank": 1213
+    },
+    {
+     "word": "以来",
+     "reading": "いらい",
+     "rank": 1239
+    },
+    {
+     "word": "至る",
+     "reading": "いたる",
+     "rank": 1250
+    },
+    {
+     "word": "不満",
+     "reading": "ふまん",
+     "rank": 1254
+    },
+    {
+     "word": "全体",
+     "reading": "ぜんたい",
+     "rank": 1256
+    },
+    {
+     "word": "含める",
+     "reading": "ふくめる",
+     "rank": 1261
+    },
+    {
+     "word": "立ち上がる",
+     "reading": "たちあがる",
+     "rank": 1326
+    },
+    {
+     "word": "鋭い",
+     "reading": "するどい",
+     "rank": 1483
+    },
+    {
+     "word": "お互い",
+     "reading": "おたがい",
+     "rank": 1499
+    },
+    {
+     "word": "馬鹿",
+     "reading": "ばか",
+     "rank": 1510
+    },
+    {
+     "word": "一言",
+     "reading": "ひとこと",
+     "rank": 1514
+    },
+    {
+     "word": "違いない",
+     "reading": "ちがいない",
+     "rank": 1519
+    },
+    {
+     "word": "飛び出す",
+     "reading": "とびだす",
+     "rank": 1537
+    },
+    {
+     "word": "伸ばす",
+     "reading": "のばす",
+     "rank": 1565
+    },
+    {
+     "word": "多少",
+     "reading": "たしょう",
+     "rank": 1575
+    },
+    {
+     "word": "同士",
+     "reading": "どうし",
+     "rank": 1576
+    },
+    {
+     "word": "悔しい",
+     "reading": "くやしい",
+     "rank": 1594
+    },
+    {
+     "word": "抵抗",
+     "reading": "ていこう",
+     "rank": 1612
+    },
+    {
+     "word": "引っ張る",
+     "reading": "ひっぱる",
+     "rank": 1622
+    },
+    {
+     "word": "真っ赤",
+     "reading": "まっか",
+     "rank": 1627
+    },
+    {
+     "word": "中身",
+     "reading": "なかみ",
+     "rank": 1643
+    },
+    {
+     "word": "殴る",
+     "reading": "なぐる",
+     "rank": 1657
+    }
+   ],
+   "grammar": [
+    "〜ばいい",
+    "〜中",
+    "〜べきではない",
+    "〜なかなか",
+    "〜あまり"
+   ]
+  },
+  {
+   "level": 4,
+   "vocab": [
+    {
+     "word": "正体",
+     "reading": "しょうたい",
+     "rank": 1682
+    },
+    {
+     "word": "穏やか",
+     "reading": "おだやか",
+     "rank": 1685
+    },
+    {
+     "word": "驚き",
+     "reading": "おどろき",
+     "rank": 1733
+    },
+    {
+     "word": "組む",
+     "reading": "くむ",
+     "rank": 1749
+    },
+    {
+     "word": "手段",
+     "reading": "しゅだん",
+     "rank": 1750
+    },
+    {
+     "word": "呼吸",
+     "reading": "こきゅう",
+     "rank": 1765
+    },
+    {
+     "word": "出来事",
+     "reading": "できごと",
+     "rank": 1767
+    },
+    {
+     "word": "同様",
+     "reading": "どうよう",
+     "rank": 1769
+    },
+    {
+     "word": "爆発",
+     "reading": "ばくはつ",
+     "rank": 1777
+    },
+    {
+     "word": "動揺",
+     "reading": "どうよう",
+     "rank": 1778
+    },
+    {
+     "word": "掴む",
+     "reading": "つかむ",
+     "rank": 1798
+    },
+    {
+     "word": "沈む",
+     "reading": "しずむ",
+     "rank": 1799
+    },
+    {
+     "word": "依頼",
+     "reading": "いらい",
+     "rank": 1812
+    },
+    {
+     "word": "覆う",
+     "reading": "おおう",
+     "rank": 1824
+    },
+    {
+     "word": "少々",
+     "reading": "しょうしょう",
+     "rank": 1840
+    },
+    {
+     "word": "調査",
+     "reading": "ちょうさ",
+     "rank": 1852
+    },
+    {
+     "word": "満ちる",
+     "reading": "みちる",
+     "rank": 1859
+    },
+    {
+     "word": "男子",
+     "reading": "だんし",
+     "rank": 1870
+    },
+    {
+     "word": "硬い",
+     "reading": "かたい",
+     "rank": 1874
+    },
+    {
+     "word": "願い",
+     "reading": "ねがい",
+     "rank": 1879
+    },
+    {
+     "word": "意思",
+     "reading": "いし",
+     "rank": 1888
+    },
+    {
+     "word": "選択",
+     "reading": "せんたく",
+     "rank": 1900
+    },
+    {
+     "word": "香り",
+     "reading": "かおり",
+     "rank": 1929
+    },
+    {
+     "word": "支配",
+     "reading": "しはい",
+     "rank": 1943
+    },
+    {
+     "word": "年齢",
+     "reading": "ねんれい",
+     "rank": 1958
+    },
+    {
+     "word": "覗く",
+     "reading": "のぞく",
+     "rank": 1982
+    },
+    {
+     "word": "観察",
+     "reading": "かんさつ",
+     "rank": 2027
+    },
+    {
+     "word": "偶々",
+     "reading": "たまたま",
+     "rank": 2046
+    },
+    {
+     "word": "続き",
+     "reading": "つづき",
+     "rank": 2073
+    },
+    {
+     "word": "騒ぎ",
+     "reading": "さわぎ",
+     "rank": 2092
+    }
+   ],
+   "grammar": [
+    "〜てごらん",
+    "〜ところが",
+    "〜ところで",
+    "〜ほど",
+    "〜ば-ほど"
+   ]
+  },
+  {
+   "level": 5,
+   "vocab": [
+    {
+     "word": "次第",
+     "reading": "しだい",
+     "rank": 2104
+    },
+    {
+     "word": "自慢",
+     "reading": "じまん",
+     "rank": 2113
+    },
+    {
+     "word": "範囲",
+     "reading": "はんい",
+     "rank": 2121
+    },
+    {
+     "word": "主張",
+     "reading": "しゅちょう",
+     "rank": 2138
+    },
+    {
+     "word": "持ち上げる",
+     "reading": "もちあげる",
+     "rank": 2155
+    },
+    {
+     "word": "蹴る",
+     "reading": "ける",
+     "rank": 2156
+    },
+    {
+     "word": "機能",
+     "reading": "きのう",
+     "rank": 2164
+    },
+    {
+     "word": "生き物",
+     "reading": "いきもの",
+     "rank": 2185
+    },
+    {
+     "word": "現状",
+     "reading": "げんじょう",
+     "rank": 2186
+    },
+    {
+     "word": "感動",
+     "reading": "かんどう",
+     "rank": 2200
+    },
+    {
+     "word": "命じる",
+     "reading": "めいじる",
+     "rank": 2210
+    },
+    {
+     "word": "掻く",
+     "reading": "かく",
+     "rank": 2224
+    },
+    {
+     "word": "舞台",
+     "reading": "ぶたい",
+     "rank": 2225
+    },
+    {
+     "word": "徐々に",
+     "reading": "じょじょに",
+     "rank": 2235
+    },
+    {
+     "word": "譲る",
+     "reading": "ゆずる",
+     "rank": 2265
+    },
+    {
+     "word": "最中",
+     "reading": "さいちゅう",
+     "rank": 2269
+    },
+    {
+     "word": "結論",
+     "reading": "けつろん",
+     "rank": 2279
+    },
+    {
+     "word": "代表",
+     "reading": "だいひょう",
+     "rank": 2296
+    },
+    {
+     "word": "治療",
+     "reading": "ちりょう",
+     "rank": 2298
+    },
+    {
+     "word": "狂う",
+     "reading": "くるう",
+     "rank": 2310
+    },
+    {
+     "word": "稼ぐ",
+     "reading": "かせぐ",
+     "rank": 2320
+    },
+    {
+     "word": "鳴らす",
+     "reading": "ならす",
+     "rank": 2342
+    },
+    {
+     "word": "世間",
+     "reading": "せけん",
+     "rank": 2376
+    },
+    {
+     "word": "湧く",
+     "reading": "わく",
+     "rank": 2394
+    },
+    {
+     "word": "年間",
+     "reading": "ねんかん",
+     "rank": 2395
+    },
+    {
+     "word": "溶ける",
+     "reading": "とける",
+     "rank": 2456
+    },
+    {
+     "word": "負う",
+     "reading": "おう",
+     "rank": 2460
+    },
+    {
+     "word": "正式",
+     "reading": "せいしき",
+     "rank": 2461
+    },
+    {
+     "word": "好み",
+     "reading": "このみ",
+     "rank": 2515
+    },
+    {
+     "word": "理想",
+     "reading": "りそう",
+     "rank": 2535
+    }
+   ],
+   "grammar": [
+    "〜ほど～ない",
+    "〜ということだ",
+    "〜というのは",
+    "〜的",
+    "〜最中に"
+   ]
+  },
+  {
+   "level": 6,
+   "vocab": [
+    {
+     "word": "話し合う",
+     "reading": "はなしあう",
+     "rank": 2544
+    },
+    {
+     "word": "拍手",
+     "reading": "はくしゅ",
+     "rank": 2552
+    },
+    {
+     "word": "単なる",
+     "reading": "たんなる",
+     "rank": 2558
+    },
+    {
+     "word": "気味",
+     "reading": "きみ",
+     "rank": 2559
+    },
+    {
+     "word": "精々",
+     "reading": "せいぜい",
+     "rank": 2572
+    },
+    {
+     "word": "維持",
+     "reading": "いじ",
+     "rank": 2575
+    },
+    {
+     "word": "注目",
+     "reading": "ちゅうもく",
+     "rank": 2579
+    },
+    {
+     "word": "一般",
+     "reading": "いっぱん",
+     "rank": 2593
+    },
+    {
+     "word": "生命",
+     "reading": "せいめい",
+     "rank": 2626
+    },
+    {
+     "word": "手伝い",
+     "reading": "てつだい",
+     "rank": 2627
+    },
+    {
+     "word": "苦痛",
+     "reading": "くつう",
+     "rank": 2640
+    },
+    {
+     "word": "方々",
+     "reading": "かたがた",
+     "rank": 2644
+    },
+    {
+     "word": "実行",
+     "reading": "じっこう",
+     "rank": 2667
+    },
+    {
+     "word": "雇う",
+     "reading": "やとう",
+     "rank": 2696
+    },
+    {
+     "word": "要素",
+     "reading": "ようそ",
+     "rank": 2733
+    },
+    {
+     "word": "安定",
+     "reading": "あんてい",
+     "rank": 2734
+    },
+    {
+     "word": "一種",
+     "reading": "いっしゅ",
+     "rank": 2738
+    },
+    {
+     "word": "風景",
+     "reading": "ふうけい",
+     "rank": 2743
+    },
+    {
+     "word": "積極的",
+     "reading": "せっきょくてき",
+     "rank": 2751
+    },
+    {
+     "word": "保護",
+     "reading": "ほご",
+     "rank": 2758
+    },
+    {
+     "word": "明確",
+     "reading": "めいかく",
+     "rank": 2778
+    },
+    {
+     "word": "地位",
+     "reading": "ちい",
+     "rank": 2785
+    },
+    {
+     "word": "表面",
+     "reading": "ひょうめん",
+     "rank": 2790
+    },
+    {
+     "word": "始まり",
+     "reading": "はじまり",
+     "rank": 2814
+    },
+    {
+     "word": "地方",
+     "reading": "ちほう",
+     "rank": 2826
+    },
+    {
+     "word": "発展",
+     "reading": "はってん",
+     "rank": 2842
+    },
+    {
+     "word": "性質",
+     "reading": "せいしつ",
+     "rank": 2847
+    },
+    {
+     "word": "分かれる",
+     "reading": "わかれる",
+     "rank": 2851
+    },
+    {
+     "word": "出会い",
+     "reading": "であい",
+     "rank": 2853
+    },
+    {
+     "word": "実現",
+     "reading": "じつげん",
+     "rank": 2859
+    }
+   ],
+   "grammar": [
+    "〜上で",
+    "〜こそ",
+    "〜は-で有名",
+    "〜ことはない",
+    "〜合う"
+   ]
+  },
+  {
+   "level": 7,
+   "vocab": [
+    {
+     "word": "経る",
+     "reading": "へる",
+     "rank": 2887
+    },
+    {
+     "word": "取り上げる",
+     "reading": "とりあげる",
+     "rank": 2889
+    },
+    {
+     "word": "重大",
+     "reading": "じゅうだい",
+     "rank": 2896
+    },
+    {
+     "word": "解釈",
+     "reading": "かいしゃく",
+     "rank": 2906
+    },
+    {
+     "word": "一致",
+     "reading": "いっち",
+     "rank": 2908
+    },
+    {
+     "word": "挑戦",
+     "reading": "ちょうせん",
+     "rank": 2916
+    },
+    {
+     "word": "高まる",
+     "reading": "たかまる",
+     "rank": 2919
+    },
+    {
+     "word": "高める",
+     "reading": "たかめる",
+     "rank": 2927
+    },
+    {
+     "word": "分析",
+     "reading": "ぶんせき",
+     "rank": 2947
+    },
+    {
+     "word": "生涯",
+     "reading": "しょうがい",
+     "rank": 2953
+    },
+    {
+     "word": "共通",
+     "reading": "きょうつう",
+     "rank": 2957
+    },
+    {
+     "word": "制限",
+     "reading": "せいげん",
+     "rank": 2958
+    },
+    {
+     "word": "外出",
+     "reading": "がいしゅつ",
+     "rank": 2963
+    },
+    {
+     "word": "経営",
+     "reading": "けいえい",
+     "rank": 2970
+    },
+    {
+     "word": "働き",
+     "reading": "はたらき",
+     "rank": 2973
+    },
+    {
+     "word": "強める",
+     "reading": "つよめる",
+     "rank": 2980
+    },
+    {
+     "word": "傾向",
+     "reading": "けいこう",
+     "rank": 2985
+    },
+    {
+     "word": "微笑む",
+     "reading": "ほほえむ",
+     "rank": 3013
+    },
+    {
+     "word": "悪魔",
+     "reading": "あくま",
+     "rank": 3049
+    },
+    {
+     "word": "携帯",
+     "reading": "けいたい",
+     "rank": 3076
+    },
+    {
+     "word": "可愛らしい",
+     "reading": "かわいらしい",
+     "rank": 3211
+    },
+    {
+     "word": "途端",
+     "reading": "とたん",
+     "rank": 3274
+    },
+    {
+     "word": "問い",
+     "reading": "とい",
+     "rank": 3293
+    },
+    {
+     "word": "駆ける",
+     "reading": "かける",
+     "rank": 3318
+    },
+    {
+     "word": "歓声",
+     "reading": "かんせい",
+     "rank": 3411
+    },
+    {
+     "word": "時刻",
+     "reading": "じこく",
+     "rank": 3412
+    },
+    {
+     "word": "表示",
+     "reading": "ひょうじ",
+     "rank": 3426
+    },
+    {
+     "word": "拘束",
+     "reading": "こうそく",
+     "rank": 3437
+    },
+    {
+     "word": "髪の毛",
+     "reading": "かみのけ",
+     "rank": 3455
+    },
+    {
+     "word": "故郷",
+     "reading": "こきょう",
+     "rank": 3458
+    }
+   ],
+   "grammar": [
+    "〜について",
+    "〜そのため-に",
+    "〜に比べて",
+    "〜どんなに-ても"
+   ]
+  },
+  {
+   "level": 8,
+   "vocab": [
+    {
+     "word": "候補",
+     "reading": "こうほ",
+     "rank": 3537
+    },
+    {
+     "word": "継ぐ",
+     "reading": "つぐ",
+     "rank": 3546
+    },
+    {
+     "word": "冷める",
+     "reading": "さめる",
+     "rank": 3563
+    },
+    {
+     "word": "通り過ぎる",
+     "reading": "とおりすぎる",
+     "rank": 3568
+    },
+    {
+     "word": "地味",
+     "reading": "じみ",
+     "rank": 3604
+    },
+    {
+     "word": "中学",
+     "reading": "ちゅうがく",
+     "rank": 3620
+    },
+    {
+     "word": "負け",
+     "reading": "まけ",
+     "rank": 3645
+    },
+    {
+     "word": "校舎",
+     "reading": "こうしゃ",
+     "rank": 3658
+    },
+    {
+     "word": "身長",
+     "reading": "しんちょう",
+     "rank": 3663
+    },
+    {
+     "word": "患者",
+     "reading": "かんじゃ",
+     "rank": 3706
+    },
+    {
+     "word": "神経",
+     "reading": "しんけい",
+     "rank": 3707
+    },
+    {
+     "word": "大半",
+     "reading": "たいはん",
+     "rank": 3723
+    },
+    {
+     "word": "お昼",
+     "reading": "おひる",
+     "rank": 3748
+    },
+    {
+     "word": "婚約",
+     "reading": "こんやく",
+     "rank": 3817
+    },
+    {
+     "word": "国家",
+     "reading": "こっか",
+     "rank": 3849
+    },
+    {
+     "word": "賭ける",
+     "reading": "かける",
+     "rank": 3851
+    },
+    {
+     "word": "捲る",
+     "reading": "めくる",
+     "rank": 3877
+    },
+    {
+     "word": "誇り",
+     "reading": "ほこり",
+     "rank": 3940
+    },
+    {
+     "word": "小屋",
+     "reading": "こや",
+     "rank": 3958
+    },
+    {
+     "word": "通信",
+     "reading": "つうしん",
+     "rank": 3971
+    },
+    {
+     "word": "贈る",
+     "reading": "おくる",
+     "rank": 3977
+    },
+    {
+     "word": "現代",
+     "reading": "げんだい",
+     "rank": 4115
+    },
+    {
+     "word": "昼食",
+     "reading": "ちゅうしょく",
+     "rank": 4126
+    },
+    {
+     "word": "加減",
+     "reading": "かげん",
+     "rank": 4140
+    },
+    {
+     "word": "物音",
+     "reading": "ものおと",
+     "rank": 4141
+    },
+    {
+     "word": "食料",
+     "reading": "しょくりょう",
+     "rank": 4154
+    },
+    {
+     "word": "夫人",
+     "reading": "ふじん",
+     "rank": 4171
+    },
+    {
+     "word": "付合う",
+     "reading": "つきあう",
+     "rank": 4185
+    },
+    {
+     "word": "愉快",
+     "reading": "ゆかい",
+     "rank": 4236
+    },
+    {
+     "word": "賢い",
+     "reading": "かしこい",
+     "rank": 4246
+    }
+   ],
+   "grammar": [
+    "〜わけだ",
+    "〜んだって",
+    "〜に対して",
+    "〜しかない",
+    "〜わけがない"
+   ]
+  },
+  {
+   "level": 9,
+   "vocab": [
+    {
+     "word": "有効",
+     "reading": "ゆうこう",
+     "rank": 4263
+    },
+    {
+     "word": "別れ",
+     "reading": "わかれ",
+     "rank": 4283
+    },
+    {
+     "word": "課題",
+     "reading": "かだい",
+     "rank": 4307
+    },
+    {
+     "word": "経緯",
+     "reading": "けいい",
+     "rank": 4321
+    },
+    {
+     "word": "哀れ",
+     "reading": "あわれ",
+     "rank": 4347
+    },
+    {
+     "word": "博士",
+     "reading": "はかせ",
+     "rank": 4350
+    },
+    {
+     "word": "体温",
+     "reading": "たいおん",
+     "rank": 4362
+    },
+    {
+     "word": "偉大",
+     "reading": "いだい",
+     "rank": 4373
+    },
+    {
+     "word": "狩り",
+     "reading": "かり",
+     "rank": 4383
+    },
+    {
+     "word": "有利",
+     "reading": "ゆうり",
+     "rank": 4416
+    },
+    {
+     "word": "決まり",
+     "reading": "きまり",
+     "rank": 4425
+    },
+    {
+     "word": "手間",
+     "reading": "てま",
+     "rank": 4433
+    },
+    {
+     "word": "破れる",
+     "reading": "やぶれる",
+     "rank": 4437
+    },
+    {
+     "word": "運転",
+     "reading": "うんてん",
+     "rank": 4477
+    },
+    {
+     "word": "不利",
+     "reading": "ふり",
+     "rank": 4479
+    },
+    {
+     "word": "嗅ぐ",
+     "reading": "かぐ",
+     "rank": 4538
+    },
+    {
+     "word": "意地",
+     "reading": "いじ",
+     "rank": 4571
+    },
+    {
+     "word": "芝居",
+     "reading": "しばい",
+     "rank": 4605
+    },
+    {
+     "word": "振り",
+     "reading": "ふり",
+     "rank": 4610
+    },
+    {
+     "word": "高速",
+     "reading": "こうそく",
+     "rank": 4613
+    },
+    {
+     "word": "劣る",
+     "reading": "おとる",
+     "rank": 4642
+    },
+    {
+     "word": "衝突",
+     "reading": "しょうとつ",
+     "rank": 4671
+    },
+    {
+     "word": "すれ違う",
+     "reading": "すれちがう",
+     "rank": 4685
+    },
+    {
+     "word": "遭う",
+     "reading": "あう",
+     "rank": 4727
+    },
+    {
+     "word": "友情",
+     "reading": "ゆうじょう",
+     "rank": 4745
+    },
+    {
+     "word": "裂く",
+     "reading": "さく",
+     "rank": 4767
+    },
+    {
+     "word": "収穫",
+     "reading": "しゅうかく",
+     "rank": 4806
+    },
+    {
+     "word": "急速",
+     "reading": "きゅうそく",
+     "rank": 4812
+    },
+    {
+     "word": "金額",
+     "reading": "きんがく",
+     "rank": 4829
+    },
+    {
+     "word": "通過",
+     "reading": "つうか",
+     "rank": 4853
+    }
+   ],
+   "grammar": [
+    "〜として",
+    "〜にしては",
+    "〜にしても",
+    "〜ことから",
+    "〜というより"
+   ]
+  },
+  {
+   "level": 10,
+   "vocab": [
+    {
+     "word": "演奏",
+     "reading": "えんそう",
+     "rank": 4864
+    },
+    {
+     "word": "澄む",
+     "reading": "すむ",
+     "rank": 4871
+    },
+    {
+     "word": "信仰",
+     "reading": "しんこう",
+     "rank": 4875
+    },
+    {
+     "word": "発射",
+     "reading": "はっしゃ",
+     "rank": 4877
+    },
+    {
+     "word": "知恵",
+     "reading": "ちえ",
+     "rank": 4932
+    },
+    {
+     "word": "溺れる",
+     "reading": "おぼれる",
+     "rank": 4934
+    },
+    {
+     "word": "一家",
+     "reading": "いっか",
+     "rank": 4949
+    },
+    {
+     "word": "企業",
+     "reading": "きぎょう",
+     "rank": 4963
+    },
+    {
+     "word": "急激",
+     "reading": "きゅうげき",
+     "rank": 4974
+    },
+    {
+     "word": "機関",
+     "reading": "きかん",
+     "rank": 5005
+    },
+    {
+     "word": "上等",
+     "reading": "じょうとう",
+     "rank": 5006
+    },
+    {
+     "word": "物事",
+     "reading": "ものごと",
+     "rank": 5013
+    },
+    {
+     "word": "留める",
+     "reading": "とめる",
+     "rank": 5018
+    },
+    {
+     "word": "考慮",
+     "reading": "こうりょ",
+     "rank": 5038
+    },
+    {
+     "word": "擦る",
+     "reading": "する",
+     "rank": 5052
+    },
+    {
+     "word": "深める",
+     "reading": "ふかめる",
+     "rank": 5125
+    },
+    {
+     "word": "広まる",
+     "reading": "ひろまる",
+     "rank": 5179
+    },
+    {
+     "word": "単位",
+     "reading": "たんい",
+     "rank": 5183
+    },
+    {
+     "word": "剥く",
+     "reading": "むく",
+     "rank": 5213
+    },
+    {
+     "word": "湿る",
+     "reading": "しめる",
+     "rank": 5378
+    },
+    {
+     "word": "菓子",
+     "reading": "かし",
+     "rank": 5389
+    },
+    {
+     "word": "気の毒",
+     "reading": "きのどく",
+     "rank": 5430
+    },
+    {
+     "word": "区別",
+     "reading": "くべつ",
+     "rank": 5438
+    },
+    {
+     "word": "財産",
+     "reading": "ざいさん",
+     "rank": 5460
+    },
+    {
+     "word": "予算",
+     "reading": "よさん",
+     "rank": 5473
+    },
+    {
+     "word": "握手",
+     "reading": "あくしゅ",
+     "rank": 5507
+    },
+    {
+     "word": "記念",
+     "reading": "きねん",
+     "rank": 5515
+    },
+    {
+     "word": "前進",
+     "reading": "ぜんしん",
+     "rank": 5553
+    },
+    {
+     "word": "吠える",
+     "reading": "ほえる",
+     "rank": 5584
+    },
+    {
+     "word": "設備",
+     "reading": "せつび",
+     "rank": 5623
+    }
+   ],
+   "grammar": [
+    "〜はもちろん",
+    "〜をはじめ",
+    "〜さえ",
+    "〜さえ-ば",
+    "〜たものだ"
+   ]
+  },
+  {
+   "level": 11,
+   "vocab": [
+    {
+     "word": "物質",
+     "reading": "ぶっしつ",
+     "rank": 5630
+    },
+    {
+     "word": "徹底",
+     "reading": "てってい",
+     "rank": 5701
+    },
+    {
+     "word": "修正",
+     "reading": "しゅうせい",
+     "rank": 5716
+    },
+    {
+     "word": "知らせ",
+     "reading": "しらせ",
+     "rank": 5737
+    },
+    {
+     "word": "高価",
+     "reading": "こうか",
+     "rank": 5742
+    },
+    {
+     "word": "臨む",
+     "reading": "のぞむ",
+     "rank": 5756
+    },
+    {
+     "word": "視点",
+     "reading": "してん",
+     "rank": 5775
+    },
+    {
+     "word": "お喋り",
+     "reading": "おしゃべり",
+     "rank": 5789
+    },
+    {
+     "word": "向かい",
+     "reading": "むかい",
+     "rank": 5797
+    },
+    {
+     "word": "溜める",
+     "reading": "ためる",
+     "rank": 5812
+    },
+    {
+     "word": "書物",
+     "reading": "しょもつ",
+     "rank": 5854
+    },
+    {
+     "word": "計る",
+     "reading": "はかる",
+     "rank": 5872
+    },
+    {
+     "word": "栄養",
+     "reading": "えいよう",
+     "rank": 5876
+    },
+    {
+     "word": "後者",
+     "reading": "こうしゃ",
+     "rank": 5927
+    },
+    {
+     "word": "適切",
+     "reading": "てきせつ",
+     "rank": 5934
+    },
+    {
+     "word": "堅い",
+     "reading": "かたい",
+     "rank": 5960
+    },
+    {
+     "word": "文明",
+     "reading": "ぶんめい",
+     "rank": 6067
+    },
+    {
+     "word": "伝言",
+     "reading": "でんごん",
+     "rank": 6103
+    },
+    {
+     "word": "尊重",
+     "reading": "そんちょう",
+     "rank": 6142
+    },
+    {
+     "word": "一帯",
+     "reading": "いったい",
+     "rank": 6143
+    },
+    {
+     "word": "散らす",
+     "reading": "ちらす",
+     "rank": 6217
+    },
+    {
+     "word": "有無",
+     "reading": "うむ",
+     "rank": 6241
+    },
+    {
+     "word": "記者",
+     "reading": "きしゃ",
+     "rank": 6243
+    },
+    {
+     "word": "お辞儀",
+     "reading": "おじぎ",
+     "rank": 6256
+    },
+    {
+     "word": "食卓",
+     "reading": "しょくたく",
+     "rank": 6266
+    },
+    {
+     "word": "貢献",
+     "reading": "こうけん",
+     "rank": 6269
+    },
+    {
+     "word": "下す",
+     "reading": "おろす",
+     "rank": 6290
+    },
+    {
+     "word": "読書",
+     "reading": "どくしょ",
+     "rank": 6317
+    },
+    {
+     "word": "礼儀",
+     "reading": "れいぎ",
+     "rank": 6330
+    },
+    {
+     "word": "有能",
+     "reading": "ゆうのう",
+     "rank": 6336
+    }
+   ],
+   "grammar": [
+    "〜さて",
+    "〜むしろ",
+    "〜つまり",
+    "〜ような気がする",
+    "〜とても-ない"
+   ]
+  },
+  {
+   "level": 12,
+   "vocab": [
+    {
+     "word": "平等",
+     "reading": "びょうどう",
+     "rank": 6339
+    },
+    {
+     "word": "横切る",
+     "reading": "よこぎる",
+     "rank": 6362
+    },
+    {
+     "word": "重視",
+     "reading": "じゅうし",
+     "rank": 6367
+    },
+    {
+     "word": "代理",
+     "reading": "だいり",
+     "rank": 6371
+    },
+    {
+     "word": "流行る",
+     "reading": "はやる",
+     "rank": 6414
+    },
+    {
+     "word": "日付",
+     "reading": "ひづけ",
+     "rank": 6486
+    },
+    {
+     "word": "亡くす",
+     "reading": "なくす",
+     "rank": 6524
+    },
+    {
+     "word": "同志",
+     "reading": "どうし",
+     "rank": 6530
+    },
+    {
+     "word": "説く",
+     "reading": "とく",
+     "rank": 6536
+    },
+    {
+     "word": "裂ける",
+     "reading": "さける",
+     "rank": 6559
+    },
+    {
+     "word": "真理",
+     "reading": "しんり",
+     "rank": 6566
+    },
+    {
+     "word": "連想",
+     "reading": "れんそう",
+     "rank": 6572
+    },
+    {
+     "word": "進歩",
+     "reading": "しんぽ",
+     "rank": 6614
+    },
+    {
+     "word": "設計",
+     "reading": "せっけい",
+     "rank": 6650
+    },
+    {
+     "word": "用心",
+     "reading": "ようじん",
+     "rank": 6663
+    },
+    {
+     "word": "医療",
+     "reading": "いりょう",
+     "rank": 6681
+    },
+    {
+     "word": "摘む",
+     "reading": "つむ",
+     "rank": 6682
+    },
+    {
+     "word": "発達",
+     "reading": "はったつ",
+     "rank": 6730
+    },
+    {
+     "word": "分野",
+     "reading": "ぶんや",
+     "rank": 6737
+    },
+    {
+     "word": "首都",
+     "reading": "しゅと",
+     "rank": 6805
+    },
+    {
+     "word": "団体",
+     "reading": "だんたい",
+     "rank": 6819
+    },
+    {
+     "word": "出場",
+     "reading": "しゅつじょう",
+     "rank": 6827
+    },
+    {
+     "word": "務め",
+     "reading": "つとめ",
+     "rank": 6848
+    },
+    {
+     "word": "成人",
+     "reading": "せいじん",
+     "rank": 6855
+    },
+    {
+     "word": "交際",
+     "reading": "こうさい",
+     "rank": 6865
+    },
+    {
+     "word": "絵画",
+     "reading": "かいが",
+     "rank": 6872
+    },
+    {
+     "word": "包み",
+     "reading": "つつみ",
+     "rank": 6876
+    },
+    {
+     "word": "一人一人",
+     "reading": "ひとりひとり",
+     "rank": 6894
+    },
+    {
+     "word": "覚める",
+     "reading": "さめる",
+     "rank": 6946
+    },
+    {
+     "word": "深まる",
+     "reading": "ふかまる",
+     "rank": 6974
+    }
+   ],
+   "grammar": [
+    "〜別に-ない",
+    "〜ばかりでなく",
+    "〜決して-ない",
+    "〜わけにはいかない",
+    "〜-ようとしない"
+   ]
+  },
+  {
+   "level": 13,
+   "vocab": [
+    {
+     "word": "反抗",
+     "reading": "はんこう",
+     "rank": 6976
+    },
+    {
+     "word": "敬意",
+     "reading": "けいい",
+     "rank": 7014
+    },
+    {
+     "word": "演説",
+     "reading": "えんぜつ",
+     "rank": 7040
+    },
+    {
+     "word": "先行",
+     "reading": "せんこう",
+     "rank": 7061
+    },
+    {
+     "word": "近頃",
+     "reading": "ちかごろ",
+     "rank": 7069
+    },
+    {
+     "word": "現金",
+     "reading": "げんきん",
+     "rank": 7073
+    },
+    {
+     "word": "形態",
+     "reading": "けいたい",
+     "rank": 7103
+    },
+    {
+     "word": "学習",
+     "reading": "がくしゅう",
+     "rank": 7106
+    },
+    {
+     "word": "見当",
+     "reading": "けんとう",
+     "rank": 7130
+    },
+    {
+     "word": "借り",
+     "reading": "かり",
+     "rank": 7134
+    },
+    {
+     "word": "休息",
+     "reading": "きゅうそく",
+     "rank": 7143
+    },
+    {
+     "word": "祝い",
+     "reading": "いわい",
+     "rank": 7176
+    },
+    {
+     "word": "年月",
+     "reading": "としつき",
+     "rank": 7183
+    },
+    {
+     "word": "広める",
+     "reading": "ひろめる",
+     "rank": 7215
+    },
+    {
+     "word": "片付く",
+     "reading": "かたづく",
+     "rank": 7256
+    },
+    {
+     "word": "畳む",
+     "reading": "たたむ",
+     "rank": 7344
+    },
+    {
+     "word": "読み",
+     "reading": "よみ",
+     "rank": 7349
+    },
+    {
+     "word": "見解",
+     "reading": "けんかい",
+     "rank": 7376
+    },
+    {
+     "word": "適する",
+     "reading": "てきする",
+     "rank": 7382
+    },
+    {
+     "word": "当り",
+     "reading": "あたり",
+     "rank": 7403
+    },
+    {
+     "word": "大部分",
+     "reading": "だいぶぶん",
+     "rank": 7456
+    },
+    {
+     "word": "頂上",
+     "reading": "ちょうじょう",
+     "rank": 7470
+    },
+    {
+     "word": "年代",
+     "reading": "ねんだい",
+     "rank": 7515
+    },
+    {
+     "word": "参考",
+     "reading": "さんこう",
+     "rank": 7516
+    },
+    {
+     "word": "公平",
+     "reading": "こうへい",
+     "rank": 7520
+    },
+    {
+     "word": "汲む",
+     "reading": "くむ",
+     "rank": 7558
+    },
+    {
+     "word": "克服",
+     "reading": "こくふく",
+     "rank": 7576
+    },
+    {
+     "word": "見送り",
+     "reading": "みおくり",
+     "rank": 7605
+    },
+    {
+     "word": "乾燥",
+     "reading": "かんそう",
+     "rank": 7612
+    },
+    {
+     "word": "適度",
+     "reading": "てきど",
+     "rank": 7615
+    }
+   ],
+   "grammar": [
+    "〜もしかしたら",
+    "〜たとえ-ても",
+    "〜ずつ",
+    "〜だらけ",
+    "〜とは限らない"
+   ]
+  },
+  {
+   "level": 14,
+   "vocab": [
+    {
+     "word": "弱まる",
+     "reading": "よわまる",
+     "rank": 7636
+    },
+    {
+     "word": "泊める",
+     "reading": "とめる",
+     "rank": 7660
+    },
+    {
+     "word": "同一",
+     "reading": "どういつ",
+     "rank": 7704
+    },
+    {
+     "word": "強まる",
+     "reading": "つよまる",
+     "rank": 7721
+    },
+    {
+     "word": "次ぐ",
+     "reading": "つぐ",
+     "rank": 7733
+    },
+    {
+     "word": "印刷",
+     "reading": "いんさつ",
+     "rank": 7734
+    },
+    {
+     "word": "発明",
+     "reading": "はつめい",
+     "rank": 7737
+    },
+    {
+     "word": "会合",
+     "reading": "かいごう",
+     "rank": 7744
+    },
+    {
+     "word": "間隔",
+     "reading": "かんかく",
+     "rank": 7755
+    },
+    {
+     "word": "日中",
+     "reading": "にっちゅう",
+     "rank": 7763
+    },
+    {
+     "word": "辞退",
+     "reading": "じたい",
+     "rank": 7768
+    },
+    {
+     "word": "発行",
+     "reading": "はっこう",
+     "rank": 7778
+    },
+    {
+     "word": "主要",
+     "reading": "しゅよう",
+     "rank": 7783
+    },
+    {
+     "word": "前者",
+     "reading": "ぜんしゃ",
+     "rank": 7804
+    },
+    {
+     "word": "需要",
+     "reading": "じゅよう",
+     "rank": 7812
+    },
+    {
+     "word": "減少",
+     "reading": "げんしょう",
+     "rank": 7853
+    },
+    {
+     "word": "金銭",
+     "reading": "きんせん",
+     "rank": 7874
+    },
+    {
+     "word": "撒く",
+     "reading": "まく",
+     "rank": 7877
+    },
+    {
+     "word": "遅れ",
+     "reading": "おくれ",
+     "rank": 7929
+    },
+    {
+     "word": "混雑",
+     "reading": "こんざつ",
+     "rank": 7951
+    },
+    {
+     "word": "農家",
+     "reading": "のうか",
+     "rank": 7969
+    },
+    {
+     "word": "馴れる",
+     "reading": "なれる",
+     "rank": 7987
+    },
+    {
+     "word": "正午",
+     "reading": "しょうご",
+     "rank": 8019
+    },
+    {
+     "word": "適用",
+     "reading": "てきよう",
+     "rank": 8028
+    },
+    {
+     "word": "実施",
+     "reading": "じっし",
+     "rank": 8061
+    },
+    {
+     "word": "長期",
+     "reading": "ちょうき",
+     "rank": 8079
+    },
+    {
+     "word": "協議",
+     "reading": "きょうぎ",
+     "rank": 8084
+    },
+    {
+     "word": "規制",
+     "reading": "きせい",
+     "rank": 8086
+    },
+    {
+     "word": "繋げる",
+     "reading": "つなげる",
+     "rank": 8100
+    },
+    {
+     "word": "景気",
+     "reading": "けいき",
+     "rank": 8106
+    }
+   ],
+   "grammar": [
+    "〜めったに-ない",
+    "〜ないことはない",
+    "〜と共に",
+    "〜につれて",
+    "〜ながらも"
+   ]
+  },
+  {
+   "level": 15,
+   "vocab": [
+    {
+     "word": "刑事",
+     "reading": "けいじ",
+     "rank": 8157
+    },
+    {
+     "word": "基づく",
+     "reading": "もとづく",
+     "rank": 8191
+    },
+    {
+     "word": "双子",
+     "reading": "ふたご",
+     "rank": 8208
+    },
+    {
+     "word": "飛行",
+     "reading": "ひこう",
+     "rank": 8237
+    },
+    {
+     "word": "討つ",
+     "reading": "うつ",
+     "rank": 8256
+    },
+    {
+     "word": "片付け",
+     "reading": "かたづけ",
+     "rank": 8581
+    },
+    {
+     "word": "仕様",
+     "reading": "しよう",
+     "rank": 8740
+    },
+    {
+     "word": "転校",
+     "reading": "てんこう",
+     "rank": 8771
+    },
+    {
+     "word": "書斎",
+     "reading": "しょさい",
+     "rank": 8821
+    },
+    {
+     "word": "羽根",
+     "reading": "はね",
+     "rank": 8903
+    },
+    {
+     "word": "物理",
+     "reading": "ぶつり",
+     "rank": 8906
+    },
+    {
+     "word": "降伏",
+     "reading": "こうふく",
+     "rank": 8967
+    },
+    {
+     "word": "治める",
+     "reading": "おさめる",
+     "rank": 9124
+    },
+    {
+     "word": "至急",
+     "reading": "しきゅう",
+     "rank": 9375
+    },
+    {
+     "word": "進学",
+     "reading": "しんがく",
+     "rank": 9419
+    },
+    {
+     "word": "哲学",
+     "reading": "てつがく",
+     "rank": 9449
+    },
+    {
+     "word": "見舞い",
+     "reading": "みまい",
+     "rank": 9581
+    },
+    {
+     "word": "競技",
+     "reading": "きょうぎ",
+     "rank": 9612
+    },
+    {
+     "word": "食糧",
+     "reading": "しょくりょう",
+     "rank": 9632
+    },
+    {
+     "word": "機構",
+     "reading": "きこう",
+     "rank": 9726
+    },
+    {
+     "word": "操縦",
+     "reading": "そうじゅう",
+     "rank": 9748
+    },
+    {
+     "word": "芝生",
+     "reading": "しばふ",
+     "rank": 9801
+    },
+    {
+     "word": "容器",
+     "reading": "ようき",
+     "rank": 9812
+    },
+    {
+     "word": "上達",
+     "reading": "じょうたつ",
+     "rank": 9856
+    },
+    {
+     "word": "煮る",
+     "reading": "にる",
+     "rank": 9957
+    },
+    {
+     "word": "作法",
+     "reading": "さほう",
+     "rank": 10014
+    },
+    {
+     "word": "生やす",
+     "reading": "はやす",
+     "rank": 10030
+    },
+    {
+     "word": "お洒落",
+     "reading": "おしゃれ",
+     "rank": 10185
+    },
+    {
+     "word": "土産",
+     "reading": "みやげ",
+     "rank": 10221
+    },
+    {
+     "word": "救助",
+     "reading": "きゅうじょ",
+     "rank": 10225
+    }
+   ],
+   "grammar": [
+    "〜一方だ",
+    "〜すでに",
+    "〜ずに",
+    "〜ずにはいられない"
+   ]
+  },
+  {
+   "level": 16,
+   "vocab": [
+    {
+     "word": "押える",
+     "reading": "おさえる",
+     "rank": 10298
+    },
+    {
+     "word": "申し訳",
+     "reading": "もうしわけ",
+     "rank": 10312
+    },
+    {
+     "word": "切れ",
+     "reading": "きれ",
+     "rank": 10340
+    },
+    {
+     "word": "退学",
+     "reading": "たいがく",
+     "rank": 10344
+    },
+    {
+     "word": "連れ",
+     "reading": "つれ",
+     "rank": 10524
+    },
+    {
+     "word": "宿泊",
+     "reading": "しゅくはく",
+     "rank": 10528
+    },
+    {
+     "word": "正規",
+     "reading": "せいき",
+     "rank": 10623
+    },
+    {
+     "word": "画家",
+     "reading": "がか",
+     "rank": 10631
+    },
+    {
+     "word": "予期",
+     "reading": "よき",
+     "rank": 10782
+    },
+    {
+     "word": "知能",
+     "reading": "ちのう",
+     "rank": 10853
+    },
+    {
+     "word": "決行",
+     "reading": "けっこう",
+     "rank": 11041
+    },
+    {
+     "word": "映える",
+     "reading": "はえる",
+     "rank": 11266
+    },
+    {
+     "word": "粗末",
+     "reading": "そまつ",
+     "rank": 11430
+    },
+    {
+     "word": "支給",
+     "reading": "しきゅう",
+     "rank": 11458
+    },
+    {
+     "word": "眺め",
+     "reading": "ながめ",
+     "rank": 11550
+    },
+    {
+     "word": "器官",
+     "reading": "きかん",
+     "rank": 11573
+    },
+    {
+     "word": "鉄道",
+     "reading": "てつどう",
+     "rank": 11583
+    },
+    {
+     "word": "前もって",
+     "reading": "まえもって",
+     "rank": 11635
+    },
+    {
+     "word": "投票",
+     "reading": "とうひょう",
+     "rank": 11645
+    },
+    {
+     "word": "会計",
+     "reading": "かいけい",
+     "rank": 11745
+    },
+    {
+     "word": "資源",
+     "reading": "しげん",
+     "rank": 11815
+    },
+    {
+     "word": "換える",
+     "reading": "かえる",
+     "rank": 11829
+    },
+    {
+     "word": "熱中",
+     "reading": "ねっちゅう",
+     "rank": 11862
+    },
+    {
+     "word": "作物",
+     "reading": "さくもつ",
+     "rank": 11871
+    },
+    {
+     "word": "手品",
+     "reading": "てじな",
+     "rank": 12010
+    },
+    {
+     "word": "余分",
+     "reading": "よぶん",
+     "rank": 12030
+    },
+    {
+     "word": "配達",
+     "reading": "はいたつ",
+     "rank": 12058
+    },
+    {
+     "word": "行儀",
+     "reading": "ぎょうぎ",
+     "rank": 12217
+    },
+    {
+     "word": "試し",
+     "reading": "ためし",
+     "rank": 12245
+    },
+    {
+     "word": "組合",
+     "reading": "くみあい",
+     "rank": 12320
+    }
+   ],
+   "grammar": [
+    "〜向き",
+    "〜向け",
+    "〜切る",
+    "〜切れない",
+    "〜きり"
+   ]
+  },
+  {
+   "level": 17,
+   "vocab": [
+    {
+     "word": "個々",
+     "reading": "ここ",
+     "rank": 12321
+    },
+    {
+     "word": "誤り",
+     "reading": "あやまり",
+     "rank": 12532
+    },
+    {
+     "word": "食物",
+     "reading": "しょくもつ",
+     "rank": 12633
+    },
+    {
+     "word": "大戦",
+     "reading": "たいせん",
+     "rank": 12723
+    },
+    {
+     "word": "蒸す",
+     "reading": "むす",
+     "rank": 12798
+    },
+    {
+     "word": "思い付く",
+     "reading": "おもいつく",
+     "rank": 12860
+    },
+    {
+     "word": "通学",
+     "reading": "つうがく",
+     "rank": 12876
+    },
+    {
+     "word": "不可",
+     "reading": "ふか",
+     "rank": 12877
+    },
+    {
+     "word": "貸し",
+     "reading": "かし",
+     "rank": 12887
+    },
+    {
+     "word": "刈る",
+     "reading": "かる",
+     "rank": 12901
+    },
+    {
+     "word": "脂肪",
+     "reading": "しぼう",
+     "rank": 13045
+    },
+    {
+     "word": "焚く",
+     "reading": "たく",
+     "rank": 13211
+    },
+    {
+     "word": "記入",
+     "reading": "きにゅう",
+     "rank": 13250
+    },
+    {
+     "word": "小銭",
+     "reading": "こぜに",
+     "rank": 13329
+    },
+    {
+     "word": "食品",
+     "reading": "しょくひん",
+     "rank": 13343
+    },
+    {
+     "word": "炊く",
+     "reading": "たく",
+     "rank": 13532
+    },
+    {
+     "word": "欠陥",
+     "reading": "けっかん",
+     "rank": 13574
+    },
+    {
+     "word": "公演",
+     "reading": "こうえん",
+     "rank": 13611
+    },
+    {
+     "word": "勘定",
+     "reading": "かんじょう",
+     "rank": 13633
+    },
+    {
+     "word": "及ぼす",
+     "reading": "およぼす",
+     "rank": 13664
+    },
+    {
+     "word": "依然",
+     "reading": "いぜん",
+     "rank": 13776
+    },
+    {
+     "word": "免許",
+     "reading": "めんきょ",
+     "rank": 13804
+    },
+    {
+     "word": "東洋",
+     "reading": "とうよう",
+     "rank": 13949
+    },
+    {
+     "word": "添う",
+     "reading": "そう",
+     "rank": 14054
+    },
+    {
+     "word": "弱める",
+     "reading": "よわめる",
+     "rank": 14061
+    },
+    {
+     "word": "近代",
+     "reading": "きんだい",
+     "rank": 14110
+    },
+    {
+     "word": "絶滅",
+     "reading": "ぜつめつ",
+     "rank": 14162
+    },
+    {
+     "word": "不平",
+     "reading": "ふへい",
+     "rank": 14208
+    },
+    {
+     "word": "勤め",
+     "reading": "つとめ",
+     "rank": 14278
+    },
+    {
+     "word": "定期",
+     "reading": "ていき",
+     "rank": 14336
+    }
+   ],
+   "grammar": [
+    "〜にかけて",
+    "〜たて",
+    "〜ふりをする",
+    "〜どうしても",
+    "〜がたい"
+   ]
+  },
+  {
+   "level": 18,
+   "vocab": [
+    {
+     "word": "反る",
+     "reading": "かえる",
+     "rank": 14477
+    },
+    {
+     "word": "国語",
+     "reading": "こくご",
+     "rank": 14630
+    },
+    {
+     "word": "射す",
+     "reading": "さす",
+     "rank": 14732
+    },
+    {
+     "word": "水準",
+     "reading": "すいじゅん",
+     "rank": 14761
+    },
+    {
+     "word": "地平線",
+     "reading": "ちへいせん",
+     "rank": 14841
+    },
+    {
+     "word": "精巧",
+     "reading": "せいこう",
+     "rank": 15047
+    },
+    {
+     "word": "湿気",
+     "reading": "しっけ",
+     "rank": 15069
+    },
+    {
+     "word": "通行",
+     "reading": "つうこう",
+     "rank": 15125
+    },
+    {
+     "word": "批評",
+     "reading": "ひひょう",
+     "rank": 15626
+    },
+    {
+     "word": "航海",
+     "reading": "こうかい",
+     "rank": 15776
+    },
+    {
+     "word": "化学",
+     "reading": "かがく",
+     "rank": 15824
+    },
+    {
+     "word": "大使",
+     "reading": "たいし",
+     "rank": 15969
+    },
+    {
+     "word": "挿す",
+     "reading": "さす",
+     "rank": 15973
+    },
+    {
+     "word": "覚ます",
+     "reading": "さます",
+     "rank": 16033
+    },
+    {
+     "word": "小麦",
+     "reading": "こむぎ",
+     "rank": 16141
+    },
+    {
+     "word": "異動",
+     "reading": "いどう",
+     "rank": 16308
+    },
+    {
+     "word": "図書",
+     "reading": "としょ",
+     "rank": 16329
+    },
+    {
+     "word": "銅貨",
+     "reading": "どうか",
+     "rank": 16426
+    },
+    {
+     "word": "論じる",
+     "reading": "ろんじる",
+     "rank": 16520
+    },
+    {
+     "word": "炒める",
+     "reading": "いためる",
+     "rank": 16751
+    },
+    {
+     "word": "享受",
+     "reading": "きょうじゅ",
+     "rank": 17252
+    },
+    {
+     "word": "硬貨",
+     "reading": "こうか",
+     "rank": 17645
+    },
+    {
+     "word": "技師",
+     "reading": "ぎし",
+     "rank": 17752
+    },
+    {
+     "word": "超す",
+     "reading": "こす",
+     "rank": 17785
+    },
+    {
+     "word": "引用",
+     "reading": "いんよう",
+     "rank": 17909
+    },
+    {
+     "word": "上京",
+     "reading": "じょうきょう",
+     "rank": 17976
+    },
+    {
+     "word": "宛てる",
+     "reading": "あてる",
+     "rank": 18116
+    },
+    {
+     "word": "横断",
+     "reading": "おうだん",
+     "rank": 18231
+    },
+    {
+     "word": "起源",
+     "reading": "きげん",
+     "rank": 18451
+    },
+    {
+     "word": "公正",
+     "reading": "こうせい",
+     "rank": 18633
+    }
+   ],
+   "grammar": [
+    "〜まさか",
+    "〜つい",
+    "〜くせに",
+    "〜がち",
+    "〜っぽい"
+   ]
+  },
+  {
+   "level": 19,
+   "vocab": [
+    {
+     "word": "慣らす",
+     "reading": "ならす",
+     "rank": 18747
+    },
+    {
+     "word": "賞品",
+     "reading": "しょうひん",
+     "rank": 18812
+    },
+    {
+     "word": "穀物",
+     "reading": "こくもつ",
+     "rank": 18838
+    },
+    {
+     "word": "発車",
+     "reading": "はっしゃ",
+     "rank": 18876
+    },
+    {
+     "word": "茹でる",
+     "reading": "ゆでる",
+     "rank": 18969
+    },
+    {
+     "word": "湿度",
+     "reading": "しつど",
+     "rank": 19026
+    },
+    {
+     "word": "相続",
+     "reading": "そうぞく",
+     "rank": 19041
+    },
+    {
+     "word": "生理",
+     "reading": "せいり",
+     "rank": 19259
+    },
+    {
+     "word": "卸す",
+     "reading": "おろす",
+     "rank": 19531
+    },
+    {
+     "word": "老い",
+     "reading": "おい",
+     "rank": 19611
+    },
+    {
+     "word": "梅雨",
+     "reading": "つゆ",
+     "rank": 19624
+    },
+    {
+     "word": "蕎麦",
+     "reading": "そば",
+     "rank": 19631
+    },
+    {
+     "word": "煮える",
+     "reading": "にえる",
+     "rank": 19702
+    },
+    {
+     "word": "便り",
+     "reading": "たより",
+     "rank": 19733
+    },
+    {
+     "word": "洗剤",
+     "reading": "せんざい",
+     "rank": 19736
+    }
+   ],
+   "grammar": [
+    "〜っぱなし",
+    "〜わざわざ",
+    "〜一体",
+    "〜っけ",
+    "〜代わりに"
+   ]
+  }
+ ]
+}

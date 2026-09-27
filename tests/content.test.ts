@@ -2,6 +2,7 @@
 // exactly one right answer among distinct options.
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import plan from '../content/plan.json'
 import { ITEMS, ITEMS_BY_ID, LEVELS } from '../src/content'
 
 const vocab = ITEMS.filter((i) => i.kind === 'vocab')
@@ -65,5 +66,16 @@ describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split
   it('has no Kasane vocab that WaniKani covers', () => {
     const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.map((w: { word: string }) => w.word))
     expect(vocab.flatMap((v) => (v.kind === 'vocab' && known.has(v.word) ? [v.word] : []))).toEqual([])
+  })
+})
+
+// Content follows content/plan.json: each written level has exactly the planned words and grammar.
+describe('level plan', () => {
+  it.each(LEVELS.map((l) => [l.level, l] as const))('level %i matches the plan', (n, l) => {
+    const p = plan.levels.find((x) => x.level === n)!
+    const words = l.items.flatMap((i) => (i.kind === 'vocab' ? [`${i.word}:${i.reading}`] : []))
+    expect(words.sort()).toEqual(p.vocab.map((v) => `${v.word}:${v.reading}`).sort())
+    const grammar = l.items.flatMap((i) => (i.kind === 'grammar' ? [i.pattern] : []))
+    expect(grammar.sort()).toEqual([...p.grammar].sort())
   })
 })
