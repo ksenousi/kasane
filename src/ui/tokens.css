@@ -51,6 +51,15 @@ body,
   height: 100%;
 }
 
+/* Home Screen app on iPhone: with the black-translucent status bar the page draws under the
+   status bar, but iOS still sizes it as if the status bar weren't there, leaving a gap that
+   tall below the tab bar. Add it back. */
+@media (display-mode: standalone) {
+  body {
+    height: calc(100% + var(--safe-top));
+  }
+}
+
 body {
   margin: 0;
   background: var(--bg);
