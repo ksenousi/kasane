@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import type { Item } from './content/schema'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
 import Levels from './screens/Levels'
@@ -10,7 +11,7 @@ import * as I from './ui/icons'
 import ui from './ui/ui.module.css'
 
 type Tab = 'home' | 'levels' | 'weak' | 'settings'
-type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' }
+type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' } | { name: 'drill'; items: Item[] }
 
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Home', icon: <I.Home /> },
@@ -31,11 +32,16 @@ export default function App() {
     return <Session items={reviews} mode="review" onExit={home} onComplete={home} onFinished={(f) => void finishReview(f)} />
   }
 
+  if (screen.name === 'drill') {
+    const back = () => setScreen({ name: 'weak' })
+    return <Session items={screen.items} mode="drill" onExit={back} onComplete={back} />
+  }
+
   return (
     <div className={ui.screen}>
       {screen.name === 'home' && <Home onLessons={() => setScreen({ name: 'lesson' })} onReviews={() => setScreen({ name: 'review' })} />}
       {screen.name === 'levels' && <Levels />}
-      {screen.name === 'weak' && <WeakSpots />}
+      {screen.name === 'weak' && <WeakSpots onDrill={(items) => setScreen({ name: 'drill', items })} />}
       {screen.name === 'settings' && <Settings />}
       <nav className={ui.tabs}>
         {TABS.map((t) => (

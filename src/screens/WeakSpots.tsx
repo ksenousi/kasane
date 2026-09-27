@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ITEMS_BY_ID, itemLabel } from '../content'
+import type { Item } from '../content/schema'
 import { db, type Answer } from '../db'
 import type { ExerciseId } from '../srs/queue'
 import ui from '../ui/ui.module.css'
@@ -14,11 +15,11 @@ const SECTIONS: { ja: string; en: string; exercises: ExerciseId[] }[] = [
   { ja: '用法', en: 'Usage', exercises: ['V7'] },
   { ja: '文法形式の判断', en: 'Pick the grammar', exercises: ['G1', 'G3', 'G7'] },
   { ja: '文の組み立て', en: 'Sentence order ★', exercises: ['G2'] },
-  { ja: '文法の意味', en: 'Grammar meaning & errors', exercises: ['G5', 'G6'] },
+  { ja: '文法の意味', en: 'Meaning & errors', exercises: ['G5', 'G6'] },
   { ja: '思い出す', en: 'Recall cards', exercises: ['RC'] },
 ]
 
-export default function WeakSpots() {
+export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => void }) {
   const [answers, setAnswers] = useState<Answer[] | null>(null)
 
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function WeakSpots() {
         {weakest.length === 0 ? (
           <p className={s.empty}>Nothing yet. Items you miss more than once show up here.</p>
         ) : (
+          <>
           <div className={s.items}>
             {weakest.map(([id, e]) => {
               const item = ITEMS_BY_ID.get(id)
@@ -84,6 +86,10 @@ export default function WeakSpots() {
               )
             })}
           </div>
+          <button className={ui.btn} style={{ marginTop: 14 }} onClick={() => onDrill(weakest.map(([id]) => ITEMS_BY_ID.get(id)).filter((i): i is Item => !!i))}>
+            Drill these {weakest.length} (no SRS effect)
+          </button>
+          </>
         )}
       </section>
     </div>

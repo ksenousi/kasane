@@ -15,8 +15,11 @@ import s from './Session.module.css'
 
 interface Props {
   items: Item[]
-  /** 'quiz' = end-of-lesson quiz: easy formats, no SRS changes until the end. */
-  mode: 'review' | 'quiz'
+  /**
+   * 'review' = SRS review. 'quiz' = end-of-lesson quiz with easy formats.
+   * 'drill' = extra practice from Weak spots: formats match the item's stage, no SRS changes.
+   */
+  mode: 'review' | 'quiz' | 'drill'
   onExit: () => void
   onComplete: (summary: Summary) => void
   onFinished?: (f: Finished) => void
