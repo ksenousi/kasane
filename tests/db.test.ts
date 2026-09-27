@@ -44,3 +44,14 @@ describe('db', () => {
     await expect(importBackup({ hello: 'world' })).rejects.toThrow('Not a Kasane backup')
   })
 })
+
+describe('removed content', () => {
+  it('ignores saved progress for items that no longer exist', async () => {
+    const { currentOnly } = await import('../src/state/store')
+    const p = new Map([
+      ['v-gaman', completeLesson(newProgress('v-gaman'), NOW)],
+      ['v-souzou', completeLesson(newProgress('v-souzou'), NOW)],
+    ])
+    expect([...currentOnly(p).keys()]).toEqual(['v-gaman'])
+  })
+})

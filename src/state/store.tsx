@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { ITEMS } from '../content'
+import { ITEMS, ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import {
   DEFAULT_SETTINGS, loadProgress, loadSettings, recordAnswer, saveProgress, saveSetting, type Answer, type Settings,
@@ -27,6 +27,15 @@ interface Store {
 
 const StoreContext = createContext<Store | null>(null)
 
+/**
+ * Drop saved progress for items no longer in the content (e.g. words swapped out
+ * because WaniKani covers them), so they don't show up in counts or forecasts.
+ * The rows stay in the database and in backups.
+ */
+export function currentOnly(p: ReadonlyMap<string, Progress>): Map<string, Progress> {
+  return new Map([...p].filter(([id]) => ITEMS_BY_ID.has(id)))
+}
+
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
   const [progress, setProgress] = useState<Map<string, Progress>>(new Map())
@@ -35,7 +44,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const refresh = useCallback(async () => {
     const [p, s] = await Promise.all([loadProgress(), loadSettings()])
-    setProgress(p)
+    setProgress(currentOnly(p))
     setSettings(s)
     setNow(clockNow())
     setReady(true)

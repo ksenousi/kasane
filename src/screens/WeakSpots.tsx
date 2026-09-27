@@ -37,7 +37,7 @@ export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => voi
     byItem.set(a.itemId, e)
   }
   const weakest = [...byItem.entries()]
-    .filter(([, e]) => e.total >= 2 && e.right < e.total)
+    .filter(([id, e]) => ITEMS_BY_ID.has(id) && e.total >= 2 && e.right < e.total)
     .sort((a, b) => a[1].right / a[1].total - b[1].right / b[1].total)
     .slice(0, 8)
 
