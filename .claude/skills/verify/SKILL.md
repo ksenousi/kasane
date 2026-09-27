@@ -11,6 +11,7 @@ description: How to run and drive Kasane in the built-in browser to verify a cha
 - Read pages with `get_page_text` or `document.body.innerText` rather than screenshots (screenshots lag).
 - Split long flows into several `javascript_exec` calls. Calls time out around 45s.
 - Wait about 200–300ms after each click. React state doesn't update synchronously, so the next query can miss the new screen.
+- Taps on a question are ignored for its first 400ms (double-tap guard, `src/lib/tapGuard.ts`). Wait at least 500ms after a new question appears before a scripted click.
 - Finding the right answer: tap each option in turn. If "Misclick" appears it was wrong, so tap "Misclick — undo" and try the next one.
 - The dev-only time machine is in Settings (+4h / +1d / +1w / Reset). Use it to make reviews come due. Press Reset when done.
 - Data lives in IndexedDB `kasane` (tables `progress`, `answers`, `settings`). Answers are logged only on Next or Continue.

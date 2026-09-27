@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { hasKanji, itemLabel } from '../content'
 import type { Item } from '../content/schema'
+import { useTapGuard } from '../lib/tapGuard'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './FlipCard.module.css'
@@ -17,9 +18,10 @@ interface Props {
 export default function FlipCard({ item, onKnew, onMissed, onChoices }: Props) {
   const [shown, setShown] = useState(false)
   const ex = item.examples[0]
+  const guard = useTapGuard()
 
   return (
-    <div className={s.wrap}>
+    <div className={s.wrap} onClickCapture={guard}>
       <button className={s.card} onClick={() => setShown(true)} disabled={shown} aria-label={shown ? undefined : 'Show answer'}>
         <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
         {!shown && <span className={s.hint}>{item.kind === 'vocab' ? (hasKanji(item.word) ? 'Recall the reading and meaning, then tap' : 'Recall the meaning, then tap') : 'Recall the meaning and how it connects, then tap'}</span>}

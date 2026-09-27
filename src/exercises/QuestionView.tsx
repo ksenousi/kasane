@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useTapGuard } from '../lib/tapGuard'
 import ui from '../ui/ui.module.css'
 import type { ChoiceQuestion, OrderQuestion, Prompt, Question, TilesQuestion } from './build'
 import s from './Question.module.css'
@@ -170,8 +171,9 @@ function Order({ q, given, onAnswer }: { q: OrderQuestion; given: Given | null; 
 
 export default function QuestionView({ question: q, given, onAnswer }: Props) {
   const showBand = q.kind !== 'order' && !(q.kind === 'choice' && q.layout === 'chips')
+  const guard = useTapGuard()
   return (
-    <div className={s.wrap}>
+    <div className={s.wrap} onClickCapture={guard}>
       {showBand && (
         <div className={s.band}>
           <PromptView prompt={q.prompt} />
