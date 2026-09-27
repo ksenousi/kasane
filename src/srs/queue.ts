@@ -50,7 +50,7 @@ export function stageCounts(progress: Iterable<Progress>): Record<StageGroup, nu
 export type Part = 'meaning' | 'reading' | 'connection'
 
 export type ExerciseId =
-  | 'V1' | 'V2' | 'V3' | 'V5' | 'V6' | 'V7' | 'V10'
+  | 'V1' | 'V2' | 'V3' | 'V4' | 'V5' | 'V6' | 'V7' | 'V10'
   | 'G1' | 'G2' | 'G3' | 'G5' | 'G6' | 'G7'
   /** Recall card (flip mode), logged for stats only. */
   | 'RC'
@@ -76,8 +76,8 @@ const POOLS: Record<Part, Record<Tier, ExerciseId[]>> = {
   },
   reading: {
     apprentice: ['V10'],
-    guru: ['V3', 'V10'],
-    master: ['V3'],
+    guru: ['V3', 'V10', 'V4'],
+    master: ['V3', 'V4'],
   },
   connection: {
     apprentice: ['G3'],
@@ -92,11 +92,22 @@ const GRAMMAR_MEANING: Record<Tier, ExerciseId[]> = {
   master: ['G5', 'G7', 'G2'],
 }
 
+const KANJI = /^[\u4e00-\u9fff]{2,}$/
+
+/** Kanji from the look-alike words that aren't in the word itself: decoy tiles for V4. Only for all-kanji words. */
+export function kanjiDecoys(item: Item): string[] {
+  if (item.kind !== 'vocab' || !KANJI.test(item.word)) return []
+  const own = new Set(item.word)
+  const pool = item.distractors.words.join('').split('').filter((c) => /[\u4e00-\u9fff]/.test(c) && !own.has(c))
+  return [...new Set(pool)].slice(0, 3)
+}
+
 /** Does the item have the data this exercise needs? */
 export function supports(item: Item, ex: ExerciseId): boolean {
   if (item.kind === 'vocab') {
     switch (ex) {
       case 'V3': return !!item.tiles?.length
+      case 'V4': return kanjiDecoys(item).length >= 2
       case 'V5': return item.examples.some((e) => e.ja.includes('＿')) && item.contextWrong.length >= 3
       case 'V6': return !!item.paraphrase
       case 'V7': return !!item.usage

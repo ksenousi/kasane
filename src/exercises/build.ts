@@ -1,5 +1,5 @@
 import type { GrammarItem, Item, VocabItem } from '../content/schema'
-import { shuffle, type ExerciseId, type Rng } from '../srs/queue'
+import { kanjiDecoys, shuffle, type ExerciseId, type Rng } from '../srs/queue'
 
 /** What sits in the top half of the question screen. */
 export type Prompt =
@@ -8,7 +8,7 @@ export type Prompt =
   /** Japanese sentence. `＿` renders as a blank, 【x】 as underlined x. */
   | { type: 'sentence'; text: string }
   /** A labelled card (grammar pattern or situation) with an optional sentence under it. */
-  | { type: 'card'; label: string; text: string; sentence?: string }
+  | { type: 'card'; label: string; text: string; sentence?: string; vocab?: boolean }
 
 export interface ChoiceQuestion {
   kind: 'choice'
@@ -23,7 +23,7 @@ export interface ChoiceQuestion {
 
 export interface TilesQuestion {
   kind: 'tiles'
-  ex: 'V3'
+  ex: 'V3' | 'V4'
   tag: string
   instruction: string
   prompt: Prompt
@@ -81,6 +81,12 @@ function vocabQuestion(v: VocabItem, ex: ExerciseId, rng: Rng): Question {
       return {
         kind: 'tiles', ex, tag: 'Build the reading', instruction: 'Tap the tiles to spell the reading',
         prompt: { type: 'word', text: v.word }, tiles: shuffle([...v.tiles!, ...(v.tileDecoys ?? [])], rng), answer: v.reading,
+      }
+    case 'V4':
+      return {
+        kind: 'tiles', ex, tag: 'Write the kanji', instruction: 'Build the word from kanji tiles',
+        prompt: { type: 'card', label: v.reading, text: v.meanings.slice(0, 2).join('; '), vocab: true },
+        tiles: shuffle([...v.word, ...kanjiDecoys(v)], rng), answer: v.word,
       }
     default:
       throw new Error(`${ex} is not a vocab exercise`)

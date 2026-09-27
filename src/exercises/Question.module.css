@@ -59,6 +59,10 @@
   color: var(--grammar);
 }
 
+.cardVocab {
+  color: var(--accent-text);
+}
+
 .cardText {
   font-size: 15px;
   color: var(--muted);

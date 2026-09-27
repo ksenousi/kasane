@@ -9,6 +9,7 @@ import s from './WeakSpots.module.css'
 /** Question formats grouped the way the JLPT paper groups them. */
 const SECTIONS: { ja: string; en: string; exercises: ExerciseId[] }[] = [
   { ja: '漢字読み', en: 'Kanji reading', exercises: ['V10', 'V3'] },
+  { ja: '表記', en: 'Writing the kanji', exercises: ['V4'] },
   { ja: '語彙の意味', en: 'Word meaning', exercises: ['V1', 'V2'] },
   { ja: '文脈規定', en: 'Word in context', exercises: ['V5'] },
   { ja: '言い換え類義', en: 'Paraphrase', exercises: ['V6'] },

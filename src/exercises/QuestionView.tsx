@@ -41,7 +41,7 @@ function PromptView({ prompt }: { prompt: Prompt }) {
     case 'card':
       return (
         <>
-          <span className={s.cardLabel} lang="ja">{prompt.label}</span>
+          <span className={`${s.cardLabel} ${prompt.vocab ? s.cardVocab : ''}`} lang="ja">{prompt.label}</span>
           <span className={s.cardText}>{prompt.text}</span>
           {prompt.sentence && <span lang="ja"><Sentence text={prompt.sentence} /></span>}
         </>

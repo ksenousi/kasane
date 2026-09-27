@@ -4,7 +4,7 @@ import { buildQuestion } from '../src/exercises/build'
 import { supports, type ExerciseId } from '../src/srs/queue'
 import { answer, answerAllParts, currentTask, finishedCount, markHeld, startSession } from '../src/srs/session'
 
-const ALL: ExerciseId[] = ['V1', 'V2', 'V3', 'V5', 'V6', 'V7', 'V10', 'G1', 'G2', 'G3', 'G5', 'G6', 'G7']
+const ALL: ExerciseId[] = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V10', 'G1', 'G2', 'G3', 'G5', 'G6', 'G7']
 
 describe('session', () => {
   const items = ['v-gaman', 'g-uchini'].map((id) => ITEMS_BY_ID.get(id)!)
