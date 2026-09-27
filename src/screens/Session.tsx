@@ -31,8 +31,6 @@ export interface Summary {
   items: number
 }
 
-const AUTO_ADVANCE_MS = 650
-
 export default function Session({ items, mode, onExit, onComplete, onFinished }: Props) {
   const { progress, settings, logAnswer } = useStore()
   const [state, setState] = useState<SessionState>(() => startSession(items))
@@ -82,13 +80,6 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
     logAnswer({ itemId: task.itemId, part: task.part, exercise: question.ex, correct: given.correct, given: given.value, mode })
     advance(given.correct)
   }
-
-  useEffect(() => {
-    if (!given?.correct) return
-    const t = window.setTimeout(next, AUTO_ADVANCE_MS)
-    return () => window.clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [given])
 
   if (!task || !item || !question) return <div className={ui.screen} />
 
@@ -154,7 +145,10 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
               </div>
             </>
           ) : (
-            <button className={s.okLine} onClick={next}>Correct</button>
+            <div className={s.okRow}>
+              <span className={s.okText}><I.Check width={20} height={20} />Correct</span>
+              <button className={ui.btn} onClick={next} autoFocus>Next</button>
+            </div>
           )}
         </div>
       )}

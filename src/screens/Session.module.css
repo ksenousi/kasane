@@ -38,14 +38,24 @@
   }
 }
 
-.okLine {
-  min-height: 48px;
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--ok-bg);
+.okRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.okText {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: var(--ok);
   font-size: 16px;
   font-weight: 600;
+}
+
+.okRow button {
+  width: 140px;
 }
 
 .rows {

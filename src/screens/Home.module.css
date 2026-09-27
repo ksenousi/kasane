@@ -12,6 +12,20 @@
   padding: 4px 0 6px;
 }
 
+.reload {
+  margin-left: auto;
+}
+
+.spin svg {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .logo {
   border-radius: 11px;
 }

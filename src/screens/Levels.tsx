@@ -1,4 +1,5 @@
 import { LEVELS, itemLabel } from '../content'
+import type { Item } from '../content/schema'
 import { stageGroup } from '../srs/stages'
 import { LEVEL_UP_FRACTION, passedFraction } from '../srs/unlock'
 import { ITEMS } from '../content'
@@ -15,7 +16,7 @@ const GROUP_COLOR = {
   burned: 'var(--st-burned)',
 } as const
 
-export default function Levels() {
+export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
   const { progress, level } = useStore()
   return (
     <div className={s.page}>
@@ -40,9 +41,9 @@ export default function Levels() {
                     {l.items.filter((i) => i.kind === kind).map((i) => {
                       const g = stageGroup(progress.get(i.id)?.stage ?? 0)
                       return (
-                        <span key={i.id} className={`${s.chip} ${g === 'lesson' ? s.new : ''}`} style={{ background: GROUP_COLOR[g] }}>
+                        <button key={i.id} className={`${s.chip} ${g === 'lesson' ? s.new : ''}`} style={{ background: GROUP_COLOR[g] }} onClick={() => onOpen(i)}>
                           {itemLabel(i)}
-                        </span>
+                        </button>
                       )
                     })}
                   </div>

@@ -1,7 +1,8 @@
-import { useState, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import type { Item } from './content/schema'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
+import ItemPage from './screens/ItemPage'
 import Levels from './screens/Levels'
 import Session from './screens/Session'
 import Settings from './screens/Settings'
@@ -11,7 +12,7 @@ import * as I from './ui/icons'
 import ui from './ui/ui.module.css'
 
 type Tab = 'home' | 'levels' | 'weak' | 'settings'
-type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' } | { name: 'drill'; items: Item[] }
+type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item }
 
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Home', icon: <I.Home /> },
@@ -24,6 +25,16 @@ export default function App() {
   const { ready, reviews, finishReview } = useStore()
   const [screen, setScreen] = useState<Screen>({ name: 'home' })
   const home = () => setScreen({ name: 'home' })
+  // Coming back from an item page, return to the same spot in the Levels list.
+  const levelsScroll = useRef<number | null>(null)
+
+  useLayoutEffect(() => {
+    if (screen.name === 'item') window.scrollTo(0, 0)
+    if (screen.name === 'levels' && levelsScroll.current !== null) {
+      window.scrollTo(0, levelsScroll.current)
+      levelsScroll.current = null
+    }
+  }, [screen])
 
   if (!ready) return null
 
@@ -31,6 +42,8 @@ export default function App() {
   if (screen.name === 'review') {
     return <Session items={reviews} mode="review" onExit={home} onComplete={home} onFinished={(f) => void finishReview(f)} />
   }
+
+  if (screen.name === 'item') return <ItemPage item={screen.item} onBack={() => setScreen({ name: 'levels' })} />
 
   if (screen.name === 'drill') {
     const back = () => setScreen({ name: 'weak' })
@@ -40,7 +53,12 @@ export default function App() {
   return (
     <div className={ui.screen}>
       {screen.name === 'home' && <Home onLessons={() => setScreen({ name: 'lesson' })} onReviews={() => setScreen({ name: 'review' })} />}
-      {screen.name === 'levels' && <Levels />}
+      {screen.name === 'levels' && <Levels
+          onOpen={(item) => {
+            levelsScroll.current = window.scrollY
+            setScreen({ name: 'item', item })
+          }}
+        />}
       {screen.name === 'weak' && <WeakSpots onDrill={(items) => setScreen({ name: 'drill', items })} />}
       {screen.name === 'settings' && <Settings />}
       <nav className={ui.tabs}>

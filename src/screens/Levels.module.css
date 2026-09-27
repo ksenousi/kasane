@@ -58,8 +58,10 @@
   align-items: center;
   height: 32px;
   padding: 0 10px;
+  border: 0;
   border-radius: 8px;
   color: #101012;
+  font-family: inherit;
   font-size: 15px;
   font-weight: 500;
 }

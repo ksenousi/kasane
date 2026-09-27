@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { ITEMS } from '../content'
 import { formatIn } from '../lib/clock'
 import { forecast, stageCounts } from '../srs/queue'
 import { useStore } from '../state/store'
+import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './Home.module.css'
 
@@ -32,6 +34,7 @@ export default function Home({ onLessons, onReviews }: Props) {
           <span className={s.title}>Kasane</span>
           <span className={s.sub}>Level {level} · N3</span>
         </div>
+        <ReloadButton />
       </header>
 
       <div className={s.big}>
@@ -79,6 +82,26 @@ export default function Home({ onLessons, onReviews }: Props) {
         <Stage n={counts.burned} label="Burned" color="var(--st-burned)" />
       </div>
     </div>
+  )
+}
+
+/** Full reload: picks up a new app version if one is out, and re-reads progress from storage. */
+function ReloadButton() {
+  const [busy, setBusy] = useState(false)
+  async function reload() {
+    setBusy(true)
+    try {
+      const reg = await navigator.serviceWorker?.getRegistration()
+      await reg?.update()
+    } catch {
+      // Offline or no service worker: a plain reload still re-reads progress.
+    }
+    window.location.reload()
+  }
+  return (
+    <button className={`${ui.iconBtn} ${s.reload} ${busy ? s.spin : ''}`} onClick={reload} disabled={busy} aria-label="Reload">
+      <I.Refresh />
+    </button>
   )
 }
 
