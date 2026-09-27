@@ -64,9 +64,19 @@ describe('content', () => {
 // Kasane skips vocab you've started on WaniKani and everything WaniKani teaches up to level 35.
 const WK_FILES = ['wanikani-known.json', 'wanikani-upto35.json'].map((f) => new URL(`../content/source/${f}`, import.meta.url))
 describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split('/').pop()!, f] as const))('WaniKani overlap (%s)', (_, file) => {
-  it('has no Kasane vocab that WaniKani covers', () => {
-    const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.map((w: { word: string }) => w.word))
-    expect(vocab.flatMap((v) => (v.kind === 'vocab' && known.has(v.word) ? [v.word] : []))).toEqual([])
+  // WaniKani often lists する verbs and な adjectives with the suffix (想像する, 静かな), so compare base forms.
+  const base = (w: string) => {
+    const b = w.replace(/(する|な|の|に|だ|と)$/, '')
+    return /[\u4e00-\u9fff]/.test(b) ? b : w
+  }
+  it('has no Kasane vocab that WaniKani covers, in any form', () => {
+    const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.flatMap((w: { word: string }) => [w.word, base(w.word)]))
+    expect(vocab.flatMap((v) => (v.kind === 'vocab' && (known.has(v.word) || known.has(base(v.word))) ? [v.word] : []))).toEqual([])
+  })
+  it('keeps the plan free of WaniKani words too', () => {
+    const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.flatMap((w: { word: string }) => [w.word, base(w.word)]))
+    const planned = plan.levels.flatMap((l) => l.vocab.map((v) => v.word))
+    expect(planned.filter((w) => known.has(w) || known.has(base(w)))).toEqual([])
   })
 })
 
