@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { hasKanji, itemLabel } from '../content'
+import { hasKanji, itemLabel, kanjiBreakdown } from '../content'
 import type { Item } from '../content/schema'
 import ui from '../ui/ui.module.css'
 import s from './Lesson.module.css'
@@ -16,7 +16,10 @@ export default function ItemCard({ item }: { item: Item }) {
 
       <div className={s.body}>
         {item.kind === 'vocab' ? (
-          <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
+          <>
+            <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
+            <KanjiParts word={item.word} />
+          </>
         ) : (
           <>
             <Section label="Meaning"><span className={s.meaning}>{item.meaning}</span></Section>
@@ -32,6 +35,23 @@ export default function ItemCard({ item }: { item: Item }) {
         {item.note && <p className={s.note} lang="ja">{item.note}</p>}
       </div>
     </>
+  )
+}
+
+function KanjiParts({ word }: { word: string }) {
+  const parts = kanjiBreakdown(word)
+  if (parts.length === 0) return null
+  return (
+    <Section label="Kanji">
+      <div className={s.kanjiList}>
+        {parts.map((p) => (
+          <div key={p.kanji} className={s.kanjiRow}>
+            <span className={s.kanjiChar} lang="ja">{p.kanji}</span>
+            <span className={s.kanjiMeaning}>{p.meaning}</span>
+          </div>
+        ))}
+      </div>
+    </Section>
   )
 }
 

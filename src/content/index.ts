@@ -1,3 +1,4 @@
+import kanjiMeanings from './kanji.json'
 import type { Item, Level } from './schema'
 import level01 from './levels/level-01.json'
 import level02 from './levels/level-02.json'
@@ -15,4 +16,15 @@ export function hasKanji(word: string): boolean {
 
 export function itemLabel(item: Item): string {
   return item.kind === 'vocab' ? item.word : item.pattern
+}
+
+const KANJI: Readonly<Record<string, string>> = kanjiMeanings
+
+/**
+ * Each distinct kanji in a word with its meaning on its own, for words with two or more kanji
+ * (a single-kanji word's meaning already is the kanji's). Empty otherwise.
+ */
+export function kanjiBreakdown(word: string): { kanji: string; meaning: string | undefined }[] {
+  const chars = [...new Set(word.match(/[\u4e00-\u9fff]/g) ?? [])]
+  return chars.length >= 2 ? chars.map((k) => ({ kanji: k, meaning: KANJI[k] })) : []
 }

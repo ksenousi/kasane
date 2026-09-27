@@ -3,7 +3,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import plan from '../content/plan.json'
-import { ITEMS, ITEMS_BY_ID, LEVELS, hasKanji } from '../src/content'
+import { ITEMS, ITEMS_BY_ID, LEVELS, hasKanji, kanjiBreakdown } from '../src/content'
 
 const vocab = ITEMS.filter((i) => i.kind === 'vocab')
 const grammar = ITEMS.filter((i) => i.kind === 'grammar')
@@ -13,6 +13,13 @@ function distinct(xs: string[]) {
 }
 
 describe('content', () => {
+  it('has a meaning for every kanji in words with two or more kanji', () => {
+    const missing = ITEMS.flatMap((i) => (i.kind === 'vocab' ? kanjiBreakdown(i.word) : []))
+      .filter((p) => !p.meaning)
+      .map((p) => p.kanji)
+    expect([...new Set(missing)]).toEqual([])
+  })
+
   it('has unique ids and sane levels', () => {
     expect(new Set(ITEMS.map((i) => i.id)).size).toBe(ITEMS.length)
     for (const l of LEVELS) for (const i of l.items) expect(i.level).toBe(l.level)
