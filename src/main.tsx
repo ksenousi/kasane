@@ -7,6 +7,9 @@ import { StoreProvider } from './state/store'
 
 registerSW({ immediate: true })
 
+// Progress lives only in this browser; ask it not to clear the data under storage pressure.
+void navigator.storage?.persist?.()
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <StoreProvider>
