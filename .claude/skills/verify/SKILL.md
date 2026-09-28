@@ -23,4 +23,14 @@ description: How to run and drive Kasane in the built-in browser to verify a cha
 - Tapping a word on Levels opens its item page.
 - Reload button on Home: set `window.__marker = 1`, tap Reload, and check that the marker is gone.
 
+**iPhone Home Screen mode (iOS Simulator):** Layout bugs that only happen in the installed app can't be reproduced in the desktop browser. Check them in the simulator instead:
+
+1. Boot an iPhone with `xcrun simctl boot <udid>`, then `attach` and `open_url` the live site (https://ksenousi.github.io/kasane/).
+2. Install it: Safari's ≡ menu → Share → View More → Add to Home Screen → Add, then tap the Kasane icon.
+   - The UI is slow on a fresh simulator, so wait 2–8s between steps.
+   - The first launch after install shows a white screen for about 15s and can have a one-off scroll offset. Judge from a cold launch instead: `xcrun simctl terminate booted com.apple.webapp`, then tap the icon again.
+3. Read the numbers: long-press the Home logo (`tap` with `duration: 1.2`) to open the diagnostics panel. It shows standalone mode, innerHeight, clientHeight, scroll position, safe-area insets, and where the header and tab bar sit.
+   - Known quirk: `clientHeight` is 62pt short of `innerHeight` (812 vs 874). `tokens.css` corrects for it.
+4. To pick up a new deploy, tap Reload twice.
+
 **Clean up:** Settings → Reset clock, resize to `desktop`, then `preview_stop`.
