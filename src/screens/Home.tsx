@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ITEMS } from '../content'
 import { formatIn } from '../lib/clock'
 import { forecast, stageCounts } from '../srs/queue'
 import { useStore } from '../state/store'
+import Diagnostics from '../ui/Diagnostics'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './Home.module.css'
@@ -25,11 +26,23 @@ export default function Home({ onLessons, onReviews }: Props) {
   const passed = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind && progress.get(i.id)?.passedAt != null).length
   const total = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind).length
   const lessonVocab = lessons.filter((i) => i.kind === 'vocab').length
+  // Five quick taps on the logo open layout diagnostics (for iPhone Home Screen quirks).
+  const [diag, setDiag] = useState(false)
+  const taps = useRef<number[]>([])
+  const onLogo = () => {
+    const t = Date.now()
+    taps.current = [...taps.current.filter((x) => t - x < 2000), t]
+    if (taps.current.length >= 5) {
+      taps.current = []
+      setDiag(true)
+    }
+  }
 
   return (
     <div className={s.page}>
+      {diag && <Diagnostics onClose={() => setDiag(false)} />}
       <header className={s.header}>
-        <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width={40} height={40} className={s.logo} />
+        <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width={40} height={40} className={s.logo} onClick={onLogo} />
         <div className={s.titles}>
           <span className={s.title}>Kasane</span>
           <span className={s.sub}>Level {level} · N3</span>
