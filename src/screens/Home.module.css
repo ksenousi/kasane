@@ -27,6 +27,7 @@
 }
 
 .logo {
+  -webkit-touch-callout: none;
   border-radius: 11px;
 }
 

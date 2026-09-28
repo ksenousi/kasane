@@ -26,23 +26,19 @@ export default function Home({ onLessons, onReviews }: Props) {
   const passed = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind && progress.get(i.id)?.passedAt != null).length
   const total = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind).length
   const lessonVocab = lessons.filter((i) => i.kind === 'vocab').length
-  // Five quick taps on the logo open layout diagnostics (for iPhone Home Screen quirks).
+  // Long-pressing the logo opens layout diagnostics (for iPhone Home Screen quirks).
   const [diag, setDiag] = useState(false)
-  const taps = useRef<number[]>([])
-  const onLogo = () => {
-    const t = Date.now()
-    taps.current = [...taps.current.filter((x) => t - x < 2000), t]
-    if (taps.current.length >= 5) {
-      taps.current = []
-      setDiag(true)
-    }
+  const press = useRef<number | undefined>(undefined)
+  const pressStart = () => {
+    press.current = window.setTimeout(() => setDiag(true), 700)
   }
+  const pressEnd = () => window.clearTimeout(press.current)
 
   return (
     <div className={s.page}>
       {diag && <Diagnostics onClose={() => setDiag(false)} />}
       <header className={s.header}>
-        <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width={40} height={40} className={s.logo} onClick={onLogo} />
+        <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width={40} height={40} className={s.logo} draggable={false} onPointerDown={pressStart} onPointerUp={pressEnd} onPointerLeave={pressEnd} onContextMenu={(e) => e.preventDefault()} />
         <div className={s.titles}>
           <span className={s.title}>Kasane</span>
           <span className={s.sub}>Level {level} · N3</span>

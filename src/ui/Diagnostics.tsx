@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-/** Layout numbers for debugging iPhone Home Screen quirks. Opened by tapping the Home logo 5 times. */
+/** Layout numbers for debugging iPhone Home Screen quirks. Opened by long-pressing the Home logo. */
 export default function Diagnostics({ onClose }: { onClose: () => void }) {
   const [, tick] = useState(0)
   useEffect(() => {
