@@ -1,6 +1,6 @@
 import { LEVELS, itemLabel } from '../content'
 import type { Item } from '../content/schema'
-import { stageGroup } from '../srs/stages'
+import { STAGES, stageGroup, stageStep, type Stage } from '../srs/stages'
 import { LEVEL_UP_FRACTION, passedFraction } from '../srs/unlock'
 import { ITEMS } from '../content'
 import { useStore } from '../state/store'
@@ -39,10 +39,18 @@ export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
                   <span className={ui.label}>{kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
                   <div className={s.chips} lang="ja">
                     {l.items.filter((i) => i.kind === kind).map((i) => {
-                      const g = stageGroup(progress.get(i.id)?.stage ?? 0)
+                      const stage = progress.get(i.id)?.stage ?? 0
+                      const g = stageGroup(stage)
                       return (
-                        <button key={i.id} className={`${s.chip} ${g === 'lesson' ? s.new : ''}`} style={{ background: GROUP_COLOR[g] }} onClick={() => onOpen(i)}>
+                        <button
+                          key={i.id}
+                          className={`${s.chip} ${g === 'lesson' ? s.new : ''}`}
+                          style={{ background: GROUP_COLOR[g] }}
+                          onClick={() => onOpen(i)}
+                          aria-label={`${itemLabel(i)}, ${g === 'lesson' ? 'not learned' : STAGES[stage].name}`}
+                        >
                           {itemLabel(i)}
+                          <Pips stage={stage} />
                         </button>
                       )
                     })}
@@ -58,6 +66,17 @@ export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
         ))}
         <span><i style={{ background: GROUP_COLOR.lesson }} />Not learned</span>
       </div>
+      <p className={s.pipKey}>Dots show the step within a stage: Apprentice 1–4, Guru 1–2.</p>
     </div>
+  )
+}
+
+function Pips({ stage }: { stage: Stage }) {
+  const at = stageStep(stage)
+  if (!at) return null
+  return (
+    <span className={s.pips} aria-hidden>
+      {Array.from({ length: at.of }, (_, k) => <i key={k} className={k < at.step ? s.pipOn : undefined} />)}
+    </span>
   )
 }

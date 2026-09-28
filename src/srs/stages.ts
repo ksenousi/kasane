@@ -37,3 +37,10 @@ export function stageGroup(stage: Stage): StageGroup {
 export function clampStage(n: number): Stage {
   return Math.max(0, Math.min(9, Math.round(n))) as Stage
 }
+
+/** Position within a multi-step group (Apprentice 1–4, Guru 1–2); null for single-step groups. */
+export function stageStep(stage: Stage): { step: number; of: number } | null {
+  if (stage >= 1 && stage <= 4) return { step: stage, of: 4 }
+  if (stage === 5 || stage === 6) return { step: stage - 4, of: 2 }
+  return null
+}
