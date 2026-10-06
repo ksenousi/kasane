@@ -51,6 +51,7 @@
 
 .toggles {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -228,4 +229,28 @@
   .en {
     transition: none;
   }
+}
+
+/* Already-known points: a toggle on each card, dimmed when shown. */
+.knownBtn {
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--line);
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.knownOn {
+  border: 1px solid var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.isKnown {
+  opacity: 0.6;
 }

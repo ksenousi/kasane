@@ -98,4 +98,13 @@ describe('removed content', () => {
     expect(await db.progress.count()).toBe(1)
     db.close()
   })
+
+  it('remembers grammar marked as known, including through a backup', async () => {
+    expect((await loadSettings()).knownGrammar).toEqual([])
+    await saveSetting('knownGrammar', ['ために', 'うちに'])
+    const backup = JSON.parse(JSON.stringify(await exportBackup(NOW)))
+    await resetAll()
+    await importBackup(backup)
+    expect((await loadSettings()).knownGrammar).toEqual(['ために', 'うちに'])
+  })
 })
