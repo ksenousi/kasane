@@ -254,3 +254,73 @@
 .isKnown {
   opacity: 0.6;
 }
+
+/* Known vs to-learn progress under the title. */
+.progress {
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--s2);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--ok);
+  transition: width 0.25s ease;
+}
+
+.progressText {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.progressText b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.progressText .knownNum {
+  color: var(--ok);
+}
+
+/* All / To learn / Known */
+.seg {
+  display: flex;
+  padding: 3px;
+  gap: 3px;
+  border-radius: 12px;
+  background: var(--s1);
+  border: 1px solid var(--line);
+}
+
+.seg button {
+  flex: 1;
+  min-height: 34px;
+  border: 0;
+  border-radius: 9px;
+  background: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.seg .segOn {
+  background: var(--s2);
+  color: var(--text);
+}
+
+.segCount {
+  margin-left: 3px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressFill {
+    transition: none;
+  }
+}

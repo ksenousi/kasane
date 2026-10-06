@@ -52,6 +52,19 @@ function Ja({ text }: { text: string }) {
 /** Plain text for searching: kanji without readings, plus the readings on their own. */
 const plain = (t: string) => `${t.replace(/\[[^\]]*\]|[{}]/g, '')} ${t.replace(RUBY, '$2').replace(/[{}]/g, '')}`
 
+type Show = 'all' | 'unknown' | 'known'
+
+function loadShow(): Show {
+  try {
+    const v = localStorage.getItem('grammar.show')
+    if (v === 'all' || v === 'unknown' || v === 'known') return v
+    // Before this filter there was a "Hide known" toggle (on by default).
+    return localStorage.getItem('grammar.hideKnown') === '0' ? 'all' : 'unknown'
+  } catch {
+    return 'unknown'
+  }
+}
+
 function load(key: string, fallback: boolean): boolean {
   try {
     const v = localStorage.getItem(key)
@@ -72,7 +85,15 @@ function save(key: string, on: boolean) {
 export default function Grammar() {
   const { settings, toggleKnownGrammar } = useStore()
   const known = useMemo(() => new Set(settings.knownGrammar), [settings.knownGrammar])
-  const [hideKnown, setHideKnown] = useState(() => load('grammar.hideKnown', true))
+  const [show, setShow] = useState<Show>(loadShow)
+  const pickShow = (v: Show) => {
+    setShow(v)
+    try {
+      localStorage.setItem('grammar.show', v)
+    } catch {
+      // Private mode: the choice just won't be remembered.
+    }
+  }
   const [query, setQuery] = useState('')
   const [furigana, setFurigana] = useState(() => load('grammar.furigana', true))
   const [hideEn, setHideEn] = useState(() => load('grammar.hideEn', false))
@@ -82,14 +103,16 @@ export default function Grammar() {
     const q = query.trim().toLowerCase()
     const match = (p: Point) =>
       !q || plain([p.pattern, p.meaning, p.connection, p.note, ...p.examples.flatMap((e) => [e.ja, e.en])].join(' ')).toLowerCase().includes(q)
-    return GROUPS.map((g) => ({ ...g, points: g.points.filter((p) => match(p) && !(hideKnown && known.has(p.pattern))) })).filter(
-      (g) => g.points.length,
-    )
-  }, [query, hideKnown, known])
+    const wanted = (p: Point) => show === 'all' || (show === 'known') === known.has(p.pattern)
+    return GROUPS.map((g) => ({ ...g, points: g.points.filter((p) => match(p) && wanted(p)) })).filter((g) => g.points.length)
+  }, [query, show, known])
 
   const toggleKnown = (pattern: string) => void toggleKnownGrammar(pattern)
 
   const total = GROUPS.reduce((n, g) => n + g.points.length, 0)
+  const knownCount = GROUPS.reduce((n, g) => n + g.points.filter((p) => known.has(p.pattern)).length, 0)
+  const counts: Record<Show, number> = { all: total, unknown: total - knownCount, known: knownCount }
+  const SHOW_LABEL: Record<Show, string> = { all: 'All', unknown: 'To learn', known: 'Known' }
   const toggle = (key: string) => setShown((prev) => {
     const next = new Set(prev)
     if (next.has(key)) next.delete(key)
@@ -100,8 +123,14 @@ export default function Grammar() {
   return (
     <div className={`${s.page} ${furigana ? '' : s.noFuri}`}>
       <div className={s.head}>
-        <span className={ui.label}>N3 · {total} core points · {known.size} known</span>
+        <span className={ui.label}>N3 · {total} core points</span>
         <span className={s.title}>Grammar</span>
+        <div className={s.progress} aria-label={`${knownCount} of ${total} known`}>
+          <div className={s.progressFill} style={{ width: `${(knownCount / total) * 100}%` }} />
+        </div>
+        <span className={s.progressText}>
+          <b className={s.knownNum}>{knownCount}</b> known · <b>{total - knownCount}</b> to learn
+        </span>
       </div>
 
       <div className={s.bar}>
@@ -120,7 +149,13 @@ export default function Grammar() {
         <div className={s.toggles}>
           <button className={`${s.toggle} ${furigana ? s.on : ''}`} aria-pressed={furigana} onClick={() => { setFurigana(!furigana); save('grammar.furigana', !furigana) }}>Furigana</button>
           <button className={`${s.toggle} ${hideEn ? s.on : ''}`} aria-pressed={hideEn} onClick={() => { setHideEn(!hideEn); save('grammar.hideEn', !hideEn); setShown(new Set()) }}>Hide English</button>
-          <button className={`${s.toggle} ${hideKnown ? s.on : ''}`} aria-pressed={hideKnown} onClick={() => { setHideKnown(!hideKnown); save('grammar.hideKnown', !hideKnown) }}>Hide known</button>
+        </div>
+        <div className={s.seg} role="group" aria-label="Show">
+          {(['unknown', 'known', 'all'] as const).map((v) => (
+            <button key={v} className={show === v ? s.segOn : ''} aria-pressed={show === v} onClick={() => pickShow(v)}>
+              {SHOW_LABEL[v]} <span className={s.segCount}>{counts[v]}</span>
+            </button>
+          ))}
         </div>
         <nav className={s.chips} aria-label="Groups">
           {groups.map((g) => (
@@ -133,7 +168,11 @@ export default function Grammar() {
 
       {groups.length === 0 && (
         <p className={s.empty}>
-          {query ? <>Nothing matches “{query}”{hideKnown && known.size ? ' among the points you haven’t marked known' : ''}. Try a pattern like ために or an English word like “even”.</> : 'You’ve marked every point as known. Turn off “Hide known” to see them again.'}
+          {query
+            ? <>Nothing matches “{query}”{show !== 'all' ? ` in ${SHOW_LABEL[show]}` : ''}. Try a pattern like ために or an English word like “even”.</>
+            : show === 'known'
+              ? 'Nothing marked as known yet. Tap “Mark known” on a point you’re comfortable with.'
+              : 'You’ve marked every point as known. Pick “All” to see them again.'}
         </p>
       )}
 
