@@ -30,11 +30,6 @@
   line-height: 1.1;
 }
 
-.pattern {
-  font-size: 44px;
-  font-weight: 600;
-  color: var(--grammar);
-}
 
 .hint {
   max-width: 230px;

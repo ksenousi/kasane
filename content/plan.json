@@ -1,5 +1,5 @@
 {
- "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-35, ordered by JPDB frequency (rank <= 20000). Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Grammar: the 91 points JLPT Sensei and Bunpro both call N3, in Bunpro lesson order. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
+ "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-35, ordered by JPDB frequency (rank <= 20000). Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
  "perLevel": 30,
  "levels": [
   {
@@ -155,13 +155,6 @@
      "reading": "とにかく",
      "rank": 590
     }
-   ],
-   "grammar": [
-    "〜うちに",
-    "〜ために",
-    "〜に違いない",
-    "〜わけではない",
-    "〜おかげで"
    ]
   },
   {
@@ -317,13 +310,6 @@
      "reading": "ちゅうしん",
      "rank": 1181
     }
-   ],
-   "grammar": [
-    "〜せいで",
-    "〜たびに",
-    "〜てばかりいる",
-    "〜とおりに",
-    "〜ついでに"
    ]
   },
   {
@@ -480,12 +466,6 @@
      "reading": "たちあがる",
      "rank": 1326
     }
-   ],
-   "grammar": [
-    "〜ばいい",
-    "〜中",
-    "〜べきではない",
-    "〜なかなか"
    ]
   },
   {
@@ -641,12 +621,6 @@
      "reading": "なぞ",
      "rank": 1742
     }
-   ],
-   "grammar": [
-    "〜あまり",
-    "〜てごらん",
-    "〜ところが",
-    "〜ところで"
    ]
   },
   {
@@ -802,11 +776,6 @@
      "reading": "のぞく",
      "rank": 1982
     }
-   ],
-   "grammar": [
-    "〜ほど",
-    "〜ば-ほど",
-    "〜ほど～ない"
    ]
   },
   {
@@ -962,12 +931,6 @@
      "reading": "くるう",
      "rank": 2310
     }
-   ],
-   "grammar": [
-    "〜ということだ",
-    "〜というのは",
-    "〜的",
-    "〜最中に"
    ]
   },
   {
@@ -1123,12 +1086,6 @@
      "reading": "あと",
      "rank": 2666
     }
-   ],
-   "grammar": [
-    "〜上で",
-    "〜こそ",
-    "〜は-で有名",
-    "〜ことはない"
    ]
   },
   {
@@ -1284,12 +1241,6 @@
      "reading": "しょうがい",
      "rank": 2953
     }
-   ],
-   "grammar": [
-    "〜合う",
-    "〜について",
-    "〜そのため-に",
-    "〜に比べて"
    ]
   },
   {
@@ -1445,11 +1396,6 @@
      "reading": "はだか",
      "rank": 3514
     }
-   ],
-   "grammar": [
-    "〜どんなに-ても",
-    "〜わけだ",
-    "〜んだって"
    ]
   },
   {
@@ -1605,12 +1551,6 @@
      "reading": "こや",
      "rank": 3958
     }
-   ],
-   "grammar": [
-    "〜に対して",
-    "〜しかない",
-    "〜わけがない",
-    "〜として"
    ]
   },
   {
@@ -1766,12 +1706,6 @@
      "reading": "てま",
      "rank": 4433
     }
-   ],
-   "grammar": [
-    "〜にしては",
-    "〜にしても",
-    "〜ことから",
-    "〜というより"
    ]
   },
   {
@@ -1927,12 +1861,6 @@
      "reading": "しんこう",
      "rank": 4875
     }
-   ],
-   "grammar": [
-    "〜はもちろん",
-    "〜をはじめ",
-    "〜さえ",
-    "〜さえ-ば"
    ]
   },
   {
@@ -2088,12 +2016,6 @@
      "reading": "よさん",
      "rank": 5473
     }
-   ],
-   "grammar": [
-    "〜たものだ",
-    "〜さて",
-    "〜むしろ",
-    "〜つまり"
    ]
   },
   {
@@ -2249,11 +2171,6 @@
      "reading": "あいにく",
      "rank": 6081
     }
-   ],
-   "grammar": [
-    "〜ような気がする",
-    "〜とても-ない",
-    "〜別に-ない"
    ]
   },
   {
@@ -2409,12 +2326,6 @@
      "reading": "しんり",
      "rank": 6566
     }
-   ],
-   "grammar": [
-    "〜ばかりでなく",
-    "〜決して-ない",
-    "〜わけにはいかない",
-    "〜-ようとしない"
    ]
   },
   {
@@ -2570,12 +2481,6 @@
      "reading": "けいたい",
      "rank": 7103
     }
-   ],
-   "grammar": [
-    "〜もしかしたら",
-    "〜たとえ-ても",
-    "〜ずつ",
-    "〜だらけ"
    ]
   },
   {
@@ -2731,12 +2636,6 @@
      "reading": "どういつ",
      "rank": 7704
     }
-   ],
-   "grammar": [
-    "〜とは限らない",
-    "〜めったに-ない",
-    "〜ないことはない",
-    "〜と共に"
    ]
   },
   {
@@ -2892,11 +2791,6 @@
      "reading": "きせい",
      "rank": 8086
     }
-   ],
-   "grammar": [
-    "〜につれて",
-    "〜ながらも",
-    "〜一方だ"
    ]
   },
   {
@@ -3052,12 +2946,6 @@
      "reading": "きこう",
      "rank": 9726
     }
-   ],
-   "grammar": [
-    "〜すでに",
-    "〜ずに",
-    "〜ずにはいられない",
-    "〜向き"
    ]
   },
   {
@@ -3213,12 +3101,6 @@
      "reading": "すみ",
      "rank": 11226
     }
-   ],
-   "grammar": [
-    "〜向け",
-    "〜切る",
-    "〜切れない",
-    "〜きり"
    ]
   },
   {
@@ -3374,12 +3256,6 @@
      "reading": "ふか",
      "rank": 12877
     }
-   ],
-   "grammar": [
-    "〜にかけて",
-    "〜たて",
-    "〜ふりをする",
-    "〜どうしても"
    ]
   },
   {
@@ -3535,11 +3411,6 @@
      "reading": "さす",
      "rank": 14732
     }
-   ],
-   "grammar": [
-    "〜がたい",
-    "〜まさか",
-    "〜つい"
    ]
   },
   {
@@ -3695,12 +3566,6 @@
      "reading": "あてる",
      "rank": 18116
     }
-   ],
-   "grammar": [
-    "〜くせに",
-    "〜がち",
-    "〜っぽい",
-    "〜っぱなし"
    ]
   },
   {
@@ -3806,12 +3671,6 @@
      "reading": "せんざい",
      "rank": 19736
     }
-   ],
-   "grammar": [
-    "〜わざわざ",
-    "〜一体",
-    "〜っけ",
-    "〜代わりに"
    ]
   }
  ]

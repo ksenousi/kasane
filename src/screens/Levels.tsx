@@ -33,12 +33,10 @@ export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
               <span className={s.name}>Level {l.level}{l.level === level ? ' · current' : ''}</span>
               <span className={s.muted}>{locked ? `Unlocks at ${LEVEL_UP_FRACTION * 100}% of level ${l.level - 1}` : `${pct}% passed`}</span>
             </div>
-            {!locked &&
-              (['vocab', 'grammar'] as const).map((kind) => (
-                <div key={kind} className={s.group}>
-                  <span className={ui.label}>{kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
+            {!locked && (
+                <div className={s.group}>
                   <div className={s.chips} lang="ja">
-                    {l.items.filter((i) => i.kind === kind).map((i) => {
+                    {l.items.map((i) => {
                       const stage = progress.get(i.id)?.stage ?? 0
                       const g = stageGroup(stage)
                       return (
@@ -56,7 +54,7 @@ export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
                     })}
                   </div>
                 </div>
-              ))}
+              )}
           </section>
         )
       })}

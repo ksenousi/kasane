@@ -23,14 +23,13 @@ export default function FlipCard({ item, onKnew, onMissed, onChoices }: Props) {
   return (
     <div className={s.wrap} onClickCapture={guard}>
       <button className={s.card} onClick={() => setShown(true)} disabled={shown} aria-label={shown ? undefined : 'Show answer'}>
-        <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
-        {!shown && <span className={s.hint}>{item.kind === 'vocab' ? (hasKanji(item.word) ? 'Recall the reading and meaning, then tap' : 'Recall the meaning, then tap') : 'Recall the meaning and how it connects, then tap'}</span>}
+        <span className={s.word} lang="ja">{itemLabel(item)}</span>
+        {!shown && <span className={s.hint}>{hasKanji(item.word) ? 'Recall the reading and meaning, then tap' : 'Recall the meaning, then tap'}</span>}
         {shown && (
           <>
-            {item.kind === 'vocab' && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
+            {hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
             <span className={s.rule} />
-            <span className={s.meaning}>{item.kind === 'vocab' ? item.meanings.join('; ') : item.meaning}</span>
-            {item.kind === 'grammar' && <span className={s.sub} lang="ja">{item.connection}</span>}
+            <span className={s.meaning}>{item.meanings.join('; ')}</span>
             {ex && <span className={s.ex} lang="ja">{ex.full}</span>}
             {ex && <span className={s.sub}>{ex.en}</span>}
           </>

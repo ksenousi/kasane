@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { useTapGuard } from '../lib/tapGuard'
 import ui from '../ui/ui.module.css'
-import type { ChoiceQuestion, OrderQuestion, Prompt, Question, TilesQuestion } from './build'
+import type { ChoiceQuestion, Prompt, Question, TilesQuestion } from './build'
 import s from './Question.module.css'
 
 /** The user's answer once given: what they picked and whether it was right. */
@@ -42,9 +42,8 @@ function PromptView({ prompt }: { prompt: Prompt }) {
     case 'card':
       return (
         <>
-          <span className={`${s.cardLabel} ${prompt.vocab ? s.cardVocab : ''}`} lang="ja">{prompt.label}</span>
+          <span className={s.cardLabel} lang="ja">{prompt.label}</span>
           <span className={s.cardText}>{prompt.text}</span>
-          {prompt.sentence && <span lang="ja"><Sentence text={prompt.sentence} /></span>}
         </>
       )
   }
@@ -61,15 +60,6 @@ function Choice({ q, given, onAnswer }: { q: ChoiceQuestion; given: Given | null
   const long = q.options.some((o) => o.length > 14)
   const gridLong = q.options.some((o) => o.length > 5)
 
-  if (q.layout === 'chips') {
-    return (
-      <div className={s.chips} lang="ja">
-        {q.options.map((o) => (
-          <button key={o} className={`${s.chip} ${cls(o)}`} onClick={() => pick(o)}>{o}</button>
-        ))}
-      </div>
-    )
-  }
   if (q.layout === 'grid') {
     return (
       <div className={s.grid} lang="ja">
@@ -122,68 +112,17 @@ function Tiles({ q, given, onAnswer }: { q: TilesQuestion; given: Given | null; 
   )
 }
 
-function Order({ q, given, onAnswer }: { q: OrderQuestion; given: Given | null; onAnswer: (g: Given) => void }) {
-  const [slots, setSlots] = useState<(number | null)[]>(() => q.correct.map(() => null))
-  const place = (i: number) => {
-    if (given || slots.includes(i)) return
-    const j = slots.indexOf(null)
-    if (j >= 0) setSlots(slots.map((x, k) => (k === j ? i : x)))
-  }
-  const full = slots.every((x) => x !== null)
-  const check = () => {
-    const value = slots.map((x) => q.pool[x!]).join(' → ')
-    onAnswer({ value, correct: slots.every((x, k) => q.pool[x!] === q.correct[k]) })
-  }
-  return (
-    <>
-      <div className={s.orderLine} lang="ja">
-        <span>{q.before}</span>
-        {slots.map((x, k) => (
-          <button
-            key={k}
-            className={`${s.slot} ${x !== null ? s.slotFilled : ''} ${k === q.star ? s.star : ''} ${given && k === q.star ? (given.correct ? s.right : s.wrong) : ''}`}
-            disabled={!!given}
-            onClick={() => setSlots(slots.map((y, m) => (m === k ? null : y)))}
-            aria-label={k === q.star ? 'Star slot' : `Slot ${k + 1}`}
-          >
-            {x !== null ? q.pool[x] : k === q.star ? '★' : ''}
-          </button>
-        ))}
-        <span>{q.after}</span>
-      </div>
-      <div className={s.spacer} />
-      <div className={s.tiles} lang="ja">
-        {q.pool.map((t, i) => (
-          <button key={i} className={`${s.tile} ${slots.includes(i) ? s.used : ''}`} disabled={!!given || slots.includes(i)} onClick={() => place(i)}>
-            {t}
-          </button>
-        ))}
-      </div>
-      {!given && (
-        <div className={s.actions}>
-          <button className={ui.btnGhost} style={{ width: 120 }} onClick={() => setSlots(q.correct.map(() => null))}>Clear</button>
-          <button className={ui.btn} disabled={!full} onClick={check}>Check</button>
-        </div>
-      )}
-    </>
-  )
-}
-
 export default function QuestionView({ question: q, given, onAnswer }: Props) {
-  const showBand = q.kind !== 'order' && !(q.kind === 'choice' && q.layout === 'chips')
   const guard = useTapGuard()
   return (
     <div className={s.wrap} onClickCapture={guard}>
-      {showBand && (
-        <div className={s.band}>
-          <PromptView prompt={q.prompt} />
-        </div>
-      )}
+      <div className={s.band}>
+        <PromptView prompt={q.prompt} />
+      </div>
       <p className={s.instruction}>{q.instruction}</p>
       {q.kind === 'choice' && <div className={s.spacer} />}
       {q.kind === 'choice' && <Choice q={q} given={given} onAnswer={onAnswer} />}
       {q.kind === 'tiles' && <Tiles q={q} given={given} onAnswer={onAnswer} />}
-      {q.kind === 'order' && <Order q={q} given={given} onAnswer={onAnswer} />}
     </div>
   )
 }

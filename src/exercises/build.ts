@@ -1,4 +1,4 @@
-import type { GrammarItem, Item, VocabItem } from '../content/schema'
+import type { Item } from '../content/schema'
 import { kanjiDecoys, shuffle, type ExerciseId, type Rng } from '../srs/queue'
 
 /** What sits in the top half of the question screen. */
@@ -7,8 +7,8 @@ export type Prompt =
   | { type: 'english'; text: string }
   /** Japanese sentence. `＿` renders as a blank, 【x】 as underlined x. */
   | { type: 'sentence'; text: string }
-  /** A labelled card (grammar pattern or situation) with an optional sentence under it. */
-  | { type: 'card'; label: string; text: string; sentence?: string; vocab?: boolean }
+  /** A reading with its meaning underneath. */
+  | { type: 'card'; label: string; text: string }
 
 export interface ChoiceQuestion {
   kind: 'choice'
@@ -18,7 +18,7 @@ export interface ChoiceQuestion {
   prompt: Prompt
   options: string[]
   answer: string
-  layout: 'list' | 'grid' | 'chips'
+  layout: 'list' | 'grid'
 }
 
 export interface TilesQuestion {
@@ -31,29 +31,13 @@ export interface TilesQuestion {
   answer: string
 }
 
-export interface OrderQuestion {
-  kind: 'order'
-  ex: 'G2'
-  tag: string
-  instruction: string
-  before: string
-  after: string
-  /** Shuffled chunks to place. */
-  pool: string[]
-  correct: string[]
-  star: number
-  en: string
-}
-
-export type Question = ChoiceQuestion | TilesQuestion | OrderQuestion
-
-const bare = (pattern: string) => pattern.replace(/^〜/, '')
+export type Question = ChoiceQuestion | TilesQuestion
 
 function choice(q: Omit<ChoiceQuestion, 'kind' | 'options'>, wrong: string[], rng: Rng): ChoiceQuestion {
   return { kind: 'choice', ...q, options: shuffle([q.answer, ...wrong], rng) }
 }
 
-function vocabQuestion(v: VocabItem, ex: ExerciseId, rng: Rng): Question {
+export function buildQuestion(v: Item, ex: ExerciseId, rng: Rng = Math.random): Question {
   const ex0 = v.examples[0]
   switch (ex) {
     case 'V1':
@@ -85,54 +69,15 @@ function vocabQuestion(v: VocabItem, ex: ExerciseId, rng: Rng): Question {
     case 'V4':
       return {
         kind: 'tiles', ex, tag: 'Write the kanji', instruction: 'Build the word from kanji tiles',
-        prompt: { type: 'card', label: v.reading, text: v.meanings.slice(0, 2).join('; '), vocab: true },
+        prompt: { type: 'card', label: v.reading, text: v.meanings.slice(0, 2).join('; ') },
         tiles: shuffle([...v.word, ...kanjiDecoys(v)], rng), answer: v.word,
       }
     default:
-      throw new Error(`${ex} is not a vocab exercise`)
+      throw new Error(`Unknown exercise ${ex}`)
   }
-}
-
-function grammarQuestion(g: GrammarItem, ex: ExerciseId, rng: Rng): Question {
-  switch (ex) {
-    case 'G1': {
-      const e = g.examples.find((x) => x.ja.includes('＿'))!
-      return choice({ ex, tag: 'Fill the blank', instruction: 'Which grammar fits?', prompt: { type: 'sentence', text: e.ja }, answer: bare(g.pattern), layout: 'grid' }, g.confusables.slice(0, 3).map(bare), rng)
-    }
-    case 'G3': {
-      const f = g.forms!
-      return choice({ ex, tag: 'Connection', instruction: `Which form of ${f.base} connects correctly?`, prompt: { type: 'card', label: g.pattern, text: g.meaning, sentence: f.sentence }, answer: f.answer, layout: 'grid' }, f.wrong, rng)
-    }
-    case 'G6': {
-      const t = g.translate!
-      return choice({ ex, tag: 'Meaning', instruction: 'What does this sentence mean?', prompt: { type: 'sentence', text: t.sentence }, answer: t.answer, layout: 'list' }, t.wrong, rng)
-    }
-    case 'G5': {
-      const e = g.errorSpot!
-      return { kind: 'choice', ex, tag: 'Spot the error', instruction: 'One piece is wrong. Tap it.', prompt: { type: 'english', text: '' }, options: e.chunks, answer: e.chunks[e.wrong], layout: 'chips' }
-    }
-    case 'G7': {
-      const s = g.situation!
-      return choice({ ex, tag: 'Situation', instruction: 'What do you say?', prompt: { type: 'card', label: 'Situation', text: s.prompt, sentence: s.sentence }, answer: s.answer, layout: 'list' }, s.wrong, rng)
-    }
-    case 'G2': {
-      const o = g.order!
-      return {
-        kind: 'order', ex, tag: 'Sentence order ★', instruction: 'Tap the pieces into order. Which one lands on ★?',
-        before: o.before, after: o.after, pool: shuffle(o.chunks, rng), correct: o.chunks, star: o.star, en: o.en,
-      }
-    }
-    default:
-      throw new Error(`${ex} is not a grammar exercise`)
-  }
-}
-
-export function buildQuestion(item: Item, ex: ExerciseId, rng: Rng = Math.random): Question {
-  return item.kind === 'vocab' ? vocabQuestion(item, ex, rng) : grammarQuestion(item, ex, rng)
 }
 
 /** Text for the "Correct: …" line after a wrong answer. */
 export function correctAnswerText(q: Question): string {
-  if (q.kind === 'order') return q.correct.join(' → ')
   return q.answer
 }

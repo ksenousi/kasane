@@ -24,7 +24,7 @@ export default function ItemPage({ item, onBack }: { item: Item; onBack: () => v
       <div className={ui.topbar}>
         <button className={ui.iconBtn} onClick={onBack} aria-label="Back to levels"><I.Back /></button>
         <span className={s.step}>{status}</span>
-        <span className={`${ui.pill} ${item.kind === 'vocab' ? ui.pillVocab : ui.pillGrammar}`}>{item.kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
+        <span className={`${ui.pill} ${ui.pillVocab}`}>Vocab</span>
       </div>
       <ItemCard item={item} />
     </div>

@@ -44,20 +44,15 @@ export function stageCounts(progress: Iterable<Progress>): Record<StageGroup, nu
 
 // ---- Question choice -------------------------------------------------------
 
-/**
- * Each review asks two parts: vocab needs meaning + reading, grammar needs
- * meaning + connection. The item only moves once both are answered.
- */
-export type Part = 'meaning' | 'reading' | 'connection'
+/** Each review asks for the meaning and the reading. The item only moves once both are answered. */
+export type Part = 'meaning' | 'reading'
 
 export type ExerciseId =
   | 'V1' | 'V2' | 'V3' | 'V4' | 'V5' | 'V6' | 'V7' | 'V10'
-  | 'G1' | 'G2' | 'G3' | 'G5' | 'G6' | 'G7'
   /** Recall card (flip mode), logged for stats only. */
   | 'RC'
 
 export function partsFor(item: Item): Part[] {
-  if (item.kind === 'grammar') return ['meaning', 'connection']
   // Kana-only words have nothing to read, so they're asked about meaning only.
   return hasKanji(item.word) ? ['meaning', 'reading'] : ['meaning']
 }
@@ -82,24 +77,13 @@ const POOLS: Record<Part, Record<Tier, ExerciseId[]>> = {
     guru: ['V3', 'V10', 'V4'],
     master: ['V3', 'V4'],
   },
-  connection: {
-    apprentice: ['G3'],
-    guru: ['G3'],
-    master: ['G3'],
-  },
-}
-
-const GRAMMAR_MEANING: Record<Tier, ExerciseId[]> = {
-  apprentice: ['G1', 'G6'],
-  guru: ['G2', 'G1'],
-  master: ['G5', 'G7', 'G2'],
 }
 
 const KANJI = /^[\u4e00-\u9fff]{2,}$/
 
 /** Kanji from the look-alike words that aren't in the word itself: decoy tiles for V4. Only for all-kanji words. */
 export function kanjiDecoys(item: Item): string[] {
-  if (item.kind !== 'vocab' || !KANJI.test(item.word)) return []
+  if (!KANJI.test(item.word)) return []
   const own = new Set(item.word)
   const pool = item.distractors.words.join('').split('').filter((c) => /[\u4e00-\u9fff]/.test(c) && !own.has(c))
   return [...new Set(pool)].slice(0, 3)
@@ -107,25 +91,14 @@ export function kanjiDecoys(item: Item): string[] {
 
 /** Does the item have the data this exercise needs? */
 export function supports(item: Item, ex: ExerciseId): boolean {
-  if (item.kind === 'vocab') {
-    switch (ex) {
-      case 'V3': return !!item.tiles?.length
-      case 'V4': return kanjiDecoys(item).length >= 2
-      case 'V5': return item.examples.some((e) => e.ja.includes('＿')) && item.contextWrong.length >= 3
-      case 'V6': return !!item.paraphrase
-      case 'V7': return !!item.usage
-      case 'V10': return item.examples.length > 0 || item.distractors.readings.length >= 3
-      case 'V1': case 'V2': return true
-      default: return false
-    }
-  }
   switch (ex) {
-    case 'G1': return item.examples.some((e) => e.ja.includes('＿')) && item.confusables.length >= 3
-    case 'G2': return !!item.order
-    case 'G3': return !!item.forms
-    case 'G5': return !!item.errorSpot
-    case 'G6': return !!item.translate
-    case 'G7': return !!item.situation
+    case 'V3': return !!item.tiles?.length
+    case 'V4': return kanjiDecoys(item).length >= 2
+    case 'V5': return item.examples.some((e) => e.ja.includes('＿')) && item.contextWrong.length >= 3
+    case 'V6': return !!item.paraphrase
+    case 'V7': return !!item.usage
+    case 'V10': return item.examples.length > 0 || item.distractors.readings.length >= 3
+    case 'V1': case 'V2': return true
     default: return false
   }
 }
@@ -138,7 +111,7 @@ export function supports(item: Item, ex: ExerciseId): boolean {
 export function pickExercise(item: Item, part: Part, stage: Stage, rng: Rng = Math.random, last?: ExerciseId): ExerciseId | null {
   const order: Tier[] = tier(stage) === 'master' ? ['master', 'guru', 'apprentice'] : tier(stage) === 'guru' ? ['guru', 'apprentice'] : ['apprentice']
   for (const t of order) {
-    const pool = (item.kind === 'grammar' && part === 'meaning' ? GRAMMAR_MEANING[t] : POOLS[part][t]).filter((ex) => supports(item, ex))
+    const pool = POOLS[part][t].filter((ex) => supports(item, ex))
     if (pool.length === 0) continue
     const fresh = pool.length > 1 && last ? pool.filter((ex) => ex !== last) : pool
     return fresh[Math.floor(rng() * fresh.length)]

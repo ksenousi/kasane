@@ -11,7 +11,7 @@ interface Props {
   onExit: () => void
 }
 
-const meaningOf = (i: Item) => (i.kind === 'vocab' ? i.meanings[0] : i.meaning)
+const meaningOf = (i: Item) => i.meanings[0]
 
 /** Lesson warm-up: tap a word, then its meaning. No effect on the SRS. */
 export default function MatchPairs({ items, onDone, onExit }: Props) {

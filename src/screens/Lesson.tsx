@@ -63,7 +63,7 @@ export default function Lesson({ onExit }: Props) {
       <div className={ui.topbar}>
         <button className={ui.iconBtn} onClick={onExit} aria-label="Close lesson"><I.Close /></button>
         <span className={s.step}>Lesson · {index + 1} of {batch.length}</span>
-        <span className={`${ui.pill} ${item.kind === 'vocab' ? ui.pillVocab : ui.pillGrammar}`}>{item.kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
+        <span className={`${ui.pill} ${ui.pillVocab}`}>Vocab</span>
       </div>
 
       <ItemCard item={item} />

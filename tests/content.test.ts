@@ -3,10 +3,9 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import plan from '../content/plan.json'
-import { ITEMS, ITEMS_BY_ID, LEVELS, hasKanji, kanjiBreakdown } from '../src/content'
+import { ITEMS, LEVELS, hasKanji, kanjiBreakdown } from '../src/content'
 
-const vocab = ITEMS.filter((i) => i.kind === 'vocab')
-const grammar = ITEMS.filter((i) => i.kind === 'grammar')
+const vocab = ITEMS
 
 function distinct(xs: string[]) {
   return new Set(xs).size === xs.length
@@ -14,12 +13,12 @@ function distinct(xs: string[]) {
 
 describe('content', () => {
   it('gives every item a meaning hook, and a reading hook when the word has kanji', () => {
-    const missing = ITEMS.filter((i) => !i.mnemonic?.meaning || (i.kind === 'vocab' && hasKanji(i.word) && !i.mnemonic.reading))
+    const missing = ITEMS.filter((i) => !i.mnemonic?.meaning || (hasKanji(i.word) && !i.mnemonic.reading))
     expect(missing.map((i) => i.id)).toEqual([])
   })
 
   it('has a meaning for every kanji in words with two or more kanji', () => {
-    const missing = ITEMS.flatMap((i) => (i.kind === 'vocab' ? kanjiBreakdown(i.word) : []))
+    const missing = ITEMS.flatMap((i) => kanjiBreakdown(i.word))
       .filter((p) => !p.meaning)
       .map((p) => p.kanji)
     expect([...new Set(missing)]).toEqual([])
@@ -31,7 +30,6 @@ describe('content', () => {
   })
 
   it.each(vocab.map((v) => [v.id, v] as const))('vocab %s is complete', (_, v) => {
-    if (v.kind !== 'vocab') return
     expect(v.reading).toMatch(/^[ぁ-ゖー]+$/)
     expect(v.meanings.length).toBeGreaterThan(0)
     if (hasKanji(v.word)) expect(v.distractors.readings).toHaveLength(3)
@@ -51,25 +49,6 @@ describe('content', () => {
     if (v.usage) expect(v.usage.correct).toContain(v.word.slice(0, 1))
   })
 
-  it.each(grammar.map((g) => [g.id, g] as const))('grammar %s is complete', (_, g) => {
-    if (g.kind !== 'grammar') return
-    for (const id of g.requires) expect(ITEMS_BY_ID.get(id)?.kind).toBe('vocab')
-    expect(g.examples.length).toBeGreaterThan(0)
-    const bare = g.pattern.replace('〜', '')
-    for (const e of g.examples) {
-      expect(e.ja.split('＿')).toHaveLength(2)
-      expect(e.full.startsWith(e.ja.split('＿')[0] + bare)).toBe(true)
-    }
-    expect(g.confusables.length).toBeGreaterThanOrEqual(3)
-    expect(g.confusables).not.toContain(g.pattern)
-    if (g.forms) {
-      expect(distinct([g.forms.answer, ...g.forms.wrong])).toBe(true)
-      expect(g.forms.sentence.split('＿')).toHaveLength(2)
-    }
-    if (g.order) expect(g.order.star).toBeLessThan(g.order.chunks.length)
-    if (g.errorSpot) expect(g.errorSpot.wrong).toBeLessThan(g.errorSpot.chunks.length)
-    if (g.situation) expect(distinct([g.situation.answer, ...g.situation.wrong])).toBe(true)
-  })
 })
 
 // Local-only guards: scripts/wanikani.mjs writes these files (gitignored, so CI skips them).
@@ -83,7 +62,7 @@ describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split
   }
   it('has no Kasane vocab that WaniKani covers, in any form', () => {
     const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.flatMap((w: { word: string }) => [w.word, base(w.word)]))
-    expect(vocab.flatMap((v) => (v.kind === 'vocab' && (known.has(v.word) || known.has(base(v.word))) ? [v.word] : []))).toEqual([])
+    expect(vocab.flatMap((v) => (known.has(v.word) || known.has(base(v.word)) ? [v.word] : []))).toEqual([])
   })
   it('keeps the plan free of WaniKani words too', () => {
     const known = new Set<string>(JSON.parse(readFileSync(file, 'utf-8')).words.flatMap((w: { word: string }) => [w.word, base(w.word)]))
@@ -92,13 +71,11 @@ describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split
   })
 })
 
-// Content follows content/plan.json: each written level has exactly the planned words and grammar.
+// Content follows content/plan.json: each written level has exactly the planned words.
 describe('level plan', () => {
   it.each(LEVELS.map((l) => [l.level, l] as const))('level %i matches the plan', (n, l) => {
     const p = plan.levels.find((x) => x.level === n)!
-    const words = l.items.flatMap((i) => (i.kind === 'vocab' ? [`${i.word}:${i.reading}`] : []))
+    const words = l.items.map((i) => `${i.word}:${i.reading}`)
     expect(words.sort()).toEqual(p.vocab.map((v) => `${v.word}:${v.reading}`).sort())
-    const grammar = l.items.flatMap((i) => (i.kind === 'grammar' ? [i.pattern] : []))
-    expect(grammar.sort()).toEqual([...p.grammar].sort())
   })
 })

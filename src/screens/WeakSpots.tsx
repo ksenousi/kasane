@@ -14,9 +14,6 @@ const SECTIONS: { ja: string; en: string; exercises: ExerciseId[] }[] = [
   { ja: '文脈規定', en: 'Word in context', exercises: ['V5'] },
   { ja: '言い換え類義', en: 'Paraphrase', exercises: ['V6'] },
   { ja: '用法', en: 'Usage', exercises: ['V7'] },
-  { ja: '文法形式の判断', en: 'Pick the grammar', exercises: ['G1', 'G3', 'G7'] },
-  { ja: '文の組み立て', en: 'Sentence order ★', exercises: ['G2'] },
-  { ja: '文法の意味', en: 'Meaning & errors', exercises: ['G5', 'G6'] },
   { ja: '思い出す', en: 'Recall cards', exercises: ['RC'] },
 ]
 

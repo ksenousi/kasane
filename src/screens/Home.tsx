@@ -23,9 +23,7 @@ export default function Home({ onLessons, onReviews }: Props) {
   const counts = stageCounts(all.filter((p) => p.stage > 0))
 
   const inLevel = ITEMS.filter((i) => i.level === level)
-  const passed = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind && progress.get(i.id)?.passedAt != null).length
-  const total = (kind: 'vocab' | 'grammar') => inLevel.filter((i) => i.kind === kind).length
-  const lessonVocab = lessons.filter((i) => i.kind === 'vocab').length
+  const passed = inLevel.filter((i) => progress.get(i.id)?.passedAt != null).length
   // Long-pressing the logo opens layout diagnostics (for iPhone Home Screen quirks).
   const [diag, setDiag] = useState(false)
   const press = useRef<number | undefined>(undefined)
@@ -50,7 +48,7 @@ export default function Home({ onLessons, onReviews }: Props) {
         <button className={s.lessons} onClick={onLessons} disabled={lessons.length === 0}>
           <span className={s.bigLabel}>Lessons</span>
           <span className={s.bigNum}>{lessons.length}</span>
-          <span className={s.bigSub}>{lessons.length ? `${lessonVocab} vocab · ${lessons.length - lessonVocab} grammar` : 'All caught up'}</span>
+          <span className={s.bigSub}>{lessons.length ? 'New words' : 'All caught up'}</span>
         </button>
         <button className={s.reviews} onClick={onReviews} disabled={reviews.length === 0}>
           <span className={s.bigLabel}>Reviews</span>
@@ -79,8 +77,7 @@ export default function Home({ onLessons, onReviews }: Props) {
           <span className={s.cardTitle}>Level {level}</span>
           <span className={s.muted}>Level up at 90% Guru</span>
         </div>
-        <Meter label="Vocab" value={passed('vocab')} max={total('vocab')} color="var(--vocab)" />
-        <Meter label="Grammar" value={passed('grammar')} max={total('grammar')} color="var(--grammar)" />
+        <Meter label="Words passed" value={passed} max={inLevel.length} color="var(--vocab)" />
       </section>
 
       <div className={s.stages}>

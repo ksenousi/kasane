@@ -99,7 +99,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
         <span className={ui.count}>{done}/{state.total}</span>
       </div>
       <div className={s.meta}>
-        <span className={`${ui.pill} ${item.kind === 'vocab' ? ui.pillVocab : ui.pillGrammar}`}>{item.kind === 'vocab' ? 'Vocab' : 'Grammar'}</span>
+        <span className={`${ui.pill} ${ui.pillVocab}`}>Vocab</span>
         <span className={ui.pill}>{flip ? 'Recall' : question.tag}</span>
         {mode === 'review' && <span className={s.stage}>{STAGES[current].name}</span>}
       </div>
@@ -130,7 +130,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
                 <div className={s.row}><span className={s.k}>You picked</span><span className={s.gave} lang="ja">{given.value}</span></div>
                 <div className={s.row}><span className={s.k}>Correct</span><span className={s.ans} lang="ja">{correctAnswerText(question)}</span></div>
               </div>
-              <Explain item={item} question={question} part={task.part} />
+              <Explain item={item} part={task.part} />
               {drop !== null && (
                 <div className={s.stageMove}>
                   <span>{STAGES[current].name}</span>
@@ -156,20 +156,13 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   )
 }
 
-function Explain({ item, question, part }: { item: Item; question: Question; part: Part }) {
-  const head =
-    item.kind === 'vocab'
-      ? `${item.word} · ${item.reading} · ${item.meanings.join(', ')}`
-      : `${item.pattern} · ${item.meaning}`
-  // The hook for the part that was missed (connection misses already show the connection rule).
-  const hook = part === 'reading' ? item.mnemonic?.reading : part === 'meaning' ? item.mnemonic?.meaning : undefined
-  const fix = question.ex === 'G5' && item.kind === 'grammar' && item.errorSpot ? `Should be ${item.errorSpot.fix}.` : null
+function Explain({ item, part }: { item: Item; part: Part }) {
+  const head = `${item.word} · ${item.reading} · ${item.meanings.join(', ')}`
+  // The hook for the part that was missed.
+  const hook = part === 'reading' ? item.mnemonic?.reading : item.mnemonic?.meaning
   return (
     <div className={s.explain}>
       <span className={s.head} lang="ja">{head}</span>
-      {item.kind === 'grammar' && <span className={s.note} lang="ja">{item.connection}</span>}
-      {fix && <span className={s.note} lang="ja">{fix}</span>}
-      {question.kind === 'order' && <span className={s.note}>{question.en}</span>}
       {item.note && <span className={s.note} lang="ja">{item.note}</span>}
       {hook && <span className={s.hook} lang="ja">{hook}</span>}
     </div>

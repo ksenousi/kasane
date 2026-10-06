@@ -4,28 +4,19 @@ import type { Item } from '../content/schema'
 import ui from '../ui/ui.module.css'
 import s from './Lesson.module.css'
 
-/** The study card for one item: word or pattern, meaning, examples, notes. Used by lessons and the Levels page. */
+/** The study card for one word: reading, meaning, kanji, mnemonics, examples, notes. Used by lessons and the Levels page. */
 export default function ItemCard({ item }: { item: Item }) {
   return (
     <>
       <div className={s.band}>
-        <span className={item.kind === 'vocab' ? s.word : s.pattern} lang="ja">{itemLabel(item)}</span>
-        {item.kind === 'vocab' && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
-        {item.kind === 'vocab' && item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
+        <span className={s.word} lang="ja">{itemLabel(item)}</span>
+        {hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
+        {item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
       </div>
 
       <div className={s.body}>
-        {item.kind === 'vocab' ? (
-          <>
-            <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
-            <KanjiParts word={item.word} />
-          </>
-        ) : (
-          <>
-            <Section label="Meaning"><span className={s.meaning}>{item.meaning}</span></Section>
-            <Section label="How it connects"><span className={s.connect} lang="ja">{item.connection}</span></Section>
-          </>
-        )}
+        <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
+        <KanjiParts word={item.word} />
         {item.mnemonic && (
           <Section label="Remember it">
             <div className={s.mnemonics}>

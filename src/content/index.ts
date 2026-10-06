@@ -15,7 +15,7 @@ export function hasKanji(word: string): boolean {
 }
 
 export function itemLabel(item: Item): string {
-  return item.kind === 'vocab' ? item.word : item.pattern
+  return item.word
 }
 
 const KANJI: Readonly<Record<string, string>> = kanjiMeanings

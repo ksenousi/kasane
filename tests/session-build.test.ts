@@ -4,10 +4,10 @@ import { buildQuestion } from '../src/exercises/build'
 import { supports, type ExerciseId } from '../src/srs/queue'
 import { answer, answerAllParts, currentTask, finishedCount, markHeld, startSession } from '../src/srs/session'
 
-const ALL: ExerciseId[] = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V10', 'G1', 'G2', 'G3', 'G5', 'G6', 'G7']
+const ALL: ExerciseId[] = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V10']
 
 describe('session', () => {
-  const items = ['v-gaman', 'g-uchini'].map((id) => ITEMS_BY_ID.get(id)!)
+  const items = ['v-gaman', 'v-setsuyaku'].map((id) => ITEMS_BY_ID.get(id)!)
 
   it('asks two parts per item and finishes an item after both are right', () => {
     let s = startSession(items)
@@ -18,7 +18,7 @@ describe('session', () => {
       s = r.state
       if (r.finished) done.push(r.finished.itemId)
     }
-    expect(done.sort()).toEqual(['g-uchini', 'v-gaman'])
+    expect(done.sort()).toEqual(['v-gaman', 'v-setsuyaku'])
     expect(finishedCount(s)).toBe(2)
   })
 
@@ -54,10 +54,8 @@ describe('buildQuestion', () => {
         if (q.kind === 'choice') {
           expect(q.options.filter((o) => o === q.answer), `${item.id} ${ex}`).toHaveLength(1)
           expect(new Set(q.options).size).toBe(q.options.length)
-        } else if (q.kind === 'tiles') {
-          expect(q.tiles.length).toBeGreaterThan(0)
         } else {
-          expect([...q.pool].sort()).toEqual([...q.correct].sort())
+          expect(q.tiles.length).toBeGreaterThan(0)
         }
       }
     }

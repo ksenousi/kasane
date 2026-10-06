@@ -21,20 +21,8 @@ export function currentLevel(items: readonly Item[], progress: ProgressMap): num
   return level
 }
 
-/**
- * An item can be learned once its level is open. Grammar also waits until
- * the vocab used in its examples has been learned, so example sentences
- * never contain unknown words.
- */
-export function isUnlocked(item: Item, level: number, progress: ProgressMap): boolean {
-  if (item.level > level) return false
-  if (item.kind === 'vocab') return true
-  return item.requires.every((id) => (progress.get(id)?.stage ?? 0) >= 1)
-}
-
-/** Unlocked items not yet learned, in content order with vocab before grammar. */
+/** Unlocked items not yet learned, in content order. */
 export function lessonItems(items: readonly Item[], progress: ProgressMap): Item[] {
   const level = currentLevel(items, progress)
-  const open = items.filter((i) => isUnlocked(i, level, progress) && (progress.get(i.id)?.stage ?? 0) === 0)
-  return [...open.filter((i) => i.kind === 'vocab'), ...open.filter((i) => i.kind === 'grammar')]
+  return items.filter((i) => i.level <= level && (progress.get(i.id)?.stage ?? 0) === 0)
 }

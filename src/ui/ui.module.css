@@ -102,11 +102,6 @@
   color: var(--vocab);
 }
 
-.pillGrammar {
-  background: var(--grammar-bg);
-  color: var(--grammar);
-}
-
 .card {
   background: var(--s1);
   border: 1px solid var(--line);
