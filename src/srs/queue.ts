@@ -1,7 +1,7 @@
 import { hasKanji } from '../content'
 import type { Item } from '../content/schema'
 import { isDue, type Progress } from './engine'
-import { stageGroup, type Stage, type StageGroup } from './stages'
+import { stageGroup, type StageGroup } from './stages'
 
 export type Rng = () => number
 
@@ -42,79 +42,12 @@ export function stageCounts(progress: Iterable<Progress>): Record<StageGroup, nu
   return counts
 }
 
-// ---- Question choice -------------------------------------------------------
+// ---- Prompts ---------------------------------------------------------------
 
 /** Each review asks for the meaning and the reading. The item only moves once both are answered. */
 export type Part = 'meaning' | 'reading'
 
-export type ExerciseId =
-  | 'V1' | 'V2' | 'V3' | 'V4' | 'V5' | 'V6' | 'V7' | 'V10'
-  /** Recall card (flip mode), logged for stats only. */
-  | 'RC'
-
 export function partsFor(item: Item): Part[] {
   // Kana-only words have nothing to read, so they're asked about meaning only.
   return hasKanji(item.word) ? ['meaning', 'reading'] : ['meaning']
-}
-
-type Tier = 'apprentice' | 'guru' | 'master'
-
-function tier(stage: Stage): Tier {
-  if (stage <= 4) return 'apprentice'
-  if (stage <= 6) return 'guru'
-  return 'master'
-}
-
-/** Harder formats as the item climbs. Canvas: "Exercise types" page. */
-const POOLS: Record<Part, Record<Tier, ExerciseId[]>> = {
-  meaning: {
-    apprentice: ['V1', 'V2'],
-    guru: ['V5', 'V1', 'V2'],
-    master: ['V6', 'V7', 'V5'],
-  },
-  reading: {
-    apprentice: ['V10'],
-    guru: ['V3', 'V10', 'V4'],
-    master: ['V3', 'V4'],
-  },
-}
-
-const KANJI = /^[\u4e00-\u9fff]{2,}$/
-
-/** Kanji from the look-alike words that aren't in the word itself: decoy tiles for V4. Only for all-kanji words. */
-export function kanjiDecoys(item: Item): string[] {
-  if (!KANJI.test(item.word)) return []
-  const own = new Set(item.word)
-  const pool = item.distractors.words.join('').split('').filter((c) => /[\u4e00-\u9fff]/.test(c) && !own.has(c))
-  return [...new Set(pool)].slice(0, 3)
-}
-
-/** Does the item have the data this exercise needs? */
-export function supports(item: Item, ex: ExerciseId): boolean {
-  switch (ex) {
-    case 'V3': return !!item.tiles?.length
-    case 'V4': return kanjiDecoys(item).length >= 2
-    case 'V5': return item.examples.some((e) => e.ja.includes('＿')) && item.contextWrong.length >= 3
-    case 'V6': return !!item.paraphrase
-    case 'V7': return !!item.usage
-    case 'V10': return item.examples.length > 0 || item.distractors.readings.length >= 3
-    case 'V1': case 'V2': return true
-    default: return false
-  }
-}
-
-/**
- * Pick a question format for one part of a review. Falls back to easier
- * tiers when the item lacks data for the harder formats, and avoids
- * repeating `last` when there's a choice.
- */
-export function pickExercise(item: Item, part: Part, stage: Stage, rng: Rng = Math.random, last?: ExerciseId): ExerciseId | null {
-  const order: Tier[] = tier(stage) === 'master' ? ['master', 'guru', 'apprentice'] : tier(stage) === 'guru' ? ['guru', 'apprentice'] : ['apprentice']
-  for (const t of order) {
-    const pool = POOLS[part][t].filter((ex) => supports(item, ex))
-    if (pool.length === 0) continue
-    const fresh = pool.length > 1 && last ? pool.filter((ex) => ex !== last) : pool
-    return fresh[Math.floor(rng() * fresh.length)]
-  }
-  return null
 }

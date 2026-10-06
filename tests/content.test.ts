@@ -7,10 +7,6 @@ import { ITEMS, LEVELS, hasKanji, kanjiBreakdown } from '../src/content'
 
 const vocab = ITEMS
 
-function distinct(xs: string[]) {
-  return new Set(xs).size === xs.length
-}
-
 describe('content', () => {
   it('gives every item a meaning hook, and a reading hook when the word has kanji', () => {
     const missing = ITEMS.filter((i) => !i.mnemonic?.meaning || (hasKanji(i.word) && !i.mnemonic.reading))
@@ -31,22 +27,11 @@ describe('content', () => {
 
   it.each(vocab.map((v) => [v.id, v] as const))('vocab %s is complete', (_, v) => {
     expect(v.reading).toMatch(/^[ぁ-ゖー]+$/)
+    for (const r of v.readings ?? []) expect(r).toMatch(/^[ぁ-ゖー]+$/)
+    if (!hasKanji(v.word)) expect(v.word).toBe(v.reading)
     expect(v.meanings.length).toBeGreaterThan(0)
-    if (hasKanji(v.word)) expect(v.distractors.readings).toHaveLength(3)
-    else expect(v.word).toBe(v.reading)
-    expect(v.distractors.meanings).toHaveLength(3)
-    expect(v.distractors.words).toHaveLength(3)
-    expect(v.contextWrong).toHaveLength(3)
-    expect(distinct([v.reading, ...v.distractors.readings])).toBe(true)
-    expect(distinct([v.word, ...v.distractors.words])).toBe(true)
-    expect(distinct([v.word, ...v.contextWrong])).toBe(true)
-    for (const e of v.examples) {
-      expect(e.ja.split('＿')).toHaveLength(2)
-      expect(e.ja.replace('＿', v.word)).toBe(e.full)
-    }
-    if (v.tiles) expect(v.tiles.join('')).toBe(v.reading)
-    if (v.paraphrase) expect(v.paraphrase.sentence).toContain(`【${v.word}】`)
-    if (v.usage) expect(v.usage.correct).toContain(v.word.slice(0, 1))
+    expect(v.examples.length).toBeGreaterThan(0)
+    for (const e of v.examples) expect(e.ja).toContain(v.word.slice(0, 1))
   })
 
 })

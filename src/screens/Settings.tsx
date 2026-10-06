@@ -58,13 +58,6 @@ export default function Settings() {
       <span className={s.title}>Settings</span>
 
       <section className={ui.card}>
-        <label className={s.row}>
-          <div className={s.text}>
-            <span>Recall cards for Master+</span>
-            <span className={s.hint}>Items at Master and above show a flip card you grade yourself, instead of a question.</span>
-          </div>
-          <input type="checkbox" className={s.toggle} checked={settings.flipMode} onChange={(e) => void setSetting('flipMode', e.target.checked)} />
-        </label>
         <div className={s.row}>
           <div className={s.text}>
             <span>Lesson batch size</span>

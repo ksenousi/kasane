@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyReview, completeLesson, holdReview, isDue, newProgress, nextStage, type Progress } from '../src/srs/engine'
+import { applyReview, completeLesson, isDue, newProgress, nextStage, type Progress } from '../src/srs/engine'
 
 const HOUR = 3_600_000
 const NOW = Date.UTC(2026, 8, 27, 12)
@@ -63,11 +63,5 @@ describe('review lifecycle', () => {
     p = applyReview(p, 2, NOW)
     expect(p.correct).toBe(1)
     expect(p.incorrect).toBe(1)
-  })
-
-  it('holds the stage for a half pass and restarts the timer', () => {
-    const p = holdReview({ ...newProgress('v1'), stage: 7, dueAt: NOW }, NOW)
-    expect(p.stage).toBe(7)
-    expect(p.dueAt).toBe(NOW + 30 * 24 * HOUR)
   })
 })

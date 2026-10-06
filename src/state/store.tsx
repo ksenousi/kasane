@@ -5,7 +5,7 @@ import {
   DEFAULT_SETTINGS, loadProgress, loadSettings, recordAnswer, saveProgress, saveSetting, type Answer, type Settings,
 } from '../db'
 import { now as clockNow } from '../lib/clock'
-import { applyReview, completeLesson, holdReview, newProgress, type Progress } from '../srs/engine'
+import { applyReview, completeLesson, newProgress, type Progress } from '../srs/engine'
 import { reviewQueue } from '../srs/queue'
 import type { Finished } from '../srs/session'
 import { currentLevel, lessonItems } from '../srs/unlock'
@@ -85,7 +85,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const p = progress.get(f.itemId)
       if (!p) return
       const t = clockNow()
-      await put([f.held && f.misses === 0 ? holdReview(p, t) : applyReview(p, f.misses, t)])
+      await put([applyReview(p, f.misses, t)])
     },
     [progress, put],
   )

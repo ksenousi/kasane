@@ -15,6 +15,14 @@
 
   --vocab: #6ea3ff;
   --vocab-bg: #1d2c4a;
+  --band: #2f6fe0;
+  --on-band: #ffffff;
+
+  /* Review prompt bars: light for Meaning, near-black for Reading, so the two never look alike. */
+  --prompt-meaning-bg: #e8e8ed;
+  --prompt-meaning-text: #161618;
+  --prompt-reading-bg: #050506;
+  --prompt-reading-text: #f5f5f7;
 
   --ok: #34c77b;
   --ok-bg: #12281c;

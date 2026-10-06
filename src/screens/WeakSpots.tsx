@@ -2,19 +2,13 @@ import { useEffect, useState } from 'react'
 import { ITEMS_BY_ID, itemLabel } from '../content'
 import type { Item } from '../content/schema'
 import { db, type Answer } from '../db'
-import type { ExerciseId } from '../srs/queue'
+import type { Part } from '../srs/queue'
 import ui from '../ui/ui.module.css'
 import s from './WeakSpots.module.css'
 
-/** Question formats grouped the way the JLPT paper groups them. */
-const SECTIONS: { ja: string; en: string; exercises: ExerciseId[] }[] = [
-  { ja: '漢字読み', en: 'Kanji reading', exercises: ['V10', 'V3'] },
-  { ja: '表記', en: 'Writing the kanji', exercises: ['V4'] },
-  { ja: '語彙の意味', en: 'Word meaning', exercises: ['V1', 'V2'] },
-  { ja: '文脈規定', en: 'Word in context', exercises: ['V5'] },
-  { ja: '言い換え類義', en: 'Paraphrase', exercises: ['V6'] },
-  { ja: '用法', en: 'Usage', exercises: ['V7'] },
-  { ja: '思い出す', en: 'Recall cards', exercises: ['RC'] },
+const SECTIONS: { ja: string; en: string; part: Part }[] = [
+  { ja: '意味', en: 'Meaning', part: 'meaning' },
+  { ja: '読み方', en: 'Reading', part: 'reading' },
 ]
 
 export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => void }) {
@@ -47,7 +41,7 @@ export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => voi
 
       <section className={ui.card}>
         {SECTIONS.map((sec) => {
-          const rows = answers.filter((a) => sec.exercises.includes(a.exercise))
+          const rows = answers.filter((a) => a.part === sec.part)
           const right = rows.filter((a) => a.correct).length
           const pct = rows.length ? Math.round((right / rows.length) * 100) : null
           return (

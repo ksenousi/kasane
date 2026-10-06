@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
-import { buildQuestion, correctAnswerText, type Question } from '../exercises/build'
-import FlipCard from '../exercises/FlipCard'
-import QuestionView, { type Given } from '../exercises/QuestionView'
-import { pickExercise, type ExerciseId, type Part } from '../srs/queue'
-import { answer, answerAllParts, currentTask, finishedCount, markHeld, startSession, type Finished, type SessionState } from '../srs/session'
+import { checkAnswer, finishKana, imeKana, type Verdict } from '../srs/answer'
 import { nextStage } from '../srs/engine'
-import { STAGES, type Stage } from '../srs/stages'
+import type { Part } from '../srs/queue'
+import { answer, currentTask, finishedCount, startSession, type Finished, type SessionState } from '../srs/session'
+import { STAGES } from '../srs/stages'
 import { useStore } from '../state/store'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
@@ -15,10 +13,7 @@ import s from './Session.module.css'
 
 interface Props {
   items: Item[]
-  /**
-   * 'review' = SRS review. 'quiz' = end-of-lesson quiz with easy formats.
-   * 'drill' = extra practice from Weak spots: formats match the item's stage, no SRS changes.
-   */
+  /** 'review' = SRS review. 'quiz' = end-of-lesson quiz. 'drill' = extra practice from Weak spots, no SRS changes. */
   mode: 'review' | 'quiz' | 'drill'
   onExit: () => void
   onComplete: (summary: Summary) => void
@@ -31,106 +26,123 @@ export interface Summary {
   items: number
 }
 
+type Graded = { value: string; verdict: Extract<Verdict, { kind: 'correct' | 'wrong' }> }
+
+/** WaniKani-style typed review: one prompt at a time, meaning in English or reading in kana. */
 export default function Session({ items, mode, onExit, onComplete, onFinished }: Props) {
-  const { progress, settings, logAnswer } = useStore()
+  const { progress, logAnswer } = useStore()
   const [state, setState] = useState<SessionState>(() => startSession(items))
-  const [given, setGiven] = useState<Given | null>(null)
-  const lastEx = useRef<ExerciseId | undefined>(undefined)
+  const [text, setText] = useState('')
+  const [graded, setGraded] = useState<Graded | null>(null)
+  const [invalid, setInvalid] = useState<string | null>(null)
+  const [info, setInfo] = useState(false)
+  const input = useRef<HTMLInputElement>(null)
   const task = currentTask(state)
   const item = task ? ITEMS_BY_ID.get(task.itemId) : undefined
-  const stage: Stage = mode === 'quiz' ? 1 : (progress.get(task?.itemId ?? '')?.stage ?? 1)
-
-  // A new question each time the task changes (answered count keys it, so a requeued part gets a fresh one).
-  const question: Question | null = useMemo(() => {
-    if (!task || !item) return null
-    const ex = pickExercise(item, task.part, stage, Math.random, lastEx.current)
-    if (!ex) return null
-    lastEx.current = ex
-    return buildQuestion(item, ex)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.answered, task?.itemId, task?.part])
-
-  // Items with no question for a part (missing data) are skipped as correct so a session never stalls.
-  useEffect(() => {
-    if (task && !question) advance(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [task, question])
 
   useEffect(() => {
     if (!task) onComplete({ answered: state.answered, correct: state.correct, items: state.total })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task])
 
-  function advance(correct: boolean) {
-    apply(answer(state, correct))
-  }
+  if (!task || !item) return <div className={ui.screen} />
 
-  function apply(r: { state: SessionState; finished?: Finished }) {
-    if (r.finished) onFinished?.(r.finished)
-    setGiven(null)
-    setState(r.state)
-  }
+  const part = task.part
+  const reading = part === 'reading'
 
-  function onAnswer(g: Given) {
-    setGiven(g)
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    if (graded) return next()
+    const v = checkAnswer(part, text, item!)
+    if (v.kind === 'invalid') {
+      setInvalid(v.message)
+      input.current?.animate(
+        [{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(0)' }],
+        { duration: 300 },
+      )
+      return
+    }
+    setInvalid(null)
+    setGraded({ value: reading ? finishKana(text) : text.trim(), verdict: v })
+    if (reading) setText(finishKana(text))
   }
 
   function next() {
-    if (!given || !task || !question) return
-    logAnswer({ itemId: task.itemId, part: task.part, exercise: question.ex, correct: given.correct, given: given.value, mode })
-    advance(given.correct)
+    if (!graded || !task) return
+    const correct = graded.verdict.kind === 'correct'
+    logAnswer({ itemId: task.itemId, part, correct, given: graded.value, mode })
+    const r = answer(state, correct)
+    if (r.finished) onFinished?.(r.finished)
+    setState(r.state)
+    setText('')
+    setGraded(null)
+    setInfo(false)
+    input.current?.focus()
   }
 
-  if (!task || !item || !question) return <div className={ui.screen} />
-
-  const flip = mode === 'review' && settings.flipMode && stage >= 7 && !state.held.includes(item.id)
+  /** Typo or slip: take the answer back and type it again, unscored. */
+  function undo() {
+    setGraded(null)
+    input.current?.focus()
+  }
 
   const done = finishedCount(state)
   const pct = state.total ? (done / state.total) * 100 : 0
-  const miss = given && !given.correct
+  const accuracy = state.answered ? Math.round((state.correct / state.answered) * 100) : null
   const current = progress.get(item.id)?.stage ?? 0
-  const drop = mode === 'review' && miss ? nextStage(current, (state.misses[item.id] ?? 0) + 1) : null
+  const wrong = graded?.verdict.kind === 'wrong'
+  const close = graded?.verdict.kind === 'correct' && graded.verdict.close
+  const drop = mode === 'review' && wrong ? nextStage(current, (state.misses[item.id] ?? 0) + 1) : null
+  const resultClass = graded ? (wrong ? s.bad : s.ok) : ''
 
   return (
-    <div className={ui.screen}>
+    <div className={`${ui.screen} ${s.session}`}>
       <div className={ui.topbar}>
         <button className={ui.iconBtn} onClick={onExit} aria-label="End session"><I.Close /></button>
         <div className={ui.bar}><div className={ui.barFill} style={{ width: `${pct}%` }} /></div>
-        <span className={ui.count}>{done}/{state.total}</span>
+        <span className={ui.count}>{done}/{state.total}{accuracy !== null && ` · ${accuracy}%`}</span>
       </div>
-      <div className={s.meta}>
-        <span className={`${ui.pill} ${ui.pillVocab}`}>Vocab</span>
-        <span className={ui.pill}>{flip ? 'Recall' : question.tag}</span>
+
+      <div className={s.word} lang="ja">{item.word}</div>
+      <div className={`${s.prompt} ${reading ? s.promptReading : s.promptMeaning}`}>
+        Vocabulary <b>{reading ? 'Reading' : 'Meaning'}</b>
         {mode === 'review' && <span className={s.stage}>{STAGES[current].name}</span>}
       </div>
 
-      {flip ? (
-        <FlipCard
-          key={state.answered}
-          item={item}
-          onKnew={() => {
-            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: true, mode })
-            apply(answerAllParts(state))
+      <form className={s.form} onSubmit={submit}>
+        <input
+          ref={input}
+          className={`${s.input} ${resultClass}`}
+          value={text}
+          onChange={(e) => {
+            if (graded) return
+            setInvalid(null)
+            setText(reading ? imeKana(e.target.value) : e.target.value)
           }}
-          onMissed={() => {
-            logAnswer({ itemId: item.id, part: task.part, exercise: 'RC', correct: false, mode })
-            advance(false)
-          }}
-          onChoices={() => setState(markHeld(state, item.id))}
+          placeholder={reading ? '答え' : 'Your answer'}
+          lang={reading ? 'ja' : 'en'}
+          aria-label={reading ? 'Reading in kana' : 'Meaning in English'}
+          autoFocus
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          enterKeyHint={graded ? 'next' : 'done'}
         />
-      ) : (
-        <QuestionView key={state.answered} question={question} given={given} onAnswer={onAnswer} />
-      )}
+        <button type="submit" className={`${s.go} ${resultClass}`} aria-label={graded ? 'Next' : 'Check'}>
+          <I.Arrow />
+        </button>
+      </form>
+      {invalid && <p className={s.invalid} role="status">{invalid}</p>}
 
-      {given && (
-        <div className={`${s.feedback} ${given.correct ? s.ok : s.bad}`}>
-          {miss ? (
+      {graded && (
+        <div className={s.result}>
+          {wrong ? (
             <>
-              <div className={s.rows}>
-                <div className={s.row}><span className={s.k}>You picked</span><span className={s.gave} lang="ja">{given.value}</span></div>
-                <div className={s.row}><span className={s.k}>Correct</span><span className={s.ans} lang="ja">{correctAnswerText(question)}</span></div>
+              <div className={s.answerRow}>
+                <span className={s.k}>Answer</span>
+                <span className={s.ans} lang="ja">{expected(item, part)}</span>
               </div>
-              <Explain item={item} part={task.part} />
               {drop !== null && (
                 <div className={s.stageMove}>
                   <span>{STAGES[current].name}</span>
@@ -139,16 +151,22 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
                   <span className={s.later}>asked again this session</span>
                 </div>
               )}
+              <Explain item={item} part={part} />
               <div className={s.actions}>
-                <button className={ui.btnGhost} onClick={() => setGiven(null)}>Misclick — undo</button>
-                <button className={ui.btn} onClick={next}>Continue</button>
+                <button className={ui.btnGhost} onClick={undo}>Undo typo</button>
+                <button className={ui.btn} onClick={next}>Next</button>
               </div>
             </>
           ) : (
-            <div className={s.okRow}>
-              <span className={s.okText}><I.Check width={20} height={20} />Correct</span>
-              <button className={ui.btn} onClick={next} autoFocus>Next</button>
-            </div>
+            <>
+              <div className={s.okRow}>
+                <span className={s.okText}><I.Check width={20} height={20} />{close ? 'Close enough' : 'Correct'}</span>
+                <button className={s.infoBtn} onClick={() => setInfo(!info)} aria-expanded={info}>{info ? 'Hide info' : 'Item info'}</button>
+              </div>
+              {close && <p className={s.note}>Exact answer: {item.meanings.join(', ')}</p>}
+              {info && <Explain item={item} part={part} />}
+              <button className={ui.btn} onClick={next}>Next</button>
+            </>
           )}
         </div>
       )}
@@ -156,15 +174,17 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   )
 }
 
+function expected(item: Item, part: Part): string {
+  return part === 'reading' ? [item.reading, ...(item.readings ?? [])].join('、') : item.meanings.join(', ')
+}
+
 function Explain({ item, part }: { item: Item; part: Part }) {
-  const head = `${item.word} · ${item.reading} · ${item.meanings.join(', ')}`
-  // The hook for the part that was missed.
-  const hook = part === 'reading' ? item.mnemonic?.reading : item.mnemonic?.meaning
+  const hook = part === 'reading' ? item.mnemonic.reading : item.mnemonic.meaning
   return (
     <div className={s.explain}>
-      <span className={s.head} lang="ja">{head}</span>
-      {item.note && <span className={s.note} lang="ja">{item.note}</span>}
+      <span className={s.head} lang="ja">{item.word} · {item.reading} · {item.meanings.join(', ')}</span>
       {hook && <span className={s.hook} lang="ja">{hook}</span>}
+      {item.note && <span className={s.note} lang="ja">{item.note}</span>}
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import 'fake-indexeddb/auto'
 import { beforeEach, describe, expect, it } from 'vitest'
+import Dexie from 'dexie'
 import {
-  exportBackup, importBackup, loadProgress, loadSettings, recordAnswer, resetAll, saveProgress, saveSetting,
+  KasaneDB, exportBackup, importBackup, loadProgress, loadSettings, recordAnswer, resetAll, saveProgress, saveSetting,
 } from '../src/db'
 import { completeLesson, newProgress } from '../src/srs/engine'
 
@@ -21,13 +22,13 @@ describe('db', () => {
 
   it('falls back to default settings and overrides saved keys', async () => {
     expect((await loadSettings()).lessonBatch).toBe(5)
-    await saveSetting('flipMode', true)
-    expect((await loadSettings()).flipMode).toBe(true)
+    await saveSetting('lessonBatch', 3)
+    expect((await loadSettings()).lessonBatch).toBe(3)
   })
 
   it('round-trips a backup through export, reset and import', async () => {
     await saveProgress(completeLesson(newProgress('v-gaman'), NOW))
-    await recordAnswer({ itemId: 'v-gaman', part: 'meaning', exercise: 'V1', correct: true, at: NOW })
+    await recordAnswer({ itemId: 'v-gaman', part: 'meaning', correct: true, at: NOW })
     await saveSetting('lessonBatch', 10)
     const backup = JSON.parse(JSON.stringify(await exportBackup(NOW)))
 
@@ -53,5 +54,20 @@ describe('removed content', () => {
       ['v-souzou', completeLesson(newProgress('v-souzou'), NOW)],
     ])
     expect([...currentOnly(p).keys()]).toEqual(['v-gaman'])
+  })
+
+  it('wipes progress and answers when upgrading from v1 (multiple-choice era)', async () => {
+    const old = new Dexie('kasane-upgrade')
+    old.version(1).stores({ progress: 'itemId, stage, dueAt', answers: '++id, itemId, exercise, at', settings: 'key' })
+    await old.table('progress').put(completeLesson(newProgress('v-gaman'), NOW))
+    await old.table('answers').add({ itemId: 'v-gaman', part: 'meaning', exercise: 'V1', correct: true, at: NOW })
+    await old.table('settings').put({ key: 'lessonBatch', value: 10 })
+    old.close()
+
+    const db = new KasaneDB('kasane-upgrade')
+    expect(await db.progress.count()).toBe(0)
+    expect(await db.answers.count()).toBe(0)
+    expect((await db.settings.get('lessonBatch'))?.value).toBe(10)
+    db.close()
   })
 })

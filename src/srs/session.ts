@@ -17,8 +17,6 @@ export interface SessionState {
   queue: Task[]
   remaining: Record<string, Part[]>
   misses: Record<string, number>
-  /** Items whose "give me choices" fallback was used (half pass). */
-  held: string[]
   answered: number
   correct: number
   total: number
@@ -27,7 +25,6 @@ export interface SessionState {
 export interface Finished {
   itemId: string
   misses: number
-  held: boolean
 }
 
 export function startSession(items: readonly Item[], rng: Rng = Math.random): SessionState {
@@ -36,7 +33,6 @@ export function startSession(items: readonly Item[], rng: Rng = Math.random): Se
     queue,
     remaining: Object.fromEntries(items.map((i) => [i.id, partsFor(i)])),
     misses: {},
-    held: [],
     answered: 0,
     correct: 0,
     total: items.length,
@@ -78,29 +74,6 @@ export function answer(s: SessionState, correct: boolean, rng: Rng = Math.random
   delete remaining[task.itemId]
   return {
     state: { ...base, queue: rest, remaining },
-    finished: { itemId: task.itemId, misses: s.misses[task.itemId] ?? 0, held: s.held.includes(task.itemId) },
+    finished: { itemId: task.itemId, misses: s.misses[task.itemId] ?? 0 },
   }
-}
-
-/** Recall mode "Knew it": every remaining part of the current item counts as correct at once. */
-export function answerAllParts(s: SessionState): { state: SessionState; finished?: Finished } {
-  const task = s.queue[0]
-  if (!task) return { state: s }
-  const itemId = task.itemId
-  const remaining = { ...s.remaining }
-  delete remaining[itemId]
-  return {
-    state: {
-      ...s,
-      queue: s.queue.filter((t) => t.itemId !== itemId),
-      remaining,
-      answered: s.answered + 1,
-      correct: s.correct + 1,
-    },
-    finished: { itemId, misses: s.misses[itemId] ?? 0, held: s.held.includes(itemId) },
-  }
-}
-
-export function markHeld(s: SessionState, itemId: string): SessionState {
-  return s.held.includes(itemId) ? s : { ...s, held: [...s.held, itemId] }
 }

@@ -26,8 +26,8 @@ export default function ItemCard({ item }: { item: Item }) {
           </Section>
         )}
         {item.examples.map((e) => (
-          <div key={e.full} className={`${ui.card} ${s.example}`}>
-            <span className={s.ja} lang="ja">{e.full}</span>
+          <div key={e.ja} className={`${ui.card} ${s.example}`}>
+            <span className={s.ja} lang="ja">{e.ja}</span>
             <span className={s.small}>{e.en}</span>
           </div>
         ))}

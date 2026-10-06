@@ -1,15 +1,14 @@
 import Dexie, { type EntityTable } from 'dexie'
 import type { Progress } from '../srs/engine'
-import type { ExerciseId, Part } from '../srs/queue'
+import type { Part } from '../srs/queue'
 
 /** One answered question, kept for accuracy stats (Weak spots). */
 export interface Answer {
   id?: number
   itemId: string
   part: Part
-  exercise: ExerciseId
   correct: boolean
-  /** What was picked or built, for spotting which wrong options catch you out. */
+  /** What was typed, for spotting which wrong answers catch you out. */
   given?: string
   /** Session type the answer came from. */
   mode?: 'review' | 'quiz' | 'drill'
@@ -17,19 +16,17 @@ export interface Answer {
 }
 
 export interface Settings {
-  /** Master+ items use flip-and-swipe recall cards instead of questions. */
-  flipMode: boolean
   lessonBatch: number
 }
 
-export const DEFAULT_SETTINGS: Settings = { flipMode: false, lessonBatch: 5 }
+export const DEFAULT_SETTINGS: Settings = { lessonBatch: 5 }
 
 interface SettingRow {
   key: keyof Settings
   value: Settings[keyof Settings]
 }
 
-class KasaneDB extends Dexie {
+export class KasaneDB extends Dexie {
   progress!: EntityTable<Progress, 'itemId'>
   answers!: EntityTable<Answer, 'id'>
   settings!: EntityTable<SettingRow, 'key'>
@@ -41,6 +38,13 @@ class KasaneDB extends Dexie {
       answers: '++id, itemId, exercise, at',
       settings: 'key',
     })
+    // v2: typed answers replace multiple choice and grammar is gone. Start everyone from scratch.
+    this.version(2)
+      .stores({ answers: '++id, itemId, part, at' })
+      .upgrade(async (tx) => {
+        await tx.table('progress').clear()
+        await tx.table('answers').clear()
+      })
   }
 }
 

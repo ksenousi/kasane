@@ -52,10 +52,6 @@ export function applyReview(p: Progress, misses: number, now: number): Progress 
   }
 }
 
-/** "Give me choices" fallback in recall mode: counts as half a pass, so the stage holds and the timer restarts. */
-export function holdReview(p: Progress, now: number): Progress {
-  return { ...p, dueAt: dueFrom(p.stage, now) }
-}
 
 export function isDue(p: Progress, now: number): boolean {
   return p.stage >= FIRST_STAGE && p.stage < BURNED && p.dueAt !== null && p.dueAt <= now

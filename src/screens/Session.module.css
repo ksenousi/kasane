@@ -1,40 +1,144 @@
-.meta {
+.session {
+  gap: 0;
+}
+
+/* The word on a coloured band, WaniKani-style. */
+.word {
+  margin: 6px 16px 0;
+  min-height: 170px;
+  padding: 20px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--band);
+  color: var(--on-band);
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 2px 20px 10px;
+  justify-content: center;
+  text-align: center;
+  font-size: clamp(48px, 16vw, 72px);
+  font-weight: 600;
+  line-height: 1.15;
+  word-break: keep-all;
+}
+
+.prompt {
+  margin: 0 16px;
+  padding: 9px 14px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.prompt b {
+  font-weight: 700;
+}
+
+.promptMeaning {
+  background: var(--prompt-meaning-bg);
+  color: var(--prompt-meaning-text);
+}
+
+.promptReading {
+  background: var(--prompt-reading-bg);
+  color: var(--prompt-reading-text);
+  border: 1px solid var(--line);
+  border-top: 0;
 }
 
 .stage {
   margin-left: auto;
   font-size: 12px;
-  color: var(--muted);
+  opacity: 0.7;
 }
 
-.feedback {
-  position: sticky;
-  bottom: 0;
-  padding: 16px 20px calc(20px + var(--safe-bottom));
-  background: var(--bg);
-  border-top: 1px solid var(--line);
+.form {
+  margin: 14px 16px 0;
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex-grow: 1;
+  min-width: 0;
+  height: 58px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--s1);
+  color: var(--text);
+  font: inherit;
+  font-size: 22px;
+  text-align: center;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-text);
+}
+
+.go {
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input.ok,
+.input.ok:focus {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.input.bad,
+.input.bad:focus {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.go.ok {
+  background: var(--ok);
+}
+
+.go.bad {
+  background: var(--bad);
+}
+
+.invalid {
+  margin: 10px 16px 0;
+  font-size: 14px;
+  color: var(--st-apprentice);
+  text-align: center;
+}
+
+.result {
+  margin: 14px 16px calc(16px + var(--safe-bottom));
   display: flex;
   flex-direction: column;
   gap: 12px;
   animation: rise 0.18s ease-out;
 }
 
-.ok {
-  border-top-color: var(--ok);
-}
-
-.bad {
-  border-top-color: var(--bad);
-}
-
 @keyframes rise {
   from {
-    transform: translateY(12px);
+    transform: translateY(8px);
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result {
+    animation: none;
   }
 }
 
@@ -54,37 +158,29 @@
   font-weight: 600;
 }
 
-.okRow button {
-  width: 140px;
+.infoBtn {
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font-size: 14px;
+  min-height: var(--tap);
 }
 
-.rows {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.row {
+.answerRow {
   display: flex;
   align-items: baseline;
   gap: 12px;
 }
 
 .k {
-  width: 86px;
+  width: 64px;
   flex-shrink: 0;
   font-size: 13px;
   color: var(--muted);
 }
 
-.gave {
-  font-size: 18px;
-  color: var(--bad);
-  text-decoration: line-through;
-}
-
 .ans {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--ok);
 }
@@ -92,7 +188,7 @@
 .explain {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   padding: 12px 14px;
   border-radius: var(--radius);
   background: var(--s1);
@@ -105,9 +201,17 @@
 }
 
 .note {
+  margin: 0;
   font-size: 14px;
   line-height: 1.55;
   color: var(--muted);
+}
+
+.hook {
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .stageMove {
@@ -127,11 +231,4 @@
 .actions {
   display: flex;
   gap: 10px;
-}
-
-.hook {
-  padding-left: 10px;
-  border-left: 3px solid var(--accent);
-  font-size: 14px;
-  line-height: 1.5;
 }
