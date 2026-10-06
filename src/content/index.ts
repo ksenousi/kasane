@@ -1,9 +1,9 @@
 import kanjiMeanings from './kanji.json'
 import type { Item, Level } from './schema'
-import level01 from './levels/level-01.json'
-import level02 from './levels/level-02.json'
 
-export const LEVELS: Level[] = [level01 as Level, level02 as Level]
+// Every src/content/levels/level-NN.json, in level order.
+const files = import.meta.glob<Level>('./levels/level-*.json', { eager: true, import: 'default' })
+export const LEVELS: Level[] = Object.keys(files).sort().map((k) => files[k])
 
 export const ITEMS: Item[] = LEVELS.flatMap((l) => l.items)
 
