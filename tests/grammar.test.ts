@@ -13,6 +13,8 @@ describe('grammar cheat sheet', () => {
   it.each(points.map((p) => [p.pattern, p] as const))('%s is complete', (_, p) => {
     expect(p.meaning && p.connection && p.note).toBeTruthy()
     expect(p.examples.length).toBeGreaterThanOrEqual(2)
+    expect(typeof p.freq).toBe('number')
+    expect(p.freq).toBeGreaterThan(0)
     for (const e of p.examples) {
       expect(e.ja).toMatch(/\{[^}]+\}/)
       expect(e.en.length).toBeGreaterThan(0)

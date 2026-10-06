@@ -324,3 +324,59 @@
     transition: none;
   }
 }
+
+/* Sort menu */
+.sortRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sortLabel {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sort {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--s1);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+
+/* How common a point is: four bars plus a word. */
+.freq {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.bars i {
+  width: 3px;
+  border-radius: 1px;
+  background: var(--s2);
+}
+
+.bars i:nth-child(1) { height: 4px; }
+.bars i:nth-child(2) { height: 6px; }
+.bars i:nth-child(3) { height: 9px; }
+.bars i:nth-child(4) { height: 12px; }
+
+.bars .barOn {
+  background: var(--accent-text);
+}

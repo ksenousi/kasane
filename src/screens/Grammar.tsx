@@ -12,6 +12,8 @@ interface Point {
   note: string
   /** Japanese uses 漢字[かな] for furigana and {…} for the highlighted grammar. */
   examples: { ja: string; en: string }[]
+  /** Sentences containing it per 10,000 in the Tatoeba corpus (content/source/grammar-frequency.json). */
+  freq: number
 }
 
 interface Group {
@@ -53,6 +55,29 @@ function Ja({ text }: { text: string }) {
 const plain = (t: string) => `${t.replace(/\[[^\]]*\]|[{}]/g, '')} ${t.replace(RUBY, '$2').replace(/[{}]/g, '')}`
 
 type Show = 'all' | 'unknown' | 'known'
+type Sort = 'theme' | 'common' | 'rare' | 'kana'
+
+const SORT_LABEL: Record<Sort, string> = { theme: 'Theme', common: 'Most common', rare: 'Least common', kana: 'あいうえお' }
+
+/** How common a point is, in words, from its corpus frequency. */
+function tier(freq: number): string {
+  if (freq >= 20) return 'Very common'
+  if (freq >= 5) return 'Common'
+  if (freq >= 1.5) return 'Less common'
+  return 'Rare'
+}
+
+/** Sort key for あいうえお order: the pattern's reading, without 〜 and brackets. */
+const kanaKey = (pattern: string) => pattern.replace(RUBY, (_, _k, r: string) => r.split('・')[0]).replace(/[〜（）()]/g, '')
+
+function loadSort(): Sort {
+  try {
+    const v = localStorage.getItem('grammar.sort')
+    return v === 'common' || v === 'rare' || v === 'kana' ? v : 'theme'
+  } catch {
+    return 'theme'
+  }
+}
 
 function loadShow(): Show {
   try {
@@ -86,6 +111,16 @@ export default function Grammar() {
   const { settings, toggleKnownGrammar } = useStore()
   const known = useMemo(() => new Set(settings.knownGrammar), [settings.knownGrammar])
   const [show, setShow] = useState<Show>(loadShow)
+  const [sort, setSort] = useState<Sort>(loadSort)
+  const pickSort = (v: Sort) => {
+    setSort(v)
+    window.scrollTo(0, 0)
+    try {
+      localStorage.setItem('grammar.sort', v)
+    } catch {
+      // Private mode: the choice just won't be remembered.
+    }
+  }
   const pickShow = (v: Show) => {
     setShow(v)
     try {
@@ -104,8 +139,15 @@ export default function Grammar() {
     const match = (p: Point) =>
       !q || plain([p.pattern, p.meaning, p.connection, p.note, ...p.examples.flatMap((e) => [e.ja, e.en])].join(' ')).toLowerCase().includes(q)
     const wanted = (p: Point) => show === 'all' || (show === 'known') === known.has(p.pattern)
-    return GROUPS.map((g) => ({ ...g, points: g.points.filter((p) => match(p) && wanted(p)) })).filter((g) => g.points.length)
-  }, [query, show, known])
+    const byTheme = GROUPS.map((g) => ({ ...g, points: g.points.filter((p) => match(p) && wanted(p)) })).filter((g) => g.points.length)
+    if (sort === 'theme') return byTheme
+    // Any other order is one flat list.
+    const points = byTheme.flatMap((g) => g.points)
+    if (sort === 'common') points.sort((a, b) => b.freq - a.freq)
+    if (sort === 'rare') points.sort((a, b) => a.freq - b.freq)
+    if (sort === 'kana') points.sort((a, b) => kanaKey(a.pattern).localeCompare(kanaKey(b.pattern), 'ja'))
+    return points.length ? [{ id: 'all', name: SORT_LABEL[sort], sub: '', points }] : []
+  }, [query, show, known, sort])
 
   const toggleKnown = (pattern: string) => void toggleKnownGrammar(pattern)
 
@@ -157,13 +199,19 @@ export default function Grammar() {
             </button>
           ))}
         </div>
-        <nav className={s.chips} aria-label="Groups">
+        <label className={s.sortRow}>
+          <span className={s.sortLabel}>Sort</span>
+          <select className={s.sort} value={sort} onChange={(e) => pickSort(e.target.value as Sort)}>
+            {(['theme', 'common', 'rare', 'kana'] as const).map((v) => <option key={v} value={v}>{SORT_LABEL[v]}</option>)}
+          </select>
+        </label>
+        {sort === 'theme' && <nav className={s.chips} aria-label="Groups">
           {groups.map((g) => (
             <a key={g.id} href={`#g-${g.id}`} className={s.chip} onClick={(e) => { e.preventDefault(); document.getElementById(`g-${g.id}`)?.scrollIntoView({ behavior: 'smooth' }) }}>
               {g.name}<b>{g.points.length}</b>
             </a>
           ))}
-        </nav>
+        </nav>}
       </div>
 
       {groups.length === 0 && (
@@ -178,8 +226,18 @@ export default function Grammar() {
 
       {groups.map((g) => (
         <section key={g.id} id={`g-${g.id}`} className={s.group}>
-          <h2 className={s.groupName}>{g.name}</h2>
-          <p className={s.sub}>{g.sub}</p>
+          {sort === 'theme' ? (
+            <>
+              <h2 className={s.groupName}>{g.name}</h2>
+              <p className={s.sub}>{g.sub}</p>
+            </>
+          ) : (
+            (sort === 'common' || sort === 'rare') && (
+              <p className={s.sub}>
+                How often each point appears in about 249,000 everyday Japanese sentences (Tatoeba). Words that link two sentences, like ところが and さて, count low because each example is one sentence.
+              </p>
+            )
+          )}
           <div className={s.cards}>
             {g.points.map((p) => (
               <article key={p.pattern} className={`${ui.card} ${s.card} ${known.has(p.pattern) ? s.isKnown : ''}`}>
@@ -194,6 +252,12 @@ export default function Grammar() {
                     {known.has(p.pattern) ? '✓ Known' : 'Mark known'}
                   </button>
                 </div>
+                <span className={s.freq} title={`In ${p.freq} of every 10,000 sentences`}>
+                  <span className={s.bars} aria-hidden>
+                    {[0, 1, 2, 3].map((i) => <i key={i} className={i < 4 - ['Very common', 'Common', 'Less common', 'Rare'].indexOf(tier(p.freq)) ? s.barOn : ''} />)}
+                  </span>
+                  {tier(p.freq)}
+                </span>
                 <span className={s.connection} lang="ja"><Ruby text={p.connection} /></span>
                 <p className={s.note}>{p.note}</p>
                 <ul className={s.examples}>

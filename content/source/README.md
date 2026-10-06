@@ -12,3 +12,5 @@ There has been no official JLPT vocab or grammar list since 2010, so these are c
 All lists were downloaded on 2026-09-27. The grammar lists disagree a lot (they share only 91 points), so the overlap is treated as the reliable core.
 
 `wanikani-known.json` and `wanikani-upto35.json` (both gitignored) come from `scripts/wanikani.mjs`: your WaniKani progress, and every vocab item WaniKani teaches up to level 35. Kasane skips both, since you plan to reach WaniKani 35. That leaves about 1,100 N3 words for Kasane.
+
+`grammar-frequency.json` counts how many of Tatoeba's ~249k Japanese sentences ([tatoeba.org](https://tatoeba.org), CC BY 2.0 FR) contain each grammar point, using the rules in `scripts/grammar-frequency.mjs`. Only the counts are stored, not the sentences. The Grammar tab uses them to sort by how common each point is.
