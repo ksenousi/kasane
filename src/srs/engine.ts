@@ -1,4 +1,4 @@
-import { BURNED, FIRST_STAGE, GURU, STAGES, clampStage, type Stage } from './stages'
+import { BURNED, FIRST_STAGE, GURU, HOUR, STAGES, clampStage, type Stage } from './stages'
 
 /** Per-item SRS state, stored in IndexedDB. */
 export interface Progress {
@@ -18,9 +18,10 @@ export function newProgress(itemId: string): Progress {
   return { itemId, stage: 0, startedAt: null, passedAt: null, burnedAt: null, dueAt: null, correct: 0, incorrect: 0 }
 }
 
-function dueFrom(stage: Stage, now: number): number | null {
+/** Next review time. Like WaniKani, it's rounded down to the start of the hour, so reviews arrive in hourly batches. */
+export function dueFrom(stage: Stage, now: number): number | null {
   const interval = STAGES[stage].interval
-  return interval === null ? null : now + interval
+  return interval === null ? null : Math.floor((now + interval) / HOUR) * HOUR
 }
 
 /**

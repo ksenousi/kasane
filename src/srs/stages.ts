@@ -3,8 +3,7 @@
 export type Stage = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type StageGroup = 'lesson' | 'apprentice' | 'guru' | 'master' | 'enlightened' | 'burned'
 
-const HOUR = 60 * 60 * 1000
-const DAY = 24 * HOUR
+export const HOUR = 60 * 60 * 1000
 
 interface StageInfo {
   name: string
@@ -13,16 +12,20 @@ interface StageInfo {
   interval: number | null
 }
 
+/**
+ * WaniKani's intervals: 4h, 8h, then a day/2 days/1 week/2 weeks/1 month/4 months less an hour,
+ * so a review done at the same time of day is ready again at that time.
+ */
 export const STAGES: Record<Stage, StageInfo> = {
   0: { name: 'Lesson', group: 'lesson', interval: null },
   1: { name: 'Apprentice 1', group: 'apprentice', interval: 4 * HOUR },
   2: { name: 'Apprentice 2', group: 'apprentice', interval: 8 * HOUR },
-  3: { name: 'Apprentice 3', group: 'apprentice', interval: 1 * DAY },
-  4: { name: 'Apprentice 4', group: 'apprentice', interval: 2 * DAY },
-  5: { name: 'Guru 1', group: 'guru', interval: 7 * DAY },
-  6: { name: 'Guru 2', group: 'guru', interval: 14 * DAY },
-  7: { name: 'Master', group: 'master', interval: 30 * DAY },
-  8: { name: 'Enlightened', group: 'enlightened', interval: 120 * DAY },
+  3: { name: 'Apprentice 3', group: 'apprentice', interval: 23 * HOUR },
+  4: { name: 'Apprentice 4', group: 'apprentice', interval: 47 * HOUR },
+  5: { name: 'Guru 1', group: 'guru', interval: 166 * HOUR },
+  6: { name: 'Guru 2', group: 'guru', interval: 335 * HOUR },
+  7: { name: 'Master', group: 'master', interval: 719 * HOUR },
+  8: { name: 'Enlightened', group: 'enlightened', interval: 2879 * HOUR },
   9: { name: 'Burned', group: 'burned', interval: null },
 }
 

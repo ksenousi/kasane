@@ -47,7 +47,7 @@ export default function Lesson({ onExit }: Props) {
     return (
       <div className={`${ui.screen} ${s.done}`}>
         <span className={s.doneTitle}>Lesson done</span>
-        <p className={s.doneText}>{batch.length} new words are now at Apprentice 1. Your first review is in 4 hours.</p>
+        <p className={s.doneText}>{batch.length} new words are now at Apprentice 1. Your first review is ready within 4 hours.</p>
         <div className={s.chips} lang="ja">{batch.map((i) => <span key={i.id} className={s.chip}>{itemLabel(i)}</span>)}</div>
         <button className={ui.btn} onClick={onExit}>Back to home</button>
       </div>

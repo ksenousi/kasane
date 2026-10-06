@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { applyReview, completeLesson, isDue, newProgress, nextStage, type Progress } from '../src/srs/engine'
+import type { Stage } from '../src/srs/stages'
+import { applyReview, completeLesson, dueFrom, isDue, newProgress, nextStage, type Progress } from '../src/srs/engine'
 
 const HOUR = 3_600_000
 const NOW = Date.UTC(2026, 8, 27, 12)
@@ -63,5 +64,16 @@ describe('review lifecycle', () => {
     p = applyReview(p, 2, NOW)
     expect(p.correct).toBe(1)
     expect(p.incorrect).toBe(1)
+  })
+})
+
+describe('review timing (WaniKani schedule)', () => {
+  it('uses WaniKani intervals: 4h, 8h, 23h, 47h, 166h, 335h, 719h, 2879h', () => {
+    expect([1, 2, 3, 4, 5, 6, 7, 8].map((st) => (dueFrom(st as Stage, NOW)! - NOW) / HOUR)).toEqual([4, 8, 23, 47, 166, 335, 719, 2879])
+  })
+
+  it('rounds the next review down to the start of the hour', () => {
+    expect(dueFrom(1, NOW + 59 * 60_000)).toBe(NOW + 4 * HOUR)
+    expect(dueFrom(9, NOW)).toBeNull()
   })
 })
