@@ -64,9 +64,18 @@ body,
   margin-inline: auto;
 }
 
+/* The column's edge lines are fixed to the screen, so they run the full height however far you scroll
+   (a border on #root stopped one screen down, since #root is only as tall as the viewport). */
 @media (min-width: 760px) {
-  #root {
+  #root::before {
+    content: '';
+    position: fixed;
+    inset-block: 0;
+    left: 50%;
+    width: 722px;
+    transform: translateX(-50%);
     border-inline: 1px solid var(--line);
+    pointer-events: none;
   }
 }
 

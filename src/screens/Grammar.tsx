@@ -165,8 +165,8 @@ export default function Grammar() {
   return (
     <div className={`${s.page} ${furigana ? '' : s.noFuri}`}>
       <div className={s.head}>
-        <span className={ui.label}>N3 · {total} core points</span>
         <span className={s.title}>Grammar</span>
+        <span className={s.subtitle}>The {total} core N3 grammar points</span>
         <div className={s.progress} aria-label={`${knownCount} of ${total} known`}>
           <div className={s.progressFill} style={{ width: `${(knownCount / total) * 100}%` }} />
         </div>

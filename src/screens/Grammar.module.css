@@ -8,7 +8,13 @@
 .head {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text);
+  opacity: 0.8;
 }
 
 .title {
@@ -19,15 +25,17 @@
 /* Search and toggles stay in view while scrolling. */
 .bar {
   position: sticky;
-  top: 0;
+  top: var(--safe-top);
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 0 -20px;
-  padding: calc(8px + var(--safe-top)) 20px 10px;
+  padding: 8px 20px 10px;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
+  /* Once pinned, also cover the status-bar strip above it so cards don't scroll behind the clock. */
+  box-shadow: 0 calc(-1 * var(--safe-top)) 0 var(--bg);
 }
 
 .search {
@@ -272,7 +280,7 @@
 }
 
 .progressText {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
