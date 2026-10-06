@@ -1,37 +1,76 @@
 import type { ReactNode } from 'react'
-import { hasKanji, itemLabel, kanjiBreakdown } from '../content'
+import { hasKanji, kanjiBreakdown } from '../content'
 import type { Item } from '../content/schema'
 import ui from '../ui/ui.module.css'
 import s from './Lesson.module.css'
 
-/** The study card for one word: reading, meaning, kanji, mnemonics, examples, notes. Used by lessons and the Levels page. */
+/** The parts of a word's page. Lessons show one at a time (WaniKani-style); the Levels page shows them all. */
+export type Panel = 'meaning' | 'reading' | 'context'
+
+export function panelsFor(item: Item): Panel[] {
+  return hasKanji(item.word) ? ['meaning', 'reading', 'context'] : ['meaning', 'context']
+}
+
+export const PANEL_LABEL: Record<Panel, string> = { meaning: 'Meaning', reading: 'Reading', context: 'Context' }
+
+export function WordBand({ item, showReading }: { item: Item; showReading: boolean }) {
+  return (
+    <div className={s.band}>
+      <span className={s.word} lang="ja">{item.word}</span>
+      {showReading && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
+      {item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
+    </div>
+  )
+}
+
+export function PanelView({ item, panel }: { item: Item; panel: Panel }) {
+  switch (panel) {
+    case 'meaning':
+      return (
+        <>
+          <Section label="Meaning">
+            <span className={s.meaning}>{item.meanings.join('; ')}</span>
+            <span className={s.small}>{item.pos}</span>
+          </Section>
+          <KanjiParts word={item.word} />
+          <Hook label="Remember the meaning" text={item.mnemonic.meaning} />
+        </>
+      )
+    case 'reading':
+      return (
+        <>
+          <Section label="Reading">
+            <span className={s.meaning} lang="ja">{[item.reading, ...(item.readings ?? [])].join('、')}</span>
+          </Section>
+          {item.mnemonic.reading && <Hook label="Remember the reading" text={item.mnemonic.reading} />}
+        </>
+      )
+    case 'context':
+      return (
+        <>
+          <Section label="Context">
+            <div className={s.examples}>
+              {item.examples.map((e) => (
+                <div key={e.ja} className={`${ui.card} ${s.example}`}>
+                  <span className={s.ja} lang="ja">{e.ja}</span>
+                  <span className={s.small}>{e.en}</span>
+                </div>
+              ))}
+            </div>
+          </Section>
+          {item.note && <p className={s.note} lang="ja">{item.note}</p>}
+        </>
+      )
+  }
+}
+
+/** Everything about one word on a single page. Used by the Levels page. */
 export default function ItemCard({ item }: { item: Item }) {
   return (
     <>
-      <div className={s.band}>
-        <span className={s.word} lang="ja">{itemLabel(item)}</span>
-        {hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
-        {item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
-      </div>
-
+      <WordBand item={item} showReading />
       <div className={s.body}>
-        <Section label="Meaning"><span className={s.meaning}>{item.meanings.join('; ')}</span><span className={s.small}>{item.pos}</span></Section>
-        <KanjiParts word={item.word} />
-        {item.mnemonic && (
-          <Section label="Remember it">
-            <div className={s.mnemonics}>
-              <Hook label="Meaning" text={item.mnemonic.meaning} />
-              {item.mnemonic.reading && <Hook label="Reading" text={item.mnemonic.reading} />}
-            </div>
-          </Section>
-        )}
-        {item.examples.map((e) => (
-          <div key={e.ja} className={`${ui.card} ${s.example}`}>
-            <span className={s.ja} lang="ja">{e.ja}</span>
-            <span className={s.small}>{e.en}</span>
-          </div>
-        ))}
-        {item.note && <p className={s.note} lang="ja">{item.note}</p>}
+        {panelsFor(item).map((p) => <PanelView key={p} item={item} panel={p} />)}
       </div>
     </>
   )
