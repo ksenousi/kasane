@@ -118,3 +118,16 @@ describe('helpers', () => {
     expect(editDistance('', 'abc')).toBe(3)
   })
 })
+
+describe('user synonyms', () => {
+  it('accepts your own meanings, with the same typo tolerance', () => {
+    expect(checkAnswer('meaning', 'grin and bear it', word).kind).toBe('wrong')
+    expect(checkAnswer('meaning', 'grin and bear it', word, ['grin and bear it'])).toEqual({ kind: 'correct', close: false })
+    expect(checkAnswer('meaning', 'grin and bare it', word, ['grin and bear it'])).toEqual({ kind: 'correct', close: true })
+  })
+
+  it("don't change how readings are checked", () => {
+    expect(checkAnswer('reading', 'かまん', word, ['かまん']).kind).toBe('wrong')
+  })
+})
+

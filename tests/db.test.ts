@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto'
 import { beforeEach, describe, expect, it } from 'vitest'
 import Dexie from 'dexie'
 import {
-  KasaneDB, exportBackup, importBackup, loadProgress, loadSettings, recordAnswer, resetAll, saveProgress, saveSetting,
+  KasaneDB, exportBackup, importBackup, loadProgress, loadSettings, loadSynonyms, recordAnswer, resetAll, saveProgress, saveSetting, saveSynonyms,
 } from '../src/db'
 import { completeLesson, newProgress } from '../src/srs/engine'
 
@@ -68,6 +68,34 @@ describe('removed content', () => {
     expect(await db.progress.count()).toBe(0)
     expect(await db.answers.count()).toBe(0)
     expect((await db.settings.get('lessonBatch'))?.value).toBe(10)
+    db.close()
+  })
+
+  it('saves synonyms, removes empty lists, and round-trips them through a backup', async () => {
+    await saveSynonyms('v-gaman', ['grin and bear it'])
+    await saveSynonyms('v-setsuyaku', ['thrift'])
+    await saveSynonyms('v-setsuyaku', [])
+    expect([...(await loadSynonyms())]).toEqual([['v-gaman', ['grin and bear it']]])
+    const backup = JSON.parse(JSON.stringify(await exportBackup(NOW)))
+    await resetAll()
+    expect((await loadSynonyms()).size).toBe(0)
+    await importBackup(backup)
+    expect((await loadSynonyms()).get('v-gaman')).toEqual(['grin and bear it'])
+  })
+
+  it('imports older backups that have no synonyms', async () => {
+    await saveSynonyms('v-gaman', ['x'])
+    await importBackup({ app: 'kasane', version: 1, exportedAt: NOW, progress: [], answers: [], settings: [] })
+    expect((await loadSynonyms()).size).toBe(0)
+  })
+
+  it('keeps progress when upgrading from v2 to v3 (synonyms)', async () => {
+    const old = new Dexie('kasane-v2')
+    old.version(2).stores({ progress: 'itemId, stage, dueAt', answers: '++id, itemId, part, at', settings: 'key' })
+    await old.table('progress').put(completeLesson(newProgress('v-gaman'), NOW))
+    old.close()
+    const db = new KasaneDB('kasane-v2')
+    expect(await db.progress.count()).toBe(1)
     db.close()
   })
 })

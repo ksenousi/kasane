@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { ITEMS, ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import {
-  DEFAULT_SETTINGS, loadProgress, loadSettings, recordAnswer, saveProgress, saveSetting, type Answer, type Settings,
+  DEFAULT_SETTINGS, loadProgress, loadSettings, loadSynonyms, recordAnswer, saveProgress, saveSetting, saveSynonyms, type Answer, type Settings,
 } from '../db'
 import { now as clockNow } from '../lib/clock'
 import { applyReview, completeLesson, newProgress, type Progress } from '../srs/engine'
@@ -15,6 +15,8 @@ interface Store {
   now: number
   progress: ReadonlyMap<string, Progress>
   settings: Settings
+  /** The user's own extra meanings, by item id. */
+  synonyms: ReadonlyMap<string, string[]>
   level: number
   lessons: Item[]
   reviews: Item[]
@@ -23,6 +25,8 @@ interface Store {
   finishReview: (f: Finished) => Promise<void>
   logAnswer: (a: Omit<Answer, 'id' | 'at'>) => void
   setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => Promise<void>
+  addSynonym: (itemId: string, meaning: string) => Promise<void>
+  removeSynonym: (itemId: string, meaning: string) => Promise<void>
 }
 
 const StoreContext = createContext<Store | null>(null)
@@ -40,12 +44,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
   const [progress, setProgress] = useState<Map<string, Progress>>(new Map())
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
+  const [synonyms, setSynonyms] = useState<Map<string, string[]>>(new Map())
   const [now, setNow] = useState(clockNow)
 
   const refresh = useCallback(async () => {
-    const [p, s] = await Promise.all([loadProgress(), loadSettings()])
+    const [p, s, syn] = await Promise.all([loadProgress(), loadSettings(), loadSynonyms()])
     setProgress(currentOnly(p))
     setSettings(s)
+    setSynonyms(syn)
     setNow(clockNow())
     setReady(true)
   }, [])
@@ -99,12 +105,37 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setSettings((s) => ({ ...s, [key]: value }))
   }, [])
 
+  const writeSynonyms = useCallback(async (itemId: string, update: (list: string[]) => string[]) => {
+    const list = update(synonyms.get(itemId) ?? [])
+    await saveSynonyms(itemId, list)
+    setSynonyms((prev) => {
+      const next = new Map(prev)
+      if (list.length) next.set(itemId, list)
+      else next.delete(itemId)
+      return next
+    })
+  }, [synonyms])
+
+  const addSynonym = useCallback(
+    (itemId: string, meaning: string) => {
+      const m = meaning.trim().replace(/\s+/g, ' ')
+      return writeSynonyms(itemId, (list) => (m && !list.some((x) => x.toLowerCase() === m.toLowerCase()) ? [...list, m] : list))
+    },
+    [writeSynonyms],
+  )
+
+  const removeSynonym = useCallback(
+    (itemId: string, meaning: string) => writeSynonyms(itemId, (list) => list.filter((x) => x !== meaning)),
+    [writeSynonyms],
+  )
+
   const value = useMemo<Store>(() => {
     return {
       ready,
       now,
       progress,
       settings,
+      synonyms,
       level: currentLevel(ITEMS, progress),
       lessons: lessonItems(ITEMS, progress),
       reviews: reviewQueue(ITEMS, progress, now),
@@ -113,8 +144,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       finishReview,
       logAnswer,
       setSetting,
+      addSynonym,
+      removeSynonym,
     }
-  }, [ready, now, progress, settings, refresh, completeLessons, finishReview, logAnswer, setSetting])
+  }, [ready, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, addSynonym, removeSynonym])
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

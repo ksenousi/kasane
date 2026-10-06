@@ -36,9 +36,12 @@ export function normalizeMeaning(s: string): string {
     .replace(FILLER, '')
 }
 
-/** Every accepted spelling of an item's meaning, including the version without (parenthesised) parts. */
-export function acceptedMeanings(item: Item): string[] {
-  const all = [...item.meanings, ...(item.accept ?? [])]
+/**
+ * Every accepted spelling of an item's meaning, including the version without (parenthesised) parts.
+ * `synonyms` are the user's own extra meanings, like WaniKani's user synonyms.
+ */
+export function acceptedMeanings(item: Item, synonyms: readonly string[] = []): string[] {
+  const all = [...item.meanings, ...(item.accept ?? []), ...synonyms]
   const forms = all.flatMap((m) => [m, m.replace(/\([^)]*\)/g, ' ')])
   return [...new Set(forms.map(normalizeMeaning).filter(Boolean))]
 }
@@ -65,13 +68,13 @@ export function editDistance(a: string, b: string): number {
   return row[b.length]
 }
 
-function checkMeaning(input: string, item: Item): Verdict {
+function checkMeaning(input: string, item: Item, synonyms: readonly string[]): Verdict {
   if (isJapanese(input.replace(/\s/g, '')) || /[぀-ヿ一-鿿]/.test(input)) {
     return { kind: 'invalid', message: 'We want the meaning in English, not the reading.' }
   }
   const given = normalizeMeaning(input)
   if (!given) return { kind: 'invalid', message: 'Type a meaning in English.' }
-  const accepted = acceptedMeanings(item)
+  const accepted = acceptedMeanings(item, synonyms)
   if (accepted.includes(given)) return { kind: 'correct', close: false }
   if (accepted.some((m) => editDistance(given, m) <= typoTolerance(m.length))) return { kind: 'correct', close: true }
   return { kind: 'wrong' }
@@ -86,6 +89,6 @@ function checkReading(input: string, item: Item): Verdict {
   return readings.includes(given) ? { kind: 'correct', close: false } : { kind: 'wrong' }
 }
 
-export function checkAnswer(part: Part, input: string, item: Item): Verdict {
-  return part === 'meaning' ? checkMeaning(input, item) : checkReading(input, item)
+export function checkAnswer(part: Part, input: string, item: Item, synonyms: readonly string[] = []): Verdict {
+  return part === 'meaning' ? checkMeaning(input, item, synonyms) : checkReading(input, item)
 }

@@ -26,10 +26,17 @@ interface SettingRow {
   value: Settings[keyof Settings]
 }
 
+/** The user's own extra meanings for one word (WaniKani's "user synonyms"). */
+export interface Synonyms {
+  itemId: string
+  list: string[]
+}
+
 export class KasaneDB extends Dexie {
   progress!: EntityTable<Progress, 'itemId'>
   answers!: EntityTable<Answer, 'id'>
   settings!: EntityTable<SettingRow, 'key'>
+  synonyms!: EntityTable<Synonyms, 'itemId'>
 
   constructor(name = 'kasane') {
     super(name)
@@ -45,6 +52,8 @@ export class KasaneDB extends Dexie {
         await tx.table('progress').clear()
         await tx.table('answers').clear()
       })
+    // v3: user synonyms. Adds a table only; progress is kept.
+    this.version(3).stores({ synonyms: 'itemId' })
   }
 }
 
@@ -57,6 +66,17 @@ export async function loadProgress(): Promise<Map<string, Progress>> {
 
 export async function saveProgress(...rows: Progress[]): Promise<void> {
   await db.progress.bulkPut(rows)
+}
+
+export async function loadSynonyms(): Promise<Map<string, string[]>> {
+  const rows = await db.synonyms.toArray()
+  return new Map(rows.map((r) => [r.itemId, r.list]))
+}
+
+/** Saves one word's synonyms; an empty list removes the row. */
+export async function saveSynonyms(itemId: string, list: string[]): Promise<void> {
+  if (list.length) await db.synonyms.put({ itemId, list })
+  else await db.synonyms.delete(itemId)
 }
 
 export async function recordAnswer(a: Omit<Answer, 'id'>): Promise<void> {
@@ -83,6 +103,8 @@ export interface Backup {
   progress: Progress[]
   answers: Answer[]
   settings: SettingRow[]
+  /** Added later; older backups don't have it. */
+  synonyms?: Synonyms[]
 }
 
 export async function exportBackup(now = Date.now()): Promise<Backup> {
@@ -93,6 +115,7 @@ export async function exportBackup(now = Date.now()): Promise<Backup> {
     progress: await db.progress.toArray(),
     answers: await db.answers.toArray(),
     settings: await db.settings.toArray(),
+    synonyms: await db.synonyms.toArray(),
   }
 }
 
@@ -102,16 +125,17 @@ export async function importBackup(data: unknown): Promise<void> {
   if (!b || b.app !== 'kasane' || b.version !== 1 || !Array.isArray(b.progress) || !Array.isArray(b.answers)) {
     throw new Error('Not a Kasane backup file')
   }
-  await db.transaction('rw', db.progress, db.answers, db.settings, async () => {
-    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear()])
+  await db.transaction('rw', [db.progress, db.answers, db.settings, db.synonyms], async () => {
+    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear(), db.synonyms.clear()])
     await db.progress.bulkPut(b.progress!)
     await db.answers.bulkPut(b.answers!)
     await db.settings.bulkPut(b.settings ?? [])
+    await db.synonyms.bulkPut(b.synonyms ?? [])
   })
 }
 
 export async function resetAll(): Promise<void> {
-  await db.transaction('rw', db.progress, db.answers, db.settings, async () => {
-    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear()])
+  await db.transaction('rw', [db.progress, db.answers, db.settings, db.synonyms], async () => {
+    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear(), db.synonyms.clear()])
   })
 }
