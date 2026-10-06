@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import { ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import { checkAnswer, finishKana, imeKana, type Verdict } from '../srs/answer'
@@ -103,7 +103,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
         <span className={ui.count}>{done}/{state.total}{accuracy !== null && ` · ${accuracy}%`}</span>
       </div>
 
-      <div className={s.word} lang="ja">{item.word}</div>
+      <div className={s.word} lang="ja" style={{ '--len': item.word.length } as CSSProperties}>{item.word}</div>
       <div className={`${s.prompt} ${reading ? s.promptReading : s.promptMeaning}`}>
         Vocabulary <b>{reading ? 'Reading' : 'Meaning'}</b>
         {mode === 'review' && <span className={s.stage}>{STAGES[current].name}</span>}

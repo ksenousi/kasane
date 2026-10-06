@@ -188,3 +188,10 @@
   font-size: 11px;
   color: var(--muted);
 }
+
+/* "Apprentice" doesn't fit a fifth of a 320px screen at 11px. */
+@media (max-width: 360px) {
+  .stageL {
+    font-size: 9.5px;
+  }
+}

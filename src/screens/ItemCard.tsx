@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { hasKanji, kanjiBreakdown } from '../content'
 import type { Item } from '../content/schema'
 import ui from '../ui/ui.module.css'
@@ -16,7 +16,7 @@ export const PANEL_LABEL: Record<Panel, string> = { meaning: 'Meaning', reading:
 export function WordBand({ item, showReading }: { item: Item; showReading: boolean }) {
   return (
     <div className={s.band}>
-      <span className={s.word} lang="ja">{item.word}</span>
+      <span className={s.word} lang="ja" style={{ '--len': item.word.length } as CSSProperties}>{item.word}</span>
       {showReading && hasKanji(item.word) && <span className={s.reading} lang="ja">{item.reading}</span>}
       {item.kanji && <span className={s.small} lang="ja">Rarely written {item.kanji}</span>}
     </div>

@@ -14,10 +14,19 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: clamp(48px, 16vw, 72px);
+  font-size: min(72px, calc((var(--col) - 80px) / var(--len, 2)));
   font-weight: 600;
   line-height: 1.15;
-  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* Phone landscape, or an iPad with the keyboard up: keep the answer box in view. */
+@media (max-height: 560px) {
+  .word {
+    min-height: 0;
+    padding: 12px 20px;
+    font-size: min(48px, calc((var(--col) - 80px) / var(--len, 2)));
+  }
 }
 
 .prompt {

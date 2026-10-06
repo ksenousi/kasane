@@ -57,6 +57,19 @@ body,
   height: 100%;
 }
 
+/* The app is one column. On iPad and Mac it stays phone-app width, centred, instead of stretching. */
+#root {
+  --col: min(100vw, 720px);
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+@media (min-width: 760px) {
+  #root {
+    border-inline: 1px solid var(--line);
+  }
+}
+
 /* Home Screen app on iPhone: with the black-translucent status bar the page draws under the
    status bar, but iOS still sizes it as if the status bar weren't there, leaving a gap that
    tall below the tab bar. Add it back. */
