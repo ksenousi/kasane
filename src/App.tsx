@@ -3,6 +3,7 @@ import type { Item } from './content/schema'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
 import ItemPage from './screens/ItemPage'
+import Grammar from './screens/Grammar'
 import Levels from './screens/Levels'
 import Session from './screens/Session'
 import Settings from './screens/Settings'
@@ -11,12 +12,13 @@ import { useStore } from './state/store'
 import * as I from './ui/icons'
 import ui from './ui/ui.module.css'
 
-type Tab = 'home' | 'levels' | 'weak' | 'settings'
+type Tab = 'home' | 'levels' | 'grammar' | 'weak' | 'settings'
 type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item }
 
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Home', icon: <I.Home /> },
   { id: 'levels', label: 'Levels', icon: <I.Levels /> },
+  { id: 'grammar', label: 'Grammar', icon: <I.Book /> },
   { id: 'weak', label: 'Weak spots', icon: <I.Target /> },
   { id: 'settings', label: 'Settings', icon: <I.Gear /> },
 ]
@@ -59,6 +61,7 @@ export default function App() {
             setScreen({ name: 'item', item })
           }}
         />}
+      {screen.name === 'grammar' && <Grammar />}
       {screen.name === 'weak' && <WeakSpots onDrill={(items) => setScreen({ name: 'drill', items })} />}
       {screen.name === 'settings' && <Settings />}
       <nav className={ui.tabs}>

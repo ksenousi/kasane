@@ -141,6 +141,19 @@
   font-size: 11px;
 }
 
+/* Five tabs on a 320px phone: keep each label on one line. */
+.tab {
+  flex: 1 1 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .tab {
+    min-width: 0;
+    font-size: 10px;
+  }
+}
+
 .tabActive {
   color: var(--accent-text);
 }

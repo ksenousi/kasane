@@ -7,6 +7,7 @@ const base = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', stroke
 export const Close = (p: P) => <svg {...base} {...p}><path d="M6 6l12 12M18 6L6 18" /></svg>
 export const Home = (p: P) => <svg {...base} {...p}><path d="M3 11l9-7 9 7v9h-6v-6H9v6H3z" /></svg>
 export const Levels = (p: P) => <svg {...base} {...p}><path d="M4 20h4V10H4zM10 20h4V4h-4zM16 20h4v-7h-4z" /></svg>
+export const Book = (p: P) => <svg {...base} {...p}><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 5v16M8 7h7" /></svg>
 export const Target = (p: P) => <svg {...base} {...p}><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /></svg>
 export const Gear = (p: P) => (
   <svg {...base} {...p}>
