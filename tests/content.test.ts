@@ -37,8 +37,8 @@ describe('content', () => {
 })
 
 // Local-only guards: scripts/wanikani.mjs writes these files (gitignored, so CI skips them).
-// Kasane skips vocab you've started on WaniKani and everything WaniKani teaches up to level 35.
-const WK_FILES = ['wanikani-known.json', 'wanikani-upto35.json'].map((f) => new URL(`../content/source/${f}`, import.meta.url))
+// Kasane skips vocab you've started on WaniKani and everything WaniKani teaches up to level 40.
+const WK_FILES = ['wanikani-known.json', 'wanikani-upto40.json'].map((f) => new URL(`../content/source/${f}`, import.meta.url))
 describe.each(WK_FILES.filter((f) => existsSync(f)).map((f) => [f.pathname.split('/').pop()!, f] as const))('WaniKani overlap (%s)', (_, file) => {
   // WaniKani often lists する verbs and な adjectives with the suffix (想像する, 静かな), so compare base forms.
   const base = (w: string) => {

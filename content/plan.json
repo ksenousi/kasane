@@ -1,5 +1,5 @@
 {
- "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-35, ordered by JPDB frequency (rank <= 20000). Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
+ "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-40, ordered by JPDB frequency (rank <= 20000). Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
  "perLevel": 30,
  "levels": [
   {
@@ -19,11 +19,6 @@
      "word": "冷ます",
      "reading": "さます",
      "rank": 14131
-    },
-    {
-     "word": "渋滞",
-     "reading": "じゅうたい",
-     "rank": 18648
     },
     {
      "word": "手術",
@@ -76,19 +71,9 @@
      "rank": 2628
     },
     {
-     "word": "扱う",
-     "reading": "あつかう",
-     "rank": 1169
-    },
-    {
      "word": "叫ぶ",
      "reading": "さけぶ",
      "rank": 724
-    },
-    {
-     "word": "避ける",
-     "reading": "さける",
-     "rank": 806
     },
     {
      "word": "黙る",
@@ -109,21 +94,6 @@
      "word": "自身",
      "reading": "じしん",
      "rank": 658
-    },
-    {
-     "word": "食う",
-     "reading": "くう",
-     "rank": 785
-    },
-    {
-     "word": "奪う",
-     "reading": "うばう",
-     "rank": 808
-    },
-    {
-     "word": "繰り返す",
-     "reading": "くりかえす",
-     "rank": 827
     },
     {
      "word": "本人",
@@ -154,12 +124,7 @@
      "word": "とにかく",
      "reading": "とにかく",
      "rank": 590
-    }
-   ]
-  },
-  {
-   "level": 2,
-   "vocab": [
+    },
     {
      "word": "印象",
      "reading": "いんしょう",
@@ -176,21 +141,6 @@
      "rank": 1317
     },
     {
-     "word": "慎重",
-     "reading": "しんちょう",
-     "rank": 2147
-    },
-    {
-     "word": "信頼",
-     "reading": "しんらい",
-     "rank": 1253
-    },
-    {
-     "word": "活躍",
-     "reading": "かつやく",
-     "rank": 2539
-    },
-    {
      "word": "興奮",
      "reading": "こうふん",
      "rank": 1542
@@ -201,15 +151,15 @@
      "rank": 1114
     },
     {
-     "word": "契約",
-     "reading": "けいやく",
-     "rank": 2173
-    },
-    {
      "word": "滞在",
      "reading": "たいざい",
      "rank": 4851
-    },
+    }
+   ]
+  },
+  {
+   "level": 2,
+   "vocab": [
     {
      "word": "到着",
      "reading": "とうちゃく",
@@ -234,11 +184,6 @@
      "word": "握る",
      "reading": "にぎる",
      "rank": 741
-    },
-    {
-     "word": "頼る",
-     "reading": "たよる",
-     "rank": 1208
     },
     {
      "word": "溜まる",
@@ -269,11 +214,6 @@
      "word": "願う",
      "reading": "ねがう",
      "rank": 1035
-    },
-    {
-     "word": "戻す",
-     "reading": "もどす",
-     "rank": 1038
     },
     {
      "word": "今後",
@@ -309,12 +249,7 @@
      "word": "中心",
      "reading": "ちゅうしん",
      "rank": 1181
-    }
-   ]
-  },
-  {
-   "level": 3,
-   "vocab": [
+    },
     {
      "word": "まるで",
      "reading": "まるで",
@@ -324,11 +259,6 @@
      "word": "しかも",
      "reading": "しかも",
      "rank": 561
-    },
-    {
-     "word": "奥",
-     "reading": "おく",
-     "rank": 576
     },
     {
      "word": "場",
@@ -341,11 +271,6 @@
      "rank": 839
     },
     {
-     "word": "描く",
-     "reading": "えがく",
-     "rank": 855
-    },
-    {
      "word": "なんとか",
      "reading": "なんとか",
      "rank": 857,
@@ -355,11 +280,6 @@
      "word": "件",
      "reading": "けん",
      "rank": 937
-    },
-    {
-     "word": "抱く",
-     "reading": "いだく",
-     "rank": 971
     },
     {
      "word": "例",
@@ -390,12 +310,12 @@
      "word": "流れ",
      "reading": "ながれ",
      "rank": 1132
-    },
-    {
-     "word": "伸びる",
-     "reading": "のびる",
-     "rank": 1138
-    },
+    }
+   ]
+  },
+  {
+   "level": 3,
+   "vocab": [
     {
      "word": "切り",
      "reading": "きり",
@@ -465,12 +385,7 @@
      "word": "立ち上がる",
      "reading": "たちあがる",
      "rank": 1326
-    }
-   ]
-  },
-  {
-   "level": 4,
-   "vocab": [
+    },
     {
      "word": "やがて",
      "reading": "やがて",
@@ -502,11 +417,6 @@
      "rank": 1455
     },
     {
-     "word": "鋭い",
-     "reading": "するどい",
-     "rank": 1483
-    },
-    {
      "word": "あるいは",
      "reading": "あるいは",
      "rank": 1492
@@ -515,11 +425,6 @@
      "word": "お互い",
      "reading": "おたがい",
      "rank": 1499
-    },
-    {
-     "word": "馬鹿",
-     "reading": "ばか",
-     "rank": 1510
     },
     {
      "word": "一言",
@@ -542,16 +447,6 @@
      "rank": 1537
     },
     {
-     "word": "膝",
-     "reading": "ひざ",
-     "rank": 1538
-    },
-    {
-     "word": "伸ばす",
-     "reading": "のばす",
-     "rank": 1565
-    },
-    {
      "word": "多少",
      "reading": "たしょう",
      "rank": 1575
@@ -567,15 +462,15 @@
      "rank": 1594
     },
     {
-     "word": "抵抗",
-     "reading": "ていこう",
-     "rank": 1612
-    },
-    {
      "word": "引っ張る",
      "reading": "ひっぱる",
      "rank": 1622
-    },
+    }
+   ]
+  },
+  {
+   "level": 4,
+   "vocab": [
     {
      "word": "真っ赤",
      "reading": "まっか",
@@ -620,12 +515,7 @@
      "word": "謎",
      "reading": "なぞ",
      "rank": 1742
-    }
-   ]
-  },
-  {
-   "level": 5,
-   "vocab": [
+    },
     {
      "word": "組む",
      "reading": "くむ",
@@ -652,11 +542,6 @@
      "rank": 1769
     },
     {
-     "word": "爆発",
-     "reading": "ばくはつ",
-     "rank": 1777
-    },
-    {
      "word": "動揺",
      "reading": "どうよう",
      "rank": 1778
@@ -675,11 +560,6 @@
      "word": "沈む",
      "reading": "しずむ",
      "rank": 1799
-    },
-    {
-     "word": "依頼",
-     "reading": "いらい",
-     "rank": 1812
     },
     {
      "word": "覆う",
@@ -737,20 +617,15 @@
      "rank": 1893
     },
     {
-     "word": "選択",
-     "reading": "せんたく",
-     "rank": 1900
-    },
-    {
-     "word": "香り",
-     "reading": "かおり",
-     "rank": 1929
-    },
-    {
      "word": "たっぷり",
      "reading": "たっぷり",
      "rank": 1938
-    },
+    }
+   ]
+  },
+  {
+   "level": 5,
+   "vocab": [
     {
      "word": "わざと",
      "reading": "わざと",
@@ -766,21 +641,6 @@
      "reading": "あらゆる",
      "rank": 1952
     },
-    {
-     "word": "年齢",
-     "reading": "ねんれい",
-     "rank": 1958
-    },
-    {
-     "word": "覗く",
-     "reading": "のぞく",
-     "rank": 1982
-    }
-   ]
-  },
-  {
-   "level": 6,
-   "vocab": [
     {
      "word": "観察",
      "reading": "かんさつ",
@@ -887,19 +747,9 @@
      "rank": 2224
     },
     {
-     "word": "舞台",
-     "reading": "ぶたい",
-     "rank": 2225
-    },
-    {
      "word": "徐々に",
      "reading": "じょじょに",
      "rank": 2235
-    },
-    {
-     "word": "譲る",
-     "reading": "ゆずる",
-     "rank": 2265
     },
     {
      "word": "最中",
@@ -917,11 +767,6 @@
      "rank": 2296
     },
     {
-     "word": "治療",
-     "reading": "ちりょう",
-     "rank": 2298
-    },
-    {
      "word": "ほっと",
      "reading": "ほっと",
      "rank": 2303
@@ -934,7 +779,7 @@
    ]
   },
   {
-   "level": 7,
+   "level": 6,
    "vocab": [
     {
      "word": "礼",
@@ -955,11 +800,6 @@
      "word": "世間",
      "reading": "せけん",
      "rank": 2376
-    },
-    {
-     "word": "湧く",
-     "reading": "わく",
-     "rank": 2394
     },
     {
      "word": "年間",
@@ -1042,19 +882,9 @@
      "rank": 2573
     },
     {
-     "word": "維持",
-     "reading": "いじ",
-     "rank": 2575
-    },
-    {
      "word": "注目",
      "reading": "ちゅうもく",
      "rank": 2579
-    },
-    {
-     "word": "一般",
-     "reading": "いっぱん",
-     "rank": 2593
     },
     {
      "word": "生命",
@@ -1082,24 +912,9 @@
      "rank": 2645
     },
     {
-     "word": "跡",
-     "reading": "あと",
-     "rank": 2666
-    }
-   ]
-  },
-  {
-   "level": 8,
-   "vocab": [
-    {
      "word": "実行",
      "reading": "じっこう",
      "rank": 2667
-    },
-    {
-     "word": "雇う",
-     "reading": "やとう",
-     "rank": 2696
     },
     {
      "word": "ぴったり",
@@ -1115,7 +930,12 @@
      "word": "安定",
      "reading": "あんてい",
      "rank": 2734
-    },
+    }
+   ]
+  },
+  {
+   "level": 7,
+   "vocab": [
     {
      "word": "およそ",
      "reading": "およそ",
@@ -1212,11 +1032,6 @@
      "rank": 2906
     },
     {
-     "word": "一致",
-     "reading": "いっち",
-     "rank": 2908
-    },
-    {
      "word": "挑戦",
      "reading": "ちょうせん",
      "rank": 2916
@@ -1240,12 +1055,7 @@
      "word": "生涯",
      "reading": "しょうがい",
      "rank": 2953
-    }
-   ]
-  },
-  {
-   "level": 9,
-   "vocab": [
+    },
     {
      "word": "共通",
      "reading": "きょうつう",
@@ -1275,21 +1085,16 @@
      "word": "働き",
      "reading": "はたらき",
      "rank": 2973
-    },
+    }
+   ]
+  },
+  {
+   "level": 8,
+   "vocab": [
     {
      "word": "強める",
      "reading": "つよめる",
      "rank": 2980
-    },
-    {
-     "word": "傾向",
-     "reading": "けいこう",
-     "rank": 2985
-    },
-    {
-     "word": "幅",
-     "reading": "はば",
-     "rank": 3003
     },
     {
      "word": "微笑む",
@@ -1302,19 +1107,9 @@
      "rank": 3049
     },
     {
-     "word": "携帯",
-     "reading": "けいたい",
-     "rank": 3076
-    },
-    {
      "word": "脇",
      "reading": "わき",
      "rank": 3152
-    },
-    {
-     "word": "銃",
-     "reading": "じゅう",
-     "rank": 3203
     },
     {
      "word": "盾",
@@ -1340,11 +1135,6 @@
      "word": "問い",
      "reading": "とい",
      "rank": 3293
-    },
-    {
-     "word": "駆ける",
-     "reading": "かける",
-     "rank": 3318
     },
     {
      "word": "すなわち",
@@ -1395,12 +1185,7 @@
      "word": "裸",
      "reading": "はだか",
      "rank": 3514
-    }
-   ]
-  },
-  {
-   "level": 10,
-   "vocab": [
+    },
     {
      "word": "なぜなら",
      "reading": "なぜなら",
@@ -1410,11 +1195,6 @@
      "word": "候補",
      "reading": "こうほ",
      "rank": 3537
-    },
-    {
-     "word": "継ぐ",
-     "reading": "つぐ",
-     "rank": 3546
     },
     {
      "word": "冷める",
@@ -1460,7 +1240,12 @@
      "word": "塔",
      "reading": "とう",
      "rank": 3677
-    },
+    }
+   ]
+  },
+  {
+   "level": 9,
+   "vocab": [
     {
      "word": "こぼれる",
      "reading": "こぼれる",
@@ -1470,11 +1255,6 @@
      "word": "こぼす",
      "reading": "こぼす",
      "rank": 3694
-    },
-    {
-     "word": "患者",
-     "reading": "かんじゃ",
-     "rank": 3706
     },
     {
      "word": "神経",
@@ -1550,31 +1330,16 @@
      "word": "小屋",
      "reading": "こや",
      "rank": 3958
-    }
-   ]
-  },
-  {
-   "level": 11,
-   "vocab": [
+    },
     {
      "word": "通信",
      "reading": "つうしん",
      "rank": 3971
     },
     {
-     "word": "贈る",
-     "reading": "おくる",
-     "rank": 3977
-    },
-    {
      "word": "鎖",
      "reading": "くさり",
      "rank": 4050
-    },
-    {
-     "word": "弾",
-     "reading": "たま",
-     "rank": 4069
     },
     {
      "word": "現代",
@@ -1630,7 +1395,12 @@
      "word": "賢い",
      "reading": "かしこい",
      "rank": 4246
-    },
+    }
+   ]
+  },
+  {
+   "level": 10,
+   "vocab": [
     {
      "word": "にっこり",
      "reading": "にっこり",
@@ -1705,16 +1475,6 @@
      "word": "手間",
      "reading": "てま",
      "rank": 4433
-    }
-   ]
-  },
-  {
-   "level": 12,
-   "vocab": [
-    {
-     "word": "破れる",
-     "reading": "やぶれる",
-     "rank": 4437
     },
     {
      "word": "不利",
@@ -1787,15 +1547,15 @@
      "rank": 4644
     },
     {
-     "word": "衝突",
-     "reading": "しょうとつ",
-     "rank": 4671
-    },
-    {
      "word": "紐",
      "reading": "ひも",
      "rank": 4681
-    },
+    }
+   ]
+  },
+  {
+   "level": 11,
+   "vocab": [
     {
      "word": "すれ違う",
      "reading": "すれちがう",
@@ -1847,11 +1607,6 @@
      "rank": 4853
     },
     {
-     "word": "演奏",
-     "reading": "えんそう",
-     "rank": 4864
-    },
-    {
      "word": "澄む",
      "reading": "すむ",
      "rank": 4871
@@ -1860,16 +1615,6 @@
      "word": "信仰",
      "reading": "しんこう",
      "rank": 4875
-    }
-   ]
-  },
-  {
-   "level": 13,
-   "vocab": [
-    {
-     "word": "知恵",
-     "reading": "ちえ",
-     "rank": 4932
     },
     {
      "word": "溺れる",
@@ -1927,11 +1672,6 @@
      "rank": 5018
     },
     {
-     "word": "考慮",
-     "reading": "こうりょ",
-     "rank": 5038
-    },
-    {
      "word": "がっかり",
      "reading": "がっかり",
      "rank": 5046
@@ -1965,12 +1705,12 @@
      "word": "剥く",
      "reading": "むく",
      "rank": 5213
-    },
-    {
-     "word": "枠",
-     "reading": "わく",
-     "rank": 5304
-    },
+    }
+   ]
+  },
+  {
+   "level": 12,
+   "vocab": [
     {
      "word": "ずれる",
      "reading": "ずれる",
@@ -1992,11 +1732,6 @@
      "rank": 5396
     },
     {
-     "word": "縄",
-     "reading": "なわ",
-     "rank": 5409
-    },
-    {
      "word": "気の毒",
      "reading": "きのどく",
      "rank": 5430
@@ -2015,12 +1750,7 @@
      "word": "予算",
      "reading": "よさん",
      "rank": 5473
-    }
-   ]
-  },
-  {
-   "level": 14,
-   "vocab": [
+    },
     {
      "word": "握手",
      "reading": "あくしゅ",
@@ -2082,11 +1812,6 @@
      "rank": 5742
     },
     {
-     "word": "臨む",
-     "reading": "のぞむ",
-     "rank": 5756
-    },
-    {
      "word": "ざっと",
      "reading": "ざっと",
      "rank": 5766
@@ -2135,7 +1860,12 @@
      "word": "計る",
      "reading": "はかる",
      "rank": 5872
-    },
+    }
+   ]
+  },
+  {
+   "level": 13,
+   "vocab": [
     {
      "word": "栄養",
      "reading": "えいよう",
@@ -2170,12 +1900,7 @@
      "word": "あいにく",
      "reading": "あいにく",
      "rank": 6081
-    }
-   ]
-  },
-  {
-   "level": 15,
-   "vocab": [
+    },
     {
      "word": "しきりに",
      "reading": "しきりに",
@@ -2290,12 +2015,12 @@
      "word": "流行る",
      "reading": "はやる",
      "rank": 6414
-    },
-    {
-     "word": "核",
-     "reading": "かく",
-     "rank": 6426
-    },
+    }
+   ]
+  },
+  {
+   "level": 14,
+   "vocab": [
     {
      "word": "日付",
      "reading": "ひづけ",
@@ -2325,12 +2050,7 @@
      "word": "真理",
      "reading": "しんり",
      "rank": 6566
-    }
-   ]
-  },
-  {
-   "level": 16,
-   "vocab": [
+    },
     {
      "word": "連想",
      "reading": "れんそう",
@@ -2350,16 +2070,6 @@
      "word": "用心",
      "reading": "ようじん",
      "rank": 6663
-    },
-    {
-     "word": "医療",
-     "reading": "いりょう",
-     "rank": 6681
-    },
-    {
-     "word": "摘む",
-     "reading": "つむ",
-     "rank": 6682
     },
     {
      "word": "しばしば",
@@ -2437,11 +2147,6 @@
      "rank": 6974
     },
     {
-     "word": "反抗",
-     "reading": "はんこう",
-     "rank": 6976
-    },
-    {
      "word": "敬意",
      "reading": "けいい",
      "rank": 7014
@@ -2465,7 +2170,12 @@
      "word": "近頃",
      "reading": "ちかごろ",
      "rank": 7069
-    },
+    }
+   ]
+  },
+  {
+   "level": 15,
+   "vocab": [
     {
      "word": "現金",
      "reading": "げんきん",
@@ -2480,12 +2190,7 @@
      "word": "形態",
      "reading": "けいたい",
      "rank": 7103
-    }
-   ]
-  },
-  {
-   "level": 17,
-   "vocab": [
+    },
     {
      "word": "学習",
      "reading": "がくしゅう",
@@ -2620,7 +2325,12 @@
      "word": "適度",
      "reading": "てきど",
      "rank": 7615
-    },
+    }
+   ]
+  },
+  {
+   "level": 16,
+   "vocab": [
     {
      "word": "弱まる",
      "reading": "よわまる",
@@ -2635,12 +2345,7 @@
      "word": "同一",
      "reading": "どういつ",
      "rank": 7704
-    }
-   ]
-  },
-  {
-   "level": 18,
-   "vocab": [
+    },
     {
      "word": "強まる",
      "reading": "つよまる",
@@ -2695,11 +2400,6 @@
      "word": "前者",
      "reading": "ぜんしゃ",
      "rank": 7804
-    },
-    {
-     "word": "需要",
-     "reading": "じゅよう",
-     "rank": 7812
     },
     {
      "word": "順",
@@ -2780,7 +2480,12 @@
      "word": "長期",
      "reading": "ちょうき",
      "rank": 8079
-    },
+    }
+   ]
+  },
+  {
+   "level": 17,
+   "vocab": [
     {
      "word": "協議",
      "reading": "きょうぎ",
@@ -2790,12 +2495,7 @@
      "word": "規制",
      "reading": "きせい",
      "rank": 8086
-    }
-   ]
-  },
-  {
-   "level": 19,
-   "vocab": [
+    },
     {
      "word": "繋げる",
      "reading": "つなげる",
@@ -2805,11 +2505,6 @@
      "word": "景気",
      "reading": "けいき",
      "rank": 8106
-    },
-    {
-     "word": "刑事",
-     "reading": "けいじ",
-     "rank": 8157
     },
     {
      "word": "寮",
@@ -2940,17 +2635,17 @@
      "word": "食糧",
      "reading": "しょくりょう",
      "rank": 9632
-    },
-    {
-     "word": "機構",
-     "reading": "きこう",
-     "rank": 9726
     }
    ]
   },
   {
-   "level": 20,
+   "level": 18,
    "vocab": [
+    {
+     "word": "機構",
+     "reading": "きこう",
+     "rank": 9726
+    },
     {
      "word": "操縦",
      "reading": "そうじゅう",
@@ -3082,11 +2777,6 @@
      "rank": 10853
     },
     {
-     "word": "湾",
-     "reading": "わん",
-     "rank": 10982
-    },
-    {
      "word": "決行",
      "reading": "けっこう",
      "rank": 11041
@@ -3104,17 +2794,12 @@
    ]
   },
   {
-   "level": 21,
+   "level": 19,
    "vocab": [
     {
      "word": "映える",
      "reading": "はえる",
      "rank": 11266
-    },
-    {
-     "word": "堀",
-     "reading": "ほり",
-     "rank": 11321
     },
     {
      "word": "粗末",
@@ -3160,11 +2845,6 @@
      "word": "資源",
      "reading": "しげん",
      "rank": 11815
-    },
-    {
-     "word": "換える",
-     "reading": "かえる",
-     "rank": 11829
     },
     {
      "word": "熱中",
@@ -3222,11 +2902,6 @@
      "rank": 12369
     },
     {
-     "word": "誤り",
-     "reading": "あやまり",
-     "rank": 12532
-    },
-    {
      "word": "食物",
      "reading": "しょくもつ",
      "rank": 12633
@@ -3255,12 +2930,7 @@
      "word": "不可",
      "reading": "ふか",
      "rank": 12877
-    }
-   ]
-  },
-  {
-   "level": 22,
-   "vocab": [
+    },
     {
      "word": "貸し",
      "reading": "かし",
@@ -3275,7 +2945,12 @@
      "word": "ばったり",
      "reading": "ばったり",
      "rank": 12975
-    },
+    }
+   ]
+  },
+  {
+   "level": 20,
+   "vocab": [
     {
      "word": "脂肪",
      "reading": "しぼう",
@@ -3337,21 +3012,6 @@
      "rank": 13633
     },
     {
-     "word": "及ぼす",
-     "reading": "およぼす",
-     "rank": 13664
-    },
-    {
-     "word": "依然",
-     "reading": "いぜん",
-     "rank": 13776
-    },
-    {
-     "word": "免許",
-     "reading": "めんきょ",
-     "rank": 13804
-    },
-    {
      "word": "税",
      "reading": "ぜい",
      "rank": 13847
@@ -3387,11 +3047,6 @@
      "rank": 14208
     },
     {
-     "word": "勤め",
-     "reading": "つとめ",
-     "rank": 14278
-    },
-    {
      "word": "定期",
      "reading": "ていき",
      "rank": 14336
@@ -3410,12 +3065,7 @@
      "word": "射す",
      "reading": "さす",
      "rank": 14732
-    }
-   ]
-  },
-  {
-   "level": 23,
-   "vocab": [
+    },
     {
      "word": "水準",
      "reading": "すいじゅん",
@@ -3450,7 +3100,12 @@
      "word": "椀",
      "reading": "わん",
      "rank": 15281
-    },
+    }
+   ]
+  },
+  {
+   "level": 21,
+   "vocab": [
     {
      "word": "批評",
      "reading": "ひひょう",
@@ -3512,19 +3167,9 @@
      "rank": 16426
     },
     {
-     "word": "稲",
-     "reading": "いね",
-     "rank": 16451
-    },
-    {
      "word": "論じる",
      "reading": "ろんじる",
      "rank": 16520
-    },
-    {
-     "word": "炒める",
-     "reading": "いためる",
-     "rank": 16751
     },
     {
      "word": "いらいら",
@@ -3547,11 +3192,6 @@
      "rank": 17752
     },
     {
-     "word": "超す",
-     "reading": "こす",
-     "rank": 17785
-    },
-    {
      "word": "引用",
      "reading": "いんよう",
      "rank": 17909
@@ -3565,12 +3205,7 @@
      "word": "宛てる",
      "reading": "あてる",
      "rank": 18116
-    }
-   ]
-  },
-  {
-   "level": 24,
-   "vocab": [
+    },
     {
      "word": "霜",
      "reading": "しも",
@@ -3620,7 +3255,12 @@
      "word": "茹でる",
      "reading": "ゆでる",
      "rank": 18969
-    },
+    }
+   ]
+  },
+  {
+   "level": 22,
+   "vocab": [
     {
      "word": "湿度",
      "reading": "しつど",
@@ -3647,11 +3287,6 @@
      "rank": 19611
     },
     {
-     "word": "梅雨",
-     "reading": "つゆ",
-     "rank": 19624
-    },
-    {
      "word": "蕎麦",
      "reading": "そば",
      "rank": 19631
@@ -3665,11 +3300,6 @@
      "word": "便り",
      "reading": "たより",
      "rank": 19733
-    },
-    {
-     "word": "洗剤",
-     "reading": "せんざい",
-     "rank": 19736
     }
    ]
   }

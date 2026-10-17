@@ -1,8 +1,8 @@
 // Pulls WaniKani vocabulary so Kasane can skip words WaniKani covers.
-// Usage: WANIKANI_API_KEY=... [WANIKANI_UP_TO=35] node scripts/wanikani.mjs
+// Usage: WANIKANI_API_KEY=... [WANIKANI_UP_TO=40] node scripts/wanikani.mjs
 // Writes (both gitignored):
 //   content/source/wanikani-known.json   vocab you've started, with your SRS stage
-//   content/source/wanikani-upto35.json  all vocab WaniKani teaches up to the target level
+//   content/source/wanikani-upto40.json  all vocab WaniKani teaches up to the target level
 // The key is only read from the environment, never saved.
 import { writeFileSync } from 'node:fs'
 
@@ -27,7 +27,7 @@ async function all(url) {
 }
 
 const TYPES = 'vocabulary,kana_vocabulary'
-const UP_TO = Number(process.env.WANIKANI_UP_TO ?? 35)
+const UP_TO = Number(process.env.WANIKANI_UP_TO ?? 40)
 const [assignments, subjects] = await Promise.all([
   all(`https://api.wanikani.com/v2/assignments?subject_types=${TYPES}&started=true`),
   all(`https://api.wanikani.com/v2/subjects?types=${TYPES}`),
