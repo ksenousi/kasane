@@ -22,6 +22,14 @@ export default function Lesson({ onExit }: Props) {
   const [step, setStep] = useState(0)
   const steps = batch.flatMap((item, i) => panelsFor(item).map((panel) => ({ i, panel })))
   const [phase, setPhase] = useState<'learn' | 'quiz' | 'done'>('learn')
+  // Words already shown. Jumping ahead with the chips or tabs can reach the last step early,
+  // so the quiz only unlocks once every word has been seen.
+  const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]))
+  const current = steps[step]?.i
+
+  useEffect(() => {
+    if (current !== undefined) setSeen((prev) => (prev.has(current) ? prev : new Set(prev).add(current)))
+  }, [current])
 
   useEffect(() => {
     if (batch.length === 0) onExit()
@@ -58,6 +66,8 @@ export default function Lesson({ onExit }: Props) {
   const item = batch[i]
   const last = step === steps.length - 1
   const goItem = (k: number) => setStep(steps.findIndex((x) => x.i === k))
+  const unseen = batch.findIndex((_, k) => !seen.has(k))
+  const ready = last && unseen === -1
 
   return (
     <div className={ui.screen}>
@@ -94,7 +104,7 @@ export default function Lesson({ onExit }: Props) {
         </div>
         <div className={s.nav}>
           <button className={ui.btnGhost} style={{ width: 120 }} disabled={step === 0} onClick={() => setStep(step - 1)}>Back</button>
-          <button className={ui.btn} onClick={() => (last ? setPhase('quiz') : setStep(step + 1))}>{last ? 'Start quiz' : 'Next'}</button>
+          <button className={ui.btn} onClick={() => (ready ? setPhase('quiz') : last ? goItem(unseen) : setStep(step + 1))}>{ready ? 'Start quiz' : 'Next'}</button>
         </div>
       </div>
     </div>
