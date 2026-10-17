@@ -1,5 +1,5 @@
 {
- "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-40, ordered by JPDB frequency (rank <= 20000). Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
+ "note": "Kasane level plan. Vocab: Tanos N3 words not covered by WaniKani 1-40, ordered by JPDB frequency (rank <= 20000). Levels 22-24 add N3 words that rank in the top 20000 of BCCWJ (books, news, web) but not JPDB (fiction); bccwj holds that rank. Includes common kana-only words (not on the N5/N4 lists, not too basic, not already a grammar point); words normally written in kana use the kana form. Includes common single-kanji nouns (肌, 霧, 袋...) but not prefixes/suffixes like 大 or 全. Levels 1-2 were written before this plan.",
  "perLevel": 30,
  "levels": [
   {
@@ -3300,6 +3300,418 @@
      "word": "便り",
      "reading": "たより",
      "rank": 19733
+    },
+    {
+     "word": "具体的",
+     "reading": "ぐたいてき",
+     "rank": 2259,
+     "bccwj": 795
+    },
+    {
+     "word": "金融",
+     "reading": "きんゆう",
+     "rank": 28559,
+     "bccwj": 831
+    },
+    {
+     "word": "やや",
+     "reading": "やや",
+     "rank": 49283,
+     "bccwj": 1124
+    },
+    {
+     "word": "もっとも",
+     "reading": "もっとも",
+     "rank": 1889,
+     "bccwj": 1712
+    },
+    {
+     "word": "見かける",
+     "reading": "みかける",
+     "rank": 2078,
+     "bccwj": 1767
+    },
+    {
+     "word": "振興",
+     "reading": "しんこう",
+     "rank": 35654,
+     "bccwj": 1877
+    },
+    {
+     "word": "国会",
+     "reading": "こっかい",
+     "rank": 21627,
+     "bccwj": 1894
+    },
+    {
+     "word": "駐車",
+     "reading": "ちゅうしゃ",
+     "rank": 36939,
+     "bccwj": 2013
+    },
+    {
+     "word": "申告",
+     "reading": "しんこく",
+     "rank": 20940,
+     "bccwj": 2066
+    },
+    {
+     "word": "知事",
+     "reading": "ちじ",
+     "rank": 20473,
+     "bccwj": 2320
+    },
+    {
+     "word": "酸化",
+     "reading": "さんか",
+     "rank": 40509,
+     "bccwj": 3009
+    },
+    {
+     "word": "菌",
+     "reading": "きん",
+     "rank": 20762,
+     "bccwj": 3149
+    },
+    {
+     "word": "補償",
+     "reading": "ほしょう",
+     "rank": 27762,
+     "bccwj": 3519
+    },
+    {
+     "word": "典型",
+     "reading": "てんけい",
+     "rank": 24638,
+     "bccwj": 3658
+    },
+    {
+     "word": "対照",
+     "reading": "たいしょう",
+     "rank": 33346,
+     "bccwj": 3715
+    },
+    {
+     "word": "作曲",
+     "reading": "さっきょく",
+     "rank": 22270,
+     "bccwj": 4064
+    },
+    {
+     "word": "有機",
+     "reading": "ゆうき",
+     "rank": 33306,
+     "bccwj": 4251
+    },
+    {
+     "word": "国籍",
+     "reading": "こくせき",
+     "rank": 25049,
+     "bccwj": 4320
+    },
+    {
+     "word": "胡椒",
+     "reading": "こしょう",
+     "rank": 30055,
+     "bccwj": 4477
+    },
+    {
+     "word": "石炭",
+     "reading": "せきたん",
+     "rank": 20217,
+     "bccwj": 5351
+    },
+    {
+     "word": "課程",
+     "reading": "かてい",
+     "rank": 31447,
+     "bccwj": 5471
+    },
+    {
+     "word": "熱帯",
+     "reading": "ねったい",
+     "rank": 30855,
+     "bccwj": 5749
+    }
+   ]
+  },
+  {
+   "level": 23,
+   "vocab": [
+    {
+     "word": "非行",
+     "reading": "ひこう",
+     "rank": 52350,
+     "bccwj": 5817
+    },
+    {
+     "word": "碑",
+     "reading": "ひ",
+     "rank": 39431,
+     "bccwj": 5966
+    },
+    {
+     "word": "論争",
+     "reading": "ろんそう",
+     "rank": 23160,
+     "bccwj": 6012
+    },
+    {
+     "word": "協調",
+     "reading": "きょうちょう",
+     "rank": 27005,
+     "bccwj": 6115
+    },
+    {
+     "word": "成年",
+     "reading": "せいねん",
+     "rank": 48227,
+     "bccwj": 6342
+    },
+    {
+     "word": "選考",
+     "reading": "せんこう",
+     "rank": 25628,
+     "bccwj": 6547
+    },
+    {
+     "word": "題名",
+     "reading": "だいめい",
+     "rank": 21935,
+     "bccwj": 6919
+    },
+    {
+     "word": "諺",
+     "reading": "ことわざ",
+     "rank": 25318,
+     "bccwj": 7081
+    },
+    {
+     "word": "野党",
+     "reading": "やとう",
+     "rank": 29877,
+     "bccwj": 7127
+    },
+    {
+     "word": "よす",
+     "reading": "よす",
+     "rank": 2813,
+     "bccwj": 7400
+    },
+    {
+     "word": "包装",
+     "reading": "ほうそう",
+     "rank": 20118,
+     "bccwj": 7506
+    },
+    {
+     "word": "暮れ",
+     "reading": "くれ",
+     "rank": 23590,
+     "bccwj": 7771
+    },
+    {
+     "word": "禅",
+     "reading": "ぜん",
+     "rank": 26114,
+     "bccwj": 7897
+    },
+    {
+     "word": "声明",
+     "reading": "せいめい",
+     "rank": 20350,
+     "bccwj": 7922
+    },
+    {
+     "word": "諮る",
+     "reading": "はかる",
+     "rank": 64625,
+     "bccwj": 7929
+    },
+    {
+     "word": "故人",
+     "reading": "こじん",
+     "rank": 20041,
+     "bccwj": 8035
+    },
+    {
+     "word": "酸性",
+     "reading": "さんせい",
+     "rank": 47554,
+     "bccwj": 8247
+    },
+    {
+     "word": "医院",
+     "reading": "いいん",
+     "rank": 29965,
+     "bccwj": 8305
+    },
+    {
+     "word": "新興",
+     "reading": "しんこう",
+     "rank": 24212,
+     "bccwj": 8305
+    },
+    {
+     "word": "蒔く",
+     "reading": "まく",
+     "rank": 28566,
+     "bccwj": 8846
+    },
+    {
+     "word": "丘陵",
+     "reading": "きゅうりょう",
+     "rank": 25556,
+     "bccwj": 9359
+    },
+    {
+     "word": "慣行",
+     "reading": "かんこう",
+     "rank": 82989,
+     "bccwj": 9480
+    },
+    {
+     "word": "語学",
+     "reading": "ごがく",
+     "rank": 26124,
+     "bccwj": 9502
+    },
+    {
+     "word": "けち",
+     "reading": "けち",
+     "rank": 22194,
+     "bccwj": 10121
+    },
+    {
+     "word": "気体",
+     "reading": "きたい",
+     "rank": 29142,
+     "bccwj": 10238
+    },
+    {
+     "word": "荒廃",
+     "reading": "こうはい",
+     "rank": 20059,
+     "bccwj": 10307
+    },
+    {
+     "word": "採集",
+     "reading": "さいしゅう",
+     "rank": 21865,
+     "bccwj": 10371
+    },
+    {
+     "word": "歌謡",
+     "reading": "かよう",
+     "rank": 54216,
+     "bccwj": 11288
+    },
+    {
+     "word": "女史",
+     "reading": "じょし",
+     "rank": 21452,
+     "bccwj": 11391
+    },
+    {
+     "word": "語句",
+     "reading": "ごく",
+     "rank": 41926,
+     "bccwj": 11529
+    }
+   ]
+  },
+  {
+   "level": 24,
+   "vocab": [
+    {
+     "word": "利口",
+     "reading": "りこう",
+     "rank": 20376,
+     "bccwj": 13131
+    },
+    {
+     "word": "特長",
+     "reading": "とくちょう",
+     "rank": 47027,
+     "bccwj": 13234
+    },
+    {
+     "word": "碁",
+     "reading": "ご",
+     "rank": 33870,
+     "bccwj": 13392
+    },
+    {
+     "word": "溶く",
+     "reading": "とく",
+     "rank": 31771,
+     "bccwj": 13756
+    },
+    {
+     "word": "衣料",
+     "reading": "いりょう",
+     "rank": 70630,
+     "bccwj": 14036
+    },
+    {
+     "word": "生年月日",
+     "reading": "せいねんがっぴ",
+     "rank": 35009,
+     "bccwj": 14328
+    },
+    {
+     "word": "修飾",
+     "reading": "しゅうしょく",
+     "rank": 61160,
+     "bccwj": 14438
+    },
+    {
+     "word": "加味",
+     "reading": "かみ",
+     "rank": 22955,
+     "bccwj": 14931
+    },
+    {
+     "word": "奨学金",
+     "reading": "しょうがくきん",
+     "rank": 28560,
+     "bccwj": 16069
+    },
+    {
+     "word": "精算",
+     "reading": "せいさん",
+     "rank": 27754,
+     "bccwj": 16261
+    },
+    {
+     "word": "訓",
+     "reading": "くん",
+     "rank": 36614,
+     "bccwj": 16839
+    },
+    {
+     "word": "計器",
+     "reading": "けいき",
+     "rank": 28636,
+     "bccwj": 17769
+    },
+    {
+     "word": "童謡",
+     "reading": "どうよう",
+     "rank": 43366,
+     "bccwj": 18228
+    },
+    {
+     "word": "目上",
+     "reading": "めうえ",
+     "rank": 22864,
+     "bccwj": 19010
+    },
+    {
+     "word": "水洗",
+     "reading": "すいせん",
+     "rank": 55067,
+     "bccwj": 19093
     }
    ]
   }
