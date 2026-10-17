@@ -13,4 +13,6 @@ All lists were downloaded on 2026-09-27. The grammar lists disagree a lot (they 
 
 `wanikani-known.json` and `wanikani-upto40.json` (both gitignored) come from `scripts/wanikani.mjs`: your WaniKani progress, and every vocab item WaniKani teaches up to level 40. Kasane skips both, since you plan to reach WaniKani 40.
 
+Word frequency comes from two lists: [JPDB](https://jpdb.io) (anime, dramas, novels, games) and NINJAL's [BCCWJ](https://clrd.ninjal.ac.jp/bccwj/en/freq-list.html) (books, newspapers, magazines, the web). Levels 1-21 are N3 words in JPDB's top 20,000. Levels 22-24 add N3 words in BCCWJ's top 20,000 that fiction rarely uses (金融, 駐車, 申告). Only each chosen word's rank is stored, in `content/plan.json` (`rank` for JPDB, `bccwj` for BCCWJ).
+
 `grammar-frequency.json` counts how many of Tatoeba's ~249k Japanese sentences ([tatoeba.org](https://tatoeba.org), CC BY 2.0 FR) contain each grammar point, using the rules in `scripts/grammar-frequency.mjs`. Only the counts are stored, not the sentences. The Grammar tab uses them to sort by how common each point is.
