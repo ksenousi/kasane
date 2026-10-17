@@ -25,6 +25,18 @@ describe('content', () => {
     for (const l of LEVELS) for (const i of l.items) expect(i.level).toBe(l.level)
   })
 
+  it('points "(Level N)" in notes at the level that word is really in', () => {
+    const levelOf = new Map(ITEMS.map((i) => [i.word, i.level]))
+    const wrong = ITEMS.flatMap((i) =>
+      [...JSON.stringify(i).matchAll(/([^\s、。,(（"]+?)\s?(?:\([^)]*?\))?\s?\(Level (\d+)\)/g)].flatMap((m) => {
+        const w = m[1].replace(/^.*[ =:]/, '')
+        const real = levelOf.get(w) ?? levelOf.get(w.replace(/^お/, ''))
+        return real === Number(m[2]) ? [] : [`${i.word}: ${m[0]} (really ${real ?? 'not in Kasane'})`]
+      }),
+    )
+    expect(wrong).toEqual([])
+  })
+
   it.each(vocab.map((v) => [v.id, v] as const))('vocab %s is complete', (_, v) => {
     expect(v.reading).toMatch(/^[ぁ-ゖー]+$/)
     for (const r of v.readings ?? []) expect(r).toMatch(/^[ぁ-ゖー]+$/)
