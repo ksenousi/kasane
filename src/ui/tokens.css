@@ -37,6 +37,8 @@
   --st-burned: #48484a;
 
   --font: 'M PLUS 2', 'Hiragino Sans', system-ui, sans-serif;
+  /* Japanese text uses WaniKani's stack: Hiragino Kaku Gothic on Apple, Noto Sans JP elsewhere. */
+  --font-ja: 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', 'Meiryo', 'Yu Gothic', sans-serif;
   --radius: 14px;
   --radius-lg: 18px;
   --tap: 44px;
@@ -98,6 +100,10 @@ body {
   overscroll-behavior: none;
   user-select: none;
   -webkit-user-select: none;
+}
+
+:lang(ja) {
+  font-family: var(--font-ja);
 }
 
 button {
