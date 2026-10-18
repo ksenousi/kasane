@@ -15,7 +15,7 @@
   justify-content: center;
   text-align: center;
   font-size: min(72px, calc((var(--col) - 80px) / var(--len, 2)));
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.15;
   overflow-wrap: anywhere;
 }
@@ -245,4 +245,30 @@
 
 .actions > button {
   flex: 1 1 140px;
+}
+
+/* Streak counter in the top bar. Re-keyed on each bump so it pops again. */
+.streak {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--st-apprentice);
+  animation: bump 0.25s ease-out;
+}
+
+.pop {
+  animation: bump 0.25s ease-out;
+}
+
+@keyframes bump {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streak,
+  .pop {
+    animation: none;
+  }
 }

@@ -24,7 +24,12 @@ export interface Summary {
   answered: number
   correct: number
   items: number
+  /** Longest run of correct answers in a row. */
+  best: number
 }
+
+/** How long a correct answer stays on screen before the next prompt. */
+const AUTO_NEXT_MS = 650
 
 type Graded = { value: string; verdict: Extract<Verdict, { kind: 'correct' | 'wrong' }> }
 
@@ -36,14 +41,28 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   const [graded, setGraded] = useState<Graded | null>(null)
   const [invalid, setInvalid] = useState<string | null>(null)
   const [info, setInfo] = useState(false)
+  const [streak, setStreak] = useState(0)
+  const [best, setBest] = useState(0)
   const input = useRef<HTMLInputElement>(null)
   const task = currentTask(state)
   const item = task ? ITEMS_BY_ID.get(task.itemId) : undefined
 
   useEffect(() => {
-    if (!task) onComplete({ answered: state.answered, correct: state.correct, items: state.total })
+    if (!task) onComplete({ answered: state.answered, correct: state.correct, items: state.total, best })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task])
+
+  // A clean correct answer moves on by itself, so the fast path is type → Enter → type.
+  // Opening item info, or a "close enough" answer worth reading, holds the screen.
+  const autoNext = graded?.verdict.kind === 'correct' && !graded.verdict.close && !info
+  const advanced = useRef<Graded | null>(null)
+  useEffect(() => {
+    if (!autoNext) return
+    const g = graded
+    const t = window.setTimeout(() => advanced.current !== g && next(), AUTO_NEXT_MS)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoNext, graded])
 
   if (!task || !item) return <div className={ui.screen} />
 
@@ -69,9 +88,13 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   }
 
   function next() {
-    if (!graded || !task) return
+    if (!graded || !task || advanced.current === graded) return
+    advanced.current = graded
     const correct = graded.verdict.kind === 'correct'
     logAnswer({ itemId: task.itemId, part, correct, given: graded.value, mode })
+    const run = correct ? streak + 1 : 0
+    setStreak(run)
+    setBest(Math.max(best, run))
     const r = answer(state, correct)
     if (r.finished) onFinished?.(r.finished)
     setState(r.state)
@@ -110,6 +133,7 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
         <button className={ui.iconBtn} onClick={onExit} aria-label="End session"><I.Close /></button>
         <div className={ui.bar}><div className={ui.barFill} style={{ width: `${pct}%` }} /></div>
         <span className={ui.count}>{done}/{state.total}{accuracy !== null && ` · ${accuracy}%`}</span>
+        {streak >= 3 && <span key={streak} className={s.streak} aria-label={`${streak} in a row`}>🔥{streak}</span>}
       </div>
 
       <div className={s.word} lang="ja" style={{ '--len': item.word.length } as CSSProperties}>{item.word}</div>
@@ -170,18 +194,24 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
           ) : (
             <>
               <div className={s.okRow}>
-                <span className={s.okText}><I.Check width={20} height={20} />{close ? 'Close enough' : 'Correct'}</span>
+                <span className={`${s.okText} ${s.pop}`}><I.Check width={20} height={20} />{close ? 'Close enough' : cheer(streak + 1)}</span>
                 <button className={s.infoBtn} onClick={() => setInfo(!info)} aria-expanded={info}>{info ? 'Hide info' : 'Item info'}</button>
               </div>
               {close && <p className={s.note}>Exact answer: {[...item.meanings, ...mine].join(', ')}</p>}
               {info && <Explain item={item} part={part} mine={mine} />}
-              <button className={ui.btn} onClick={next}>Next</button>
+              {!autoNext && <button className={ui.btn} onClick={next}>Next</button>}
             </>
           )}
         </div>
       )}
     </div>
   )
+}
+
+function cheer(run: number): string {
+  if (run >= 10) return `${run} in a row!`
+  if (run >= 5) return 'On a roll'
+  return 'Correct'
 }
 
 function expected(item: Item, part: Part, mine: string[]): string {
