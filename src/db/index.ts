@@ -16,11 +16,9 @@ export interface Answer {
 
 export interface Settings {
   lessonBatch: number
-  /** Grammar points (by pattern) marked as already known on the Grammar tab. */
-  knownGrammar: string[]
 }
 
-export const DEFAULT_SETTINGS: Settings = { lessonBatch: 5, knownGrammar: [] }
+export const DEFAULT_SETTINGS: Settings = { lessonBatch: 5 }
 
 interface SettingRow {
   key: keyof Settings

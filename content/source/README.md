@@ -1,18 +1,15 @@
 # Source lists
 
-There has been no official JLPT vocab or grammar list since 2010, so these are community lists. They're used as the checklist for what Kasane teaches. Readings, meanings, example sentences and distractors are written into `src/content/levels/*.json`.
+There has been no official JLPT vocab list since 2010, so these are community lists. They're used as the checklist for what Kasane teaches. Readings, meanings, example sentences and distractors are written into `src/content/levels/*.json`.
 
 | File | What | Source | License |
 |---|---|---|---|
 | `n3-vocab.csv` | ~2,140 N3 words: expression, reading, meaning, tags | [jamsinclair/open-anki-jlpt-decks](https://github.com/jamsinclair/open-anki-jlpt-decks) `src/n3.csv`, based on Jonathan Waller's lists at [tanos.co.uk](http://www.tanos.co.uk/jlpt/) | MIT (repo); Tanos lists are CC BY |
 | `n5-vocab.csv`, `n4-vocab.csv` | Easier JLPT word lists from the same repo | Same | Used only to leave out kana words you'd already know |
-| `n3-grammar-points.json` | 182 N3 grammar pattern names (Japanese + romaji only) | Pattern names as listed by [JLPT Sensei](https://jlptsensei.com/jlpt-n3-grammar-list/) | Names only. No explanations or examples copied. |
-| `n3-grammar-crosscheck.json` | `core`: the 91 points both JLPT Sensei and [Bunpro](https://bunpro.jp/grammar_points) list as N3, plus each site's extras | Names only | Source for the N3 grammar cheat sheet (grammar is not in the app) |
 
-All lists were downloaded on 2026-09-27. The grammar lists disagree a lot (they share only 91 points), so the overlap is treated as the reliable core.
+All lists were downloaded on 2026-09-27.
 
 `wanikani-known.json` and `wanikani-upto40.json` (both gitignored) come from `scripts/wanikani.mjs`: your WaniKani progress, and every vocab item WaniKani teaches up to level 40. Kasane skips both, since you plan to reach WaniKani 40.
 
 Word frequency comes from two lists: [JPDB](https://jpdb.io) (anime, dramas, novels, games) and NINJAL's [BCCWJ](https://clrd.ninjal.ac.jp/bccwj/en/freq-list.html) (books, newspapers, magazines, the web). Levels 1-21 are N3 words in JPDB's top 20,000. Levels 22-24 add N3 words in BCCWJ's top 20,000 that fiction rarely uses (金融, 駐車, 申告). Only each chosen word's rank is stored, in `content/plan.json` (`rank` for JPDB, `bccwj` for BCCWJ).
 
-`grammar-frequency.json` counts how many of Tatoeba's ~249k Japanese sentences ([tatoeba.org](https://tatoeba.org), CC BY 2.0 FR) contain each grammar point, using the rules in `scripts/grammar-frequency.mjs`. Only the counts are stored, not the sentences. The Grammar tab uses them to sort by how common each point is.

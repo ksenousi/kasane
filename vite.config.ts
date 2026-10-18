@@ -18,7 +18,7 @@ export default defineConfig({
       manifest: {
         name: 'Kasane',
         short_name: 'Kasane',
-        description: 'JLPT N3 vocab and grammar with spaced repetition',
+        description: 'JLPT N3 vocab with spaced repetition',
         lang: 'en',
         start_url: base,
         scope: base,

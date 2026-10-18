@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { ITEMS, ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import {
@@ -30,8 +30,6 @@ interface Store {
   finishReview: (f: Finished) => Promise<void>
   logAnswer: (a: Omit<Answer, 'id' | 'at'>) => void
   setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => Promise<void>
-  /** Toggle a grammar point in the "already known" list. Safe to call several times in a row. */
-  toggleKnownGrammar: (pattern: string) => Promise<void>
   addSynonym: (itemId: string, meaning: string) => Promise<void>
   removeSynonym: (itemId: string, meaning: string) => Promise<void>
 }
@@ -142,20 +140,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setSettings((s) => ({ ...s, [key]: value }))
   }, [])
 
-  // The latest known-grammar list, updated synchronously so quick taps build on each other.
-  const knownRef = useRef<string[]>(settings.knownGrammar)
-  useEffect(() => {
-    knownRef.current = settings.knownGrammar
-  }, [settings.knownGrammar])
-
-  const toggleKnownGrammar = useCallback(async (pattern: string) => {
-    const list = knownRef.current
-    const next = list.includes(pattern) ? list.filter((x) => x !== pattern) : [...list, pattern]
-    knownRef.current = next
-    setSettings((s) => ({ ...s, knownGrammar: next }))
-    await saveSetting('knownGrammar', next)
-  }, [])
-
   const writeSynonyms = useCallback(async (itemId: string, update: (list: string[]) => string[]) => {
     const list = update(synonyms.get(itemId) ?? [])
     await saveSynonyms(itemId, list)
@@ -198,11 +182,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       finishReview,
       logAnswer,
       setSetting,
-      toggleKnownGrammar,
       addSynonym,
       removeSynonym,
     }
-  }, [ready, signedOut, signIn, signOut, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, toggleKnownGrammar, addSynonym, removeSynonym])
+  }, [ready, signedOut, signIn, signOut, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, addSynonym, removeSynonym])
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
