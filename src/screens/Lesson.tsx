@@ -5,7 +5,7 @@ import { useStore } from '../state/store'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './Lesson.module.css'
-import { PANEL_LABEL, PanelView, WordBand, panelsFor } from './ItemCard'
+import ItemCard from './ItemCard'
 import Session from './Session'
 
 interface Props {
@@ -13,23 +13,21 @@ interface Props {
 }
 
 /**
- * WaniKani-style lesson: each word in the batch is taught in steps (meaning, reading, context),
+ * WaniKani-style lesson: each word in the batch is taught on one page (meaning, reading, context),
  * then a typed quiz on the whole batch. Passing the quiz starts the words at Apprentice 1.
  */
 export default function Lesson({ onExit }: Props) {
   const { lessons, settings, completeLessons } = useStore()
   const [batch] = useState<Item[]>(() => lessons.slice(0, settings.lessonBatch))
-  const [step, setStep] = useState(0)
-  const steps = batch.flatMap((item, i) => panelsFor(item).map((panel) => ({ i, panel })))
+  const [i, setI] = useState(0)
   const [phase, setPhase] = useState<'learn' | 'quiz' | 'done'>('learn')
-  // Words already shown. Jumping ahead with the chips or tabs can reach the last step early,
+  // Words already shown. Jumping ahead with the chips can reach the last word early,
   // so the quiz only unlocks once every word has been seen.
   const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]))
-  const current = steps[step]?.i
 
   useEffect(() => {
-    if (current !== undefined) setSeen((prev) => (prev.has(current) ? prev : new Set(prev).add(current)))
-  }, [current])
+    setSeen((prev) => (prev.has(i) ? prev : new Set(prev).add(i)))
+  }, [i])
 
   useEffect(() => {
     if (batch.length === 0) onExit()
@@ -62,10 +60,8 @@ export default function Lesson({ onExit }: Props) {
     )
   }
 
-  const { i, panel } = steps[step]
   const item = batch[i]
-  const last = step === steps.length - 1
-  const goItem = (k: number) => setStep(steps.findIndex((x) => x.i === k))
+  const last = i === batch.length - 1
   const unseen = batch.findIndex((_, k) => !seen.has(k))
   const ready = last && unseen === -1
 
@@ -77,34 +73,17 @@ export default function Lesson({ onExit }: Props) {
         <span className={`${ui.pill} ${ui.pillVocab}`}>Vocab</span>
       </div>
 
-      <WordBand item={item} showReading={panel !== 'meaning'} />
-      <div className={s.tabs} role="tablist">
-        {panelsFor(item).map((p) => (
-          <button
-            key={p}
-            role="tab"
-            aria-selected={p === panel}
-            className={`${s.tab} ${p === panel ? s.tabOn : ''}`}
-            onClick={() => setStep(steps.findIndex((x) => x.i === i && x.panel === p))}
-          >
-            {PANEL_LABEL[p]}
-          </button>
-        ))}
-      </div>
-
-      <div className={s.body}>
-        <PanelView item={item} panel={panel} />
-      </div>
+      <ItemCard item={item} />
 
       <div className={s.footer}>
         <div className={s.chips} lang="ja">
           {batch.map((b, k) => (
-            <button key={b.id} className={`${s.chip} ${k === i ? s.chipOn : ''}`} onClick={() => goItem(k)}>{itemLabel(b)}</button>
+            <button key={b.id} className={`${s.chip} ${k === i ? s.chipOn : ''}`} onClick={() => setI(k)}>{itemLabel(b)}</button>
           ))}
         </div>
         <div className={s.nav}>
-          <button className={ui.btnGhost} style={{ width: 120 }} disabled={step === 0} onClick={() => setStep(step - 1)}>Back</button>
-          <button className={ui.btn} onClick={() => (ready ? setPhase('quiz') : last ? goItem(unseen) : setStep(step + 1))}>{ready ? 'Start quiz' : 'Next'}</button>
+          <button className={ui.btnGhost} style={{ width: 120 }} disabled={i === 0} onClick={() => setI(i - 1)}>Back</button>
+          <button className={ui.btn} onClick={() => (ready ? setPhase('quiz') : last ? setI(unseen) : setI(i + 1))}>{ready ? 'Start quiz' : 'Next'}</button>
         </div>
       </div>
     </div>

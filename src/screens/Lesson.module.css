@@ -21,7 +21,7 @@
 
 .word {
   font-size: min(68px, calc((var(--col) - 80px) / var(--len, 2)));
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.1;
   overflow-wrap: anywhere;
 }
@@ -34,38 +34,9 @@
 }
 
 
-.tabs {
-  margin: 10px 16px 0;
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 12px;
-  background: var(--s1);
-  border: 1px solid var(--line);
-}
 
-.tab {
-  flex: 1;
-  min-height: 36px;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-}
 
-.tabOn {
-  background: var(--s2);
-  color: var(--text);
-}
 
-.examples {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 2px;
-}
 
 .reading {
   display: flex;
@@ -82,8 +53,8 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px 20px;
+  gap: 12px;
+  padding: 14px 20px;
   flex-grow: 1;
 }
 
@@ -98,74 +69,85 @@
   font-weight: 600;
 }
 
-.kanjiList {
+
+
+
+
+
+
+
+
+/* Kanji breakdown as one row of chips: 我 self · 慢 lazy */
+.parts {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 6px;
-  margin-top: 2px;
 }
 
-.kanjiRow {
-  display: flex;
+.part {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-}
-
-.kanjiChar {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 10px 0 4px;
+  border-radius: 9px;
   background: var(--s1);
   border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 14px;
 }
 
-.kanjiMeaning {
-  font-size: 16px;
+.partChar {
+  width: 26px;
+  text-align: center;
+  font-size: 19px;
 }
 
-.mnemonics {
+/* Meaning and reading hooks stacked in one card, each with a small M / R tag. */
+.hooks {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 2px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--s1);
 }
 
 .hook {
   margin: 0;
-  padding: 10px 12px;
-  border-left: 3px solid var(--accent);
-  border-radius: 0 10px 10px 0;
-  background: var(--s1);
+  display: flex;
+  gap: 10px;
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-.hookLabel {
-  display: block;
-  margin-bottom: 2px;
-  font-size: 12px;
-  font-weight: 600;
+.hookTag {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 5px;
+  background: var(--vocab-bg);
   color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+}
 
 .small {
   font-size: 14px;
   color: var(--muted);
 }
 
-.example {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 
 .ja {
   font-size: 18px;
