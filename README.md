@@ -8,6 +8,10 @@ Progress is saved online (a Cloudflare Worker with a D1 database, in `worker/`) 
 
 **Live app:** https://kasane.ksenousi-5ca.workers.dev/
 
+Scan with your iPhone camera to open it:
+
+<img src="docs/qr.png" alt="QR code for https://kasane.ksenousi-5ca.workers.dev/" width="220">
+
 ## Running it
 
 - `npm run dev:api` runs the Worker with a local D1 on port 8787. Put `PASSPHRASE=...` in `.dev.vars` first.
