@@ -3,6 +3,7 @@ import { ITEMS } from '../content'
 import { formatIn } from '../lib/clock'
 import { forecast, stageCounts } from '../srs/queue'
 import { useStore } from '../state/store'
+import { ROUND } from './RoundDone'
 import Diagnostics from '../ui/Diagnostics'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export default function Home({ onLessons, onReviews }: Props) {
-  const { progress, level, lessons, reviews, now } = useStore()
+  const { progress, level, lessons, reviews, now, settings } = useStore()
   const all = [...progress.values()]
   const hours = forecast(all, now, 24)
   const upcoming = hours.slice(1).reduce((a, b) => a + b, 0)
@@ -44,18 +45,13 @@ export default function Home({ onLessons, onReviews }: Props) {
         <ReloadButton />
       </header>
 
-      <div className={s.big}>
-        <button className={s.lessons} onClick={onLessons} disabled={lessons.length === 0}>
-          <span className={s.bigLabel}>Lessons</span>
-          <span className={s.bigNum}>{lessons.length}</span>
-          <span className={s.bigSub}>{lessons.length ? 'New words' : 'All caught up'}</span>
-        </button>
-        <button className={s.reviews} onClick={onReviews} disabled={reviews.length === 0}>
-          <span className={s.bigLabel}>Reviews</span>
-          <span className={s.bigNum}>{reviews.length}</span>
-          <span className={s.bigSub}>{reviews.length ? 'Ready now' : nextDue ? `Next in ${formatIn(nextDue.dueAt! - now)}` : 'None yet'}</span>
-        </button>
-      </div>
+      <NextUp
+        reviews={reviews.length}
+        lessons={Math.min(lessons.length, settings.lessonBatch)}
+        nextIn={nextDue ? formatIn(nextDue.dueAt! - now) : null}
+        onLessons={onLessons}
+        onReviews={onReviews}
+      />
 
       <section className={ui.card}>
         <div className={s.cardHead}>
@@ -88,6 +84,45 @@ export default function Home({ onLessons, onReviews }: Props) {
         <Stage n={counts.burned} label="Burned" color="var(--st-burned)" />
       </div>
     </div>
+  )
+}
+
+/**
+ * One obvious thing to do next, sized to a couple of minutes. Reviews come first (they decay);
+ * lessons are the secondary button when both are waiting.
+ */
+function NextUp({ reviews, lessons, nextIn, onLessons, onReviews }: { reviews: number; lessons: number; nextIn: string | null; onLessons: () => void; onReviews: () => void }) {
+  const round = Math.min(reviews, ROUND)
+  const lessonBtn = lessons > 0 && (
+    <button className={reviews ? s.alt : s.hero} onClick={onLessons}>
+      {reviews ? <>Or learn {lessons} new words</> : <HeroText label="Next up" title={`Learn ${lessons} new words`} sub={`about ${Math.max(2, Math.round(lessons * 0.8))} min`} />}
+    </button>
+  )
+  if (reviews) {
+    return (
+      <div className={s.next}>
+        <button className={s.hero} onClick={onReviews}>
+          <HeroText label="Next up" title={`Review ${round} words`} sub={`about ${Math.max(1, Math.round(round * 0.2))} min${reviews > round ? ` · ${reviews} due in total` : ''}`} />
+        </button>
+        {lessonBtn}
+      </div>
+    )
+  }
+  if (lessons) return <div className={s.next}>{lessonBtn}</div>
+  return (
+    <div className={`${s.hero} ${s.heroIdle}`}>
+      <HeroText label="All caught up ✓" title="Nothing to do right now" sub={nextIn ? `Next reviews in ${nextIn}` : 'Come back later'} />
+    </div>
+  )
+}
+
+function HeroText({ label, title, sub }: { label: string; title: string; sub: string }) {
+  return (
+    <>
+      <span className={s.heroLabel}>{label}</span>
+      <span className={s.heroTitle}>{title}</span>
+      <span className={s.heroSub}>{sub}</span>
+    </>
   )
 }
 

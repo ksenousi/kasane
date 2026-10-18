@@ -49,65 +49,58 @@
   color: var(--muted);
 }
 
-.big {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.lessons,
-.reviews {
+.next {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 8px;
+}
+
+/* The one thing to do next. Big enough to hit without thinking. */
+.hero {
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  height: 132px;
-  padding: 16px;
+  gap: 4px;
+  width: 100%;
+  padding: 22px 20px;
+  border: 0;
   border-radius: var(--radius-lg);
+  background: var(--accent);
+  color: var(--on-accent);
   text-align: left;
 }
 
-.lessons {
-  background: var(--s2);
+.heroIdle {
+  background: var(--s1);
   border: 1px solid var(--line);
   color: var(--text);
 }
 
-.lessons .bigNum {
-  color: var(--accent-text);
+.heroLabel {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.8;
 }
 
-.reviews {
-  background: var(--accent);
-  border: 0;
-  color: var(--on-accent);
+.heroTitle {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
 }
 
-.lessons:disabled,
-.reviews:disabled {
-  background: var(--s1);
+.heroSub {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.alt {
+  min-height: var(--tap);
   border: 1px solid var(--line);
-  color: var(--muted);
-}
-
-.lessons:disabled .bigNum,
-.reviews:disabled .bigNum {
-  color: var(--muted);
-}
-
-.bigLabel {
+  border-radius: var(--radius);
+  background: var(--s1);
+  color: var(--text);
   font-size: 15px;
-  font-weight: 600;
-}
-
-.bigNum {
-  font-size: 46px;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.bigSub {
-  font-size: 12px;
+  font-weight: 500;
 }
 
 .cardHead {
