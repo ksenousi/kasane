@@ -13,6 +13,22 @@ describe('content', () => {
     expect(missing.map((i) => i.id)).toEqual([])
   })
 
+  it('writes hooks as stories, not a restatement of the kanji chips', () => {
+    // The sound hook must spell out the whole reading, so no syllable goes unhooked.
+    const partial = ITEMS.filter((i) => !(hasKanji(i.word) ? i.mnemonic.reading! : i.mnemonic.meaning).includes(i.reading))
+    expect(partial.map((i) => i.id)).toEqual([])
+    // "滞 stay + 在 exist: ..." just repeats the chips shown above the hook.
+    const formula = ITEMS.filter((i) => /^\S+ [a-zA-Z ;,()-]+ \+ /.test(i.mnemonic.meaning))
+    expect(formula.map((i) => i.id)).toEqual([])
+    // The meaning hook must land on the meaning it's teaching.
+    const stop = new Set(['something', 'someone', 'oneself', 'with', 'from', 'into', 'that', 'very', 'the', 'and', 'for', 'one', 'not', 'all', 'get', 'out', 'off', 'put'])
+    const unmentioned = ITEMS.filter((i) => {
+      const words = i.meanings.flatMap((m) => m.toLowerCase().match(/[a-z]{3,}/g) ?? []).filter((w) => !stop.has(w))
+      return words.length > 0 && !words.some((w) => i.mnemonic.meaning.toLowerCase().includes(w))
+    })
+    expect(unmentioned.map((i) => i.id)).toEqual([])
+  })
+
   it('has a meaning for every kanji in words with two or more kanji', () => {
     const missing = ITEMS.flatMap((i) => kanjiBreakdown(i.word))
       .filter((p) => !p.meaning)
