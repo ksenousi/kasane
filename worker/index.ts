@@ -33,14 +33,14 @@ async function api(req: Request, path: string, env: Env): Promise<Response> {
 
   if (m === 'POST' && path === '/login') {
     const { passphrase } = await req.json<{ passphrase?: unknown }>()
-    if (typeof passphrase !== 'string' || !env.PASSPHRASE || (await token(passphrase)) !== (await token(env.PASSPHRASE))) {
+    if (typeof passphrase !== 'string' || !env.PASSPHRASE || !same(await token(passphrase), await token(env.PASSPHRASE))) {
       return json({ error: 'Wrong passphrase' }, 401)
     }
     return json({ ok: true }, 200, { 'Set-Cookie': cookie(await token(env.PASSPHRASE), YEAR) })
   }
   if (m === 'POST' && path === '/logout') return json({ ok: true }, 200, { 'Set-Cookie': cookie('', 0) })
 
-  if (!env.PASSPHRASE || readCookie(req) !== (await token(env.PASSPHRASE))) return json({ error: 'Signed out' }, 401)
+  if (!env.PASSPHRASE || !same(readCookie(req) ?? '', await token(env.PASSPHRASE))) return json({ error: 'Signed out' }, 401)
 
   const db = env.DB
 
@@ -145,6 +145,14 @@ async function token(passphrase: string): Promise<string> {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(passphrase), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('kasane-session-v1'))
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+/** Compares without stopping at the first difference, so response time doesn't reveal how much of a guess matched. */
+function same(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  let diff = 0
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  return diff === 0
 }
 
 function cookie(value: string, maxAge: number): string {
