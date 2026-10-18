@@ -1,0 +1,43 @@
+.page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 24px 15vh;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.hint {
+  color: var(--muted);
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.input {
+  height: 54px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--s1);
+  color: var(--text);
+  font: inherit;
+  font-size: 18px;
+  user-select: text;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-text);
+}
+
+.error {
+  color: var(--bad);
+  text-align: center;
+  margin: 0;
+}

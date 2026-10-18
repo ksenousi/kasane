@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ITEMS_BY_ID, itemLabel } from '../content'
 import type { Item } from '../content/schema'
-import { db, type Answer } from '../db'
+import { loadAnswers, type Answer } from '../db'
 import type { Part } from '../srs/queue'
 import ui from '../ui/ui.module.css'
 import s from './WeakSpots.module.css'
@@ -15,7 +15,7 @@ export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => voi
   const [answers, setAnswers] = useState<Answer[] | null>(null)
 
   useEffect(() => {
-    void db.answers.toArray().then(setAnswers)
+    void loadAnswers().then(setAnswers)
   }, [])
 
   if (!answers) return null

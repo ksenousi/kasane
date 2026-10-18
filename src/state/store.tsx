@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { ITEMS, ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import {
-  DEFAULT_SETTINGS, loadProgress, loadSettings, loadSynonyms, recordAnswer, saveProgress, saveSetting, saveSynonyms, type Answer, type Settings,
+  DEFAULT_SETTINGS, SignedOut, loadState, login, logout, recordAnswer, saveProgress, saveSetting, saveSynonyms, type Answer, type Settings,
 } from '../db'
 import { now as clockNow } from '../lib/clock'
 import { applyReview, completeLesson, newProgress, type Progress } from '../srs/engine'
@@ -12,6 +12,11 @@ import { currentLevel, lessonItems } from '../srs/unlock'
 
 interface Store {
   ready: boolean
+  /** The server wants the passphrase before it hands over any data. */
+  signedOut: boolean
+  /** Returns false for a wrong passphrase. */
+  signIn: (passphrase: string) => Promise<boolean>
+  signOut: () => Promise<void>
   now: number
   progress: ReadonlyMap<string, Progress>
   settings: Settings
@@ -44,18 +49,48 @@ export function currentOnly(p: ReadonlyMap<string, Progress>): Map<string, Progr
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
+  const [signedOut, setSignedOut] = useState(false)
   const [progress, setProgress] = useState<Map<string, Progress>>(new Map())
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [synonyms, setSynonyms] = useState<Map<string, string[]>>(new Map())
   const [now, setNow] = useState(clockNow)
 
   const refresh = useCallback(async () => {
-    const [p, s, syn] = await Promise.all([loadProgress(), loadSettings(), loadSynonyms()])
-    setProgress(currentOnly(p))
-    setSettings(s)
-    setSynonyms(syn)
+    try {
+      const s = await loadState()
+      setProgress(currentOnly(s.progress))
+      setSettings(s.settings)
+      setSynonyms(s.synonyms)
+      setSignedOut(false)
+    } catch (e) {
+      if (!(e instanceof SignedOut)) throw e
+      setSignedOut(true)
+    }
     setNow(clockNow())
     setReady(true)
+  }, [])
+
+  const signIn = useCallback(
+    async (passphrase: string) => {
+      if (!(await login(passphrase))) return false
+      await refresh()
+      return true
+    },
+    [refresh],
+  )
+
+  const signOut = useCallback(async () => {
+    await logout()
+    setSignedOut(true)
+  }, [])
+
+  // Saves happen in the background; if the session has lapsed, bring back the sign-in screen.
+  useEffect(() => {
+    const onError = (e: PromiseRejectionEvent) => {
+      if (e.reason instanceof SignedOut) setSignedOut(true)
+    }
+    window.addEventListener('unhandledrejection', onError)
+    return () => window.removeEventListener('unhandledrejection', onError)
   }, [])
 
   useEffect(() => {
@@ -148,6 +183,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const value = useMemo<Store>(() => {
     return {
       ready,
+      signedOut,
+      signIn,
+      signOut,
       now,
       progress,
       settings,
@@ -164,7 +202,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       addSynonym,
       removeSynonym,
     }
-  }, [ready, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, toggleKnownGrammar, addSynonym, removeSynonym])
+  }, [ready, signedOut, signIn, signOut, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, toggleKnownGrammar, addSynonym, removeSynonym])
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

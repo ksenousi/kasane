@@ -8,7 +8,7 @@ import s from './Settings.module.css'
 const HOUR = 3_600_000
 
 export default function Settings() {
-  const { settings, setSetting, refresh } = useStore()
+  const { settings, setSetting, refresh, signOut } = useStore()
   const [msg, setMsg] = useState<string | null>(null)
   const file = useRef<HTMLInputElement>(null)
 
@@ -73,13 +73,17 @@ export default function Settings() {
 
       <section className={ui.card}>
         <span className={ui.label}>Backup</span>
-        <p className={s.hint}>Your progress lives only on this phone. Save a backup now and then (Files, iCloud Drive…). The same file can be shared for a progress check-up.</p>
+        <p className={s.hint}>Your progress is saved online and syncs across devices. A backup file is a copy you keep yourself, and can be shared for a progress check-up.</p>
         <div className={s.buttons}>
           <button className={ui.btnGhost} onClick={() => void doExport()}>Save backup / export</button>
           <button className={ui.btnGhost} onClick={() => file.current?.click()}>Restore…</button>
         </div>
         <input ref={file} type="file" accept="application/json,.json" hidden onChange={(e) => e.target.files?.[0] && void doImport(e.target.files[0])} />
         <button className={s.danger} onClick={() => void doReset()}>Erase all progress</button>
+      </section>
+
+      <section className={ui.card}>
+        <button className={ui.btnGhost} onClick={() => void signOut()}>Sign out on this device</button>
       </section>
 
       {import.meta.env.DEV && (

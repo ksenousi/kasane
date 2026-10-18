@@ -3,11 +3,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// Served from GitHub Pages at https://ksenousi.github.io/kasane/
-const base = '/kasane/'
+// Served by the Cloudflare Worker in worker/index.ts, which also answers /api.
+const base = '/'
 
 export default defineConfig({
   base,
+  // In dev, `npm run dev:api` runs the Worker (with a local D1) on 8787.
+  server: { proxy: { '/api': 'http://localhost:8787' } },
   plugins: [
     react(),
     VitePWA({
@@ -32,6 +34,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png}'],
+        // The API is always fetched live, never answered with the cached app shell.
+        navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',

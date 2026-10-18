@@ -1,15 +1,31 @@
-import 'fake-indexeddb/auto'
 import { beforeEach, describe, expect, it } from 'vitest'
-import Dexie from 'dexie'
 import {
-  KasaneDB, exportBackup, importBackup, loadProgress, loadSettings, loadSynonyms, recordAnswer, resetAll, saveProgress, saveSetting, saveSynonyms,
+  SignedOut, exportBackup, importBackup, loadAnswers, loadState, login, logout, recordAnswer, resetAll, saveProgress, saveSetting, saveSynonyms,
 } from '../src/db'
 import { completeLesson, newProgress } from '../src/srs/engine'
+import { PASSPHRASE, useApi } from './api-harness'
 
 const NOW = Date.UTC(2026, 8, 27, 12)
 
+const loadProgress = async () => (await loadState()).progress
+const loadSettings = async () => (await loadState()).settings
+const loadSynonyms = async () => (await loadState()).synonyms
+
 beforeEach(async () => {
-  await resetAll()
+  await useApi()
+})
+
+describe('sign-in', () => {
+  it('refuses data until signed in, and again after signing out', async () => {
+    await useApi({ signedIn: false })
+    await expect(loadState()).rejects.toBeInstanceOf(SignedOut)
+    expect(await login('nope')).toBe(false)
+    await expect(saveSetting('lessonBatch', 3)).rejects.toBeInstanceOf(SignedOut)
+    expect(await login(PASSPHRASE)).toBe(true)
+    expect((await loadState()).settings.lessonBatch).toBe(5)
+    await logout()
+    await expect(loadState()).rejects.toBeInstanceOf(SignedOut)
+  })
 })
 
 describe('db', () => {
@@ -39,6 +55,15 @@ describe('db', () => {
     expect((await loadProgress()).get('v-gaman')?.stage).toBe(1)
     expect((await loadSettings()).lessonBatch).toBe(10)
     expect((await exportBackup()).answers).toHaveLength(1)
+    expect(await loadAnswers()).toMatchObject([{ itemId: 'v-gaman', part: 'meaning', correct: true, at: NOW }])
+  })
+
+  it('saves many progress rows in one go', async () => {
+    const rows = Array.from({ length: 1234 }, (_, i) => newProgress(`v-${i}`))
+    await saveProgress(...rows)
+    expect((await loadProgress()).size).toBe(1234)
+    await importBackup(JSON.parse(JSON.stringify(await exportBackup(NOW))))
+    expect((await loadProgress()).size).toBe(1234)
   })
 
   it('rejects files that are not Kasane backups', async () => {
@@ -54,21 +79,6 @@ describe('removed content', () => {
       ['v-souzou', completeLesson(newProgress('v-souzou'), NOW)],
     ])
     expect([...currentOnly(p).keys()]).toEqual(['v-gaman'])
-  })
-
-  it('wipes progress and answers when upgrading from v1 (multiple-choice era)', async () => {
-    const old = new Dexie('kasane-upgrade')
-    old.version(1).stores({ progress: 'itemId, stage, dueAt', answers: '++id, itemId, exercise, at', settings: 'key' })
-    await old.table('progress').put(completeLesson(newProgress('v-gaman'), NOW))
-    await old.table('answers').add({ itemId: 'v-gaman', part: 'meaning', exercise: 'V1', correct: true, at: NOW })
-    await old.table('settings').put({ key: 'lessonBatch', value: 10 })
-    old.close()
-
-    const db = new KasaneDB('kasane-upgrade')
-    expect(await db.progress.count()).toBe(0)
-    expect(await db.answers.count()).toBe(0)
-    expect((await db.settings.get('lessonBatch'))?.value).toBe(10)
-    db.close()
   })
 
   it('saves synonyms, removes empty lists, and round-trips them through a backup', async () => {
@@ -87,16 +97,6 @@ describe('removed content', () => {
     await saveSynonyms('v-gaman', ['x'])
     await importBackup({ app: 'kasane', version: 1, exportedAt: NOW, progress: [], answers: [], settings: [] })
     expect((await loadSynonyms()).size).toBe(0)
-  })
-
-  it('keeps progress when upgrading from v2 to v3 (synonyms)', async () => {
-    const old = new Dexie('kasane-v2')
-    old.version(2).stores({ progress: 'itemId, stage, dueAt', answers: '++id, itemId, part, at', settings: 'key' })
-    await old.table('progress').put(completeLesson(newProgress('v-gaman'), NOW))
-    old.close()
-    const db = new KasaneDB('kasane-v2')
-    expect(await db.progress.count()).toBe(1)
-    db.close()
   })
 
   it('remembers grammar marked as known, including through a backup', async () => {

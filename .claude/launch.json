@@ -8,6 +8,12 @@
       "port": 5173
     },
     {
+      "name": "kasane-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:api"],
+      "port": 8787
+    },
+    {
       "name": "kasane-preview",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "4173", "--strictPort"],

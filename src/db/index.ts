@@ -1,4 +1,3 @@
-import Dexie, { type EntityTable } from 'dexie'
 import type { Progress } from '../srs/engine'
 import type { Part } from '../srs/queue'
 
@@ -34,66 +33,84 @@ export interface Synonyms {
   list: string[]
 }
 
-export class KasaneDB extends Dexie {
-  progress!: EntityTable<Progress, 'itemId'>
-  answers!: EntityTable<Answer, 'id'>
-  settings!: EntityTable<SettingRow, 'key'>
-  synonyms!: EntityTable<Synonyms, 'itemId'>
+// ---- API ------------------------------------------------------------------
+// Everything lives on the server (worker/index.ts), behind a passphrase.
 
-  constructor(name = 'kasane') {
-    super(name)
-    this.version(1).stores({
-      progress: 'itemId, stage, dueAt',
-      answers: '++id, itemId, exercise, at',
-      settings: 'key',
-    })
-    // v2: typed answers replace multiple choice and grammar is gone. Start everyone from scratch.
-    this.version(2)
-      .stores({ answers: '++id, itemId, part, at' })
-      .upgrade(async (tx) => {
-        await tx.table('progress').clear()
-        await tx.table('answers').clear()
-      })
-    // v3: user synonyms. Adds a table only; progress is kept.
-    this.version(3).stores({ synonyms: 'itemId' })
+/** Thrown when the session cookie is missing or stale; the app shows the sign-in screen. */
+export class SignedOut extends Error {
+  constructor() {
+    super('Signed out')
   }
 }
 
-export const db = new KasaneDB()
+async function api<T = unknown>(method: string, path: string, body?: unknown): Promise<T> {
+  const res = await fetch(`/api${path}`, {
+    method,
+    credentials: 'same-origin',
+    headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  })
+  if (res.status === 401) throw new SignedOut()
+  if (!res.ok) throw new Error(`${method} ${path} failed (${res.status})`)
+  return res.json() as Promise<T>
+}
 
-export async function loadProgress(): Promise<Map<string, Progress>> {
-  const rows = await db.progress.toArray()
-  return new Map(rows.map((p) => [p.itemId, p]))
+/** Returns false for a wrong passphrase. */
+export async function login(passphrase: string): Promise<boolean> {
+  try {
+    await api('POST', '/login', { passphrase })
+    return true
+  } catch (e) {
+    if (e instanceof SignedOut) return false
+    throw e
+  }
+}
+
+export async function logout(): Promise<void> {
+  await api('POST', '/logout')
+}
+
+export interface State {
+  progress: Map<string, Progress>
+  settings: Settings
+  synonyms: Map<string, string[]>
+}
+
+/** Loads everything the app needs at start-up in one request. Throws SignedOut if not signed in. */
+export async function loadState(): Promise<State> {
+  const s = await api<{ progress: Progress[]; settings: SettingRow[]; synonyms: Synonyms[] }>('GET', '/state')
+  return {
+    progress: new Map(s.progress.map((p) => [p.itemId, p])),
+    settings: toSettings(s.settings),
+    synonyms: new Map(s.synonyms.map((r) => [r.itemId, r.list])),
+  }
 }
 
 export async function saveProgress(...rows: Progress[]): Promise<void> {
-  await db.progress.bulkPut(rows)
-}
-
-export async function loadSynonyms(): Promise<Map<string, string[]>> {
-  const rows = await db.synonyms.toArray()
-  return new Map(rows.map((r) => [r.itemId, r.list]))
+  await api('PUT', '/progress', rows)
 }
 
 /** Saves one word's synonyms; an empty list removes the row. */
 export async function saveSynonyms(itemId: string, list: string[]): Promise<void> {
-  if (list.length) await db.synonyms.put({ itemId, list })
-  else await db.synonyms.delete(itemId)
+  await api('PUT', `/synonyms/${encodeURIComponent(itemId)}`, { list })
 }
 
 export async function recordAnswer(a: Omit<Answer, 'id'>): Promise<void> {
-  await db.answers.add(a)
+  await api('POST', '/answers', a)
 }
 
-export async function loadSettings(): Promise<Settings> {
-  const rows = await db.settings.toArray()
-  const s = { ...DEFAULT_SETTINGS } as Record<string, unknown>
-  for (const r of rows) s[r.key] = r.value
-  return s as unknown as Settings
+export async function loadAnswers(): Promise<Answer[]> {
+  return api('GET', '/answers')
 }
 
 export async function saveSetting<K extends keyof Settings>(key: K, value: Settings[K]): Promise<void> {
-  await db.settings.put({ key, value })
+  await api('PUT', `/settings/${key}`, { value })
+}
+
+function toSettings(rows: SettingRow[]): Settings {
+  const s = { ...DEFAULT_SETTINGS } as Record<string, unknown>
+  for (const r of rows) s[r.key] = r.value
+  return s as unknown as Settings
 }
 
 // ---- Backup ---------------------------------------------------------------
@@ -110,34 +127,19 @@ export interface Backup {
 }
 
 export async function exportBackup(now = Date.now()): Promise<Backup> {
-  return {
-    app: 'kasane',
-    version: 1,
-    exportedAt: now,
-    progress: await db.progress.toArray(),
-    answers: await db.answers.toArray(),
-    settings: await db.settings.toArray(),
-    synonyms: await db.synonyms.toArray(),
-  }
+  const rows = await api<Omit<Backup, 'app' | 'version' | 'exportedAt'>>('GET', '/backup')
+  return { app: 'kasane', version: 1, exportedAt: now, ...rows }
 }
 
-/** Replaces all local data with the backup. Throws if the file isn't a Kasane backup. */
+/** Replaces all saved data with the backup. Throws if the file isn't a Kasane backup. */
 export async function importBackup(data: unknown): Promise<void> {
   const b = data as Partial<Backup> | null
   if (!b || b.app !== 'kasane' || b.version !== 1 || !Array.isArray(b.progress) || !Array.isArray(b.answers)) {
     throw new Error('Not a Kasane backup file')
   }
-  await db.transaction('rw', [db.progress, db.answers, db.settings, db.synonyms], async () => {
-    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear(), db.synonyms.clear()])
-    await db.progress.bulkPut(b.progress!)
-    await db.answers.bulkPut(b.answers!)
-    await db.settings.bulkPut(b.settings ?? [])
-    await db.synonyms.bulkPut(b.synonyms ?? [])
-  })
+  await api('PUT', '/backup', { progress: b.progress, answers: b.answers, settings: b.settings ?? [], synonyms: b.synonyms ?? [] })
 }
 
 export async function resetAll(): Promise<void> {
-  await db.transaction('rw', [db.progress, db.answers, db.settings, db.synonyms], async () => {
-    await Promise.all([db.progress.clear(), db.answers.clear(), db.settings.clear(), db.synonyms.clear()])
-  })
+  await api('DELETE', '/data')
 }
