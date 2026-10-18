@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { TooManyTries } from '../db'
 import { useStore } from '../state/store'
 import ui from '../ui/ui.module.css'
 import s from './Login.module.css'
@@ -16,8 +17,8 @@ export default function Login() {
     setError('')
     try {
       if (!(await signIn(passphrase))) setError('Wrong passphrase.')
-    } catch {
-      setError('Couldn’t reach the server. Check your connection.')
+    } catch (e) {
+      setError(e instanceof TooManyTries ? 'Too many tries. Wait a minute and try again.' : 'Couldn’t reach the server. Check your connection.')
     }
     setBusy(false)
   }

@@ -8,6 +8,8 @@ export interface Env {
   DB: D1Database
   PASSPHRASE: string
   ASSETS: Fetcher
+  LOGIN_PER_IP: RateLimit
+  LOGIN_TOTAL: RateLimit
 }
 
 const COOKIE = 'kasane_session'
@@ -32,6 +34,10 @@ async function api(req: Request, path: string, env: Env): Promise<Response> {
   const m = req.method
 
   if (m === 'POST' && path === '/login') {
+    // Slow down passphrase guessing. Devices already signed in aren't affected.
+    const ip = req.headers.get('CF-Connecting-IP') ?? 'unknown'
+    const [perIp, total] = await Promise.all([env.LOGIN_PER_IP.limit({ key: ip }), env.LOGIN_TOTAL.limit({ key: 'all' })])
+    if (!perIp.success || !total.success) return json({ error: 'Too many tries' }, 429)
     const { passphrase } = await req.json<{ passphrase?: unknown }>()
     if (typeof passphrase !== 'string' || !env.PASSPHRASE || !same(await token(passphrase), await token(env.PASSPHRASE))) {
       return json({ error: 'Wrong passphrase' }, 401)

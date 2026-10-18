@@ -57,9 +57,20 @@ function fakeD1() {
   }
 }
 
+/** Like the Workers rate limit binding, without the time window: tests run well inside a minute. */
+function fakeLimit(limit: number) {
+  const counts = new Map<string, number>()
+  return {
+    limit: async ({ key }: { key: string }) => {
+      counts.set(key, (counts.get(key) ?? 0) + 1)
+      return { success: counts.get(key)! <= limit }
+    },
+  }
+}
+
 /** Installs a fresh database and fetch shim. Signed in unless `signedIn` is false. */
 export async function useApi({ signedIn = true } = {}): Promise<void> {
-  const env = { DB: fakeD1(), PASSPHRASE, ASSETS: { fetch: async () => new Response('app') } }
+  const env = { DB: fakeD1(), PASSPHRASE, ASSETS: { fetch: async () => new Response('app') }, LOGIN_PER_IP: fakeLimit(5), LOGIN_TOTAL: fakeLimit(20) }
   let jar = ''
   globalThis.fetch = (async (input: string, init?: RequestInit) => {
     const headers = new Headers(init?.headers)

@@ -41,6 +41,13 @@ export class SignedOut extends Error {
   }
 }
 
+/** Thrown when the server is rate-limiting sign-in attempts. */
+export class TooManyTries extends Error {
+  constructor() {
+    super('Too many tries')
+  }
+}
+
 async function api<T = unknown>(method: string, path: string, body?: unknown): Promise<T> {
   const res = await fetch(`/api${path}`, {
     method,
@@ -49,11 +56,12 @@ async function api<T = unknown>(method: string, path: string, body?: unknown): P
     body: body === undefined ? undefined : JSON.stringify(body),
   })
   if (res.status === 401) throw new SignedOut()
+  if (res.status === 429) throw new TooManyTries()
   if (!res.ok) throw new Error(`${method} ${path} failed (${res.status})`)
   return res.json() as Promise<T>
 }
 
-/** Returns false for a wrong passphrase. */
+/** Returns false for a wrong passphrase. Throws TooManyTries after too many attempts. */
 export async function login(passphrase: string): Promise<boolean> {
   try {
     await api('POST', '/login', { passphrase })

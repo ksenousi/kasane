@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  SignedOut, exportBackup, importBackup, loadAnswers, loadState, login, logout, recordAnswer, resetAll, saveProgress, saveSetting, saveSynonyms,
+  SignedOut, TooManyTries, exportBackup, importBackup, loadAnswers, loadState, login, logout, recordAnswer, resetAll, saveProgress, saveSetting, saveSynonyms,
 } from '../src/db'
 import { completeLesson, newProgress } from '../src/srs/engine'
 import { PASSPHRASE, useApi } from './api-harness'
@@ -25,6 +25,13 @@ describe('sign-in', () => {
     expect((await loadState()).settings.lessonBatch).toBe(5)
     await logout()
     await expect(loadState()).rejects.toBeInstanceOf(SignedOut)
+  })
+
+  it('stops taking passphrases after 5 tries, but keeps signed-in sessions working', async () => {
+    // useApi() already used one try to sign in.
+    for (let i = 0; i < 4; i++) expect(await login('nope')).toBe(false)
+    await expect(login(PASSPHRASE)).rejects.toBeInstanceOf(TooManyTries)
+    expect((await loadState()).settings.lessonBatch).toBe(5)
   })
 })
 
