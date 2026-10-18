@@ -5,7 +5,8 @@ import Lesson from './screens/Lesson'
 import ItemPage from './screens/ItemPage'
 import Grammar from './screens/Grammar'
 import Levels from './screens/Levels'
-import Session from './screens/Session'
+import RoundDone, { ROUND } from './screens/RoundDone'
+import Session, { type Summary } from './screens/Session'
 import Settings from './screens/Settings'
 import WeakSpots from './screens/WeakSpots'
 import { useStore } from './state/store'
@@ -13,7 +14,7 @@ import * as I from './ui/icons'
 import ui from './ui/ui.module.css'
 
 type Tab = 'home' | 'levels' | 'grammar' | 'weak' | 'settings'
-type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review' } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item }
+type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review'; items: Item[] } | { name: 'roundDone'; summary: Summary } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item }
 
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Home', icon: <I.Home /> },
@@ -27,6 +28,7 @@ export default function App() {
   const { ready, reviews, finishReview } = useStore()
   const [screen, setScreen] = useState<Screen>({ name: 'home' })
   const home = () => setScreen({ name: 'home' })
+  const review = () => setScreen({ name: 'review', items: reviews.slice(0, ROUND) })
   // Coming back from an item page, return to the same spot in the Levels list.
   const levelsScroll = useRef<number | null>(null)
 
@@ -42,8 +44,9 @@ export default function App() {
 
   if (screen.name === 'lesson') return <Lesson onExit={home} />
   if (screen.name === 'review') {
-    return <Session items={reviews} mode="review" onExit={home} onComplete={home} onFinished={(f) => void finishReview(f)} />
+    return <Session items={screen.items} mode="review" onExit={home} onComplete={(summary) => setScreen({ name: 'roundDone', summary })} onFinished={(f) => void finishReview(f)} />
   }
+  if (screen.name === 'roundDone') return <RoundDone summary={screen.summary} left={reviews.length} onMore={review} onDone={home} />
 
   if (screen.name === 'item') return <ItemPage item={screen.item} onBack={() => setScreen({ name: 'levels' })} />
 
@@ -54,7 +57,7 @@ export default function App() {
 
   return (
     <div className={`${ui.screen} ${ui.tabScreen}`}>
-      {screen.name === 'home' && <Home onLessons={() => setScreen({ name: 'lesson' })} onReviews={() => setScreen({ name: 'review' })} />}
+      {screen.name === 'home' && <Home onLessons={() => setScreen({ name: 'lesson' })} onReviews={review} />}
       {screen.name === 'levels' && <Levels
           onOpen={(item) => {
             levelsScroll.current = window.scrollY
