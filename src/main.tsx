@@ -4,6 +4,7 @@ import { registerSW } from 'virtual:pwa-register'
 import './ui/tokens.css'
 import App from './App'
 import { StoreProvider } from './state/store'
+import SaveBanner from './ui/SaveBanner'
 
 registerSW({ immediate: true })
 
@@ -11,6 +12,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <StoreProvider>
       <App />
+      <SaveBanner />
     </StoreProvider>
   </StrictMode>,
 )

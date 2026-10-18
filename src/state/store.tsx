@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ITEMS, ITEMS_BY_ID } from '../content'
 import type { Item } from '../content/schema'
 import {
@@ -17,6 +17,13 @@ interface Store {
   /** Returns false for a wrong passphrase. */
   signIn: (passphrase: string) => Promise<boolean>
   signOut: () => Promise<void>
+  /** The server couldn't be reached when loading; the app shows the offline screen. */
+  offline: boolean
+  /** Changes made in the app that the server hasn't confirmed yet (kept in memory and retried). */
+  unsaved: number
+  /** The last attempt to send them failed. */
+  saveFailed: boolean
+  retrySaves: () => void
   now: number
   progress: ReadonlyMap<string, Progress>
   settings: Settings
@@ -52,25 +59,72 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [synonyms, setSynonyms] = useState<Map<string, string[]>>(new Map())
   const [now, setNow] = useState(clockNow)
+  const [offline, setOffline] = useState(false)
+  const [unsaved, setUnsaved] = useState(0)
+  const [saveFailed, setSaveFailed] = useState(false)
+
+  // Writes go out one at a time, in order. The app updates straight away; a write that
+  // fails stays at the front of the queue until a retry gets it through.
+  const queue = useRef<(() => Promise<unknown>)[]>([])
+  const flushing = useRef<Promise<boolean> | null>(null)
+
+  /** Sends queued writes. Resolves true once the queue is empty. */
+  const flush = useCallback((): Promise<boolean> => {
+    if (flushing.current) return flushing.current
+    const run = (async () => {
+      try {
+        while (queue.current.length) {
+          await queue.current[0]()
+          queue.current.shift()
+          setUnsaved(queue.current.length)
+        }
+        setSaveFailed(false)
+        return true
+      } catch (e) {
+        if (e instanceof SignedOut) setSignedOut(true)
+        else setSaveFailed(true)
+        return false
+      }
+    })()
+    // Cleared once it settles (not inside it: with nothing queued it finishes before this line).
+    flushing.current = run
+    void run.then(() => {
+      if (flushing.current === run) flushing.current = null
+    })
+    return run
+  }, [])
+
+  const save = useCallback(
+    (write: () => Promise<unknown>) => {
+      queue.current.push(write)
+      setUnsaved(queue.current.length)
+      void flush()
+    },
+    [flush],
+  )
 
   const refresh = useCallback(async () => {
+    // Loading now would show the server's older copy, so send pending changes first.
+    if (!(await flush())) return
     try {
       const s = await loadState()
       setProgress(currentOnly(s.progress))
       setSettings(s.settings)
       setSynonyms(s.synonyms)
       setSignedOut(false)
+      setOffline(false)
     } catch (e) {
-      if (!(e instanceof SignedOut)) throw e
-      setSignedOut(true)
+      if (e instanceof SignedOut) setSignedOut(true)
+      else setOffline(true)
     }
     setNow(clockNow())
     setReady(true)
-  }, [])
+  }, [flush])
 
   const signIn = useCallback(
     async (passphrase: string) => {
       if (!(await login(passphrase))) return false
+      setSignedOut(false)
       await refresh()
       return true
     },
@@ -82,14 +136,26 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setSignedOut(true)
   }, [])
 
-  // Saves happen in the background; if the session has lapsed, bring back the sign-in screen.
+  // When the connection comes back, retry whatever was waiting.
+  const offlineRef = useRef(offline)
   useEffect(() => {
-    const onError = (e: PromiseRejectionEvent) => {
-      if (e.reason instanceof SignedOut) setSignedOut(true)
+    offlineRef.current = offline
+  }, [offline])
+  useEffect(() => {
+    const onOnline = () => void (offlineRef.current ? refresh() : flush())
+    // Warn before closing the app with changes the server doesn't have yet.
+    const onLeave = (e: BeforeUnloadEvent) => {
+      if (queue.current.length) e.preventDefault()
     }
-    window.addEventListener('unhandledrejection', onError)
-    return () => window.removeEventListener('unhandledrejection', onError)
-  }, [])
+    window.addEventListener('online', onOnline)
+    window.addEventListener('beforeunload', onLeave)
+    return () => {
+      window.removeEventListener('online', onOnline)
+      window.removeEventListener('beforeunload', onLeave)
+    }
+  }, [refresh, flush])
+
+  const retrySaves = useCallback(() => void flush(), [flush])
 
   useEffect(() => {
     void refresh()
@@ -104,14 +170,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [refresh])
 
   const put = useCallback(async (rows: Progress[]) => {
-    await saveProgress(...rows)
+    save(() => saveProgress(...rows))
     setProgress((prev) => {
       const next = new Map(prev)
       for (const r of rows) next.set(r.itemId, r)
       return next
     })
     setNow(clockNow())
-  }, [])
+  }, [save])
 
   const completeLessons = useCallback(
     async (ids: string[]) => {
@@ -132,24 +198,25 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   )
 
   const logAnswer = useCallback((a: Omit<Answer, 'id' | 'at'>) => {
-    void recordAnswer({ ...a, at: clockNow() })
-  }, [])
+    const at = clockNow()
+    save(() => recordAnswer({ ...a, at }))
+  }, [save])
 
   const setSetting = useCallback(async <K extends keyof Settings>(key: K, value: Settings[K]) => {
-    await saveSetting(key, value)
+    save(() => saveSetting(key, value))
     setSettings((s) => ({ ...s, [key]: value }))
-  }, [])
+  }, [save])
 
   const writeSynonyms = useCallback(async (itemId: string, update: (list: string[]) => string[]) => {
     const list = update(synonyms.get(itemId) ?? [])
-    await saveSynonyms(itemId, list)
+    save(() => saveSynonyms(itemId, list))
     setSynonyms((prev) => {
       const next = new Map(prev)
       if (list.length) next.set(itemId, list)
       else next.delete(itemId)
       return next
     })
-  }, [synonyms])
+  }, [synonyms, save])
 
   const addSynonym = useCallback(
     (itemId: string, meaning: string) => {
@@ -170,6 +237,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       signedOut,
       signIn,
       signOut,
+      offline,
+      unsaved,
+      saveFailed,
+      retrySaves,
       now,
       progress,
       settings,
@@ -185,7 +256,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       addSynonym,
       removeSynonym,
     }
-  }, [ready, signedOut, signIn, signOut, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, addSynonym, removeSynonym])
+  }, [ready, signedOut, signIn, signOut, offline, unsaved, saveFailed, retrySaves, now, progress, settings, synonyms, refresh, completeLessons, finishReview, logAnswer, setSetting, addSynonym, removeSynonym])
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

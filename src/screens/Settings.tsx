@@ -7,13 +7,21 @@ import s from './Settings.module.css'
 
 const HOUR = 3_600_000
 
+const OFFLINE = 'Couldn’t reach the server. Check your connection and try again.'
+
 export default function Settings() {
   const { settings, setSetting, refresh, signOut } = useStore()
   const [msg, setMsg] = useState<string | null>(null)
   const file = useRef<HTMLInputElement>(null)
 
   async function doExport() {
-    const data = await exportBackup()
+    let data
+    try {
+      data = await exportBackup()
+    } catch {
+      setMsg(OFFLINE)
+      return
+    }
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
     const name = `kasane-backup-${new Date().toISOString().slice(0, 10)}.json`
     const f = new File([blob], name, { type: 'application/json' })
@@ -36,13 +44,18 @@ export default function Settings() {
       await refresh()
       setMsg('Backup restored.')
     } catch (e) {
-      setMsg(e instanceof Error ? e.message : 'Could not read that file.')
+      setMsg(e instanceof Error && e.message.startsWith('Not a Kasane') ? e.message : e instanceof SyntaxError ? 'Could not read that file.' : OFFLINE)
     }
   }
 
   async function doReset() {
     if (!window.confirm('Erase all progress? This cannot be undone unless you have a backup.')) return
-    await resetAll()
+    try {
+      await resetAll()
+    } catch {
+      setMsg(OFFLINE)
+      return
+    }
     await refresh()
     setMsg('Progress erased.')
   }

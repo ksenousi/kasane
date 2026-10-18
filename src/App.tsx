@@ -3,6 +3,7 @@ import type { Item } from './content/schema'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
 import Login from './screens/Login'
+import Offline from './screens/Offline'
 import ItemPage from './screens/ItemPage'
 import Levels from './screens/Levels'
 import RoundDone, { ROUND } from './screens/RoundDone'
@@ -24,7 +25,7 @@ const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
 ]
 
 export default function App() {
-  const { ready, signedOut, reviews, finishReview } = useStore()
+  const { ready, signedOut, offline, reviews, finishReview } = useStore()
   const [screen, setScreen] = useState<Screen>({ name: 'home' })
   const home = () => setScreen({ name: 'home' })
   const review = () => setScreen({ name: 'review', items: reviews.slice(0, ROUND) })
@@ -41,6 +42,7 @@ export default function App() {
 
   if (!ready) return null
   if (signedOut) return <Login />
+  if (offline) return <Offline />
 
   if (screen.name === 'lesson') return <Lesson onExit={home} />
   if (screen.name === 'review') {

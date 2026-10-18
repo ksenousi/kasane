@@ -13,11 +13,20 @@ const SECTIONS: { ja: string; en: string; part: Part }[] = [
 
 export default function WeakSpots({ onDrill }: { onDrill: (items: Item[]) => void }) {
   const [answers, setAnswers] = useState<Answer[] | null>(null)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    void loadAnswers().then(setAnswers)
+    loadAnswers().then(setAnswers, () => setFailed(true))
   }, [])
 
+  if (failed) {
+    return (
+      <div className={s.page}>
+        <span className={s.title}>Weak spots</span>
+        <p className={s.empty}>Couldn’t load your answers. Check your connection and open this tab again.</p>
+      </div>
+    )
+  }
   if (!answers) return null
 
   const byItem = new Map<string, { right: number; total: number }>()
