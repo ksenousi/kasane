@@ -4,11 +4,13 @@ import s from './Forecast.module.css'
 
 // The next 24 hours, after Kanigami's forecast:
 // - One column per clock hour, no gaps, standing on one hairline baseline.
-//   Beneath, the current hour and every third clock hour are named (all 25 don't
-//   fit across a phone): bright when reviews arrive, dim when empty, the
-//   current hour in the accent. Tapping an hour names it exactly.
+//   Beneath, every hour is named when the column is wide enough (an iPad); on a
+//   phone only the current hour and every third: bright when reviews arrive,
+//   dim when empty, the current hour in the accent. Tapping an hour names it.
 // - Each bar carries its count. The current hour holds everything overdue, so it
 //   doesn't set the scale: if it outweighs the rest it stops at the top with ↑.
+// - Purple dots over an hour mark the level's words that pass to Guru on a
+//   right answer then; tapping the hour names them.
 // - From midnight the hours sit on a faint tint behind a dashed rule, under
 //   the word "tomorrow".
 // - Tapping (or hovering, or arrow keys) an hour reads it out in the line
@@ -20,9 +22,13 @@ interface Props {
   due: number
   /** When the next review comes due, if nothing is due now. */
   nextAt: number | null
+  /** By hour index: the level's words that pass to Guru on a right answer in that hour. */
+  passing?: ReadonlyMap<number, string[]>
 }
 
-export default function Forecast({ hours, due, nextAt }: Props) {
+const NO_MARKS: ReadonlyMap<number, string[]> = new Map()
+
+export default function Forecast({ hours, due, nextAt, passing = NO_MARKS }: Props) {
   const [at, setAt] = useState<number | null>(null)
   const group = useRef<HTMLDivElement>(null)
 
@@ -48,7 +54,7 @@ export default function Forecast({ hours, due, nextAt }: Props) {
   }
 
   return (
-    <>
+    <div className={s.wrap}>
       <div
         ref={group}
         className={s.hours}
@@ -66,7 +72,8 @@ export default function Forecast({ hours, due, nextAt }: Props) {
           const date = new Date(hour.at)
           const nextDay = date.toDateString() !== today
           const midnight = i > 0 && nextDay && date.getHours() === 0
-          const named = i === 0 || (date.getHours() % 3 === 0 && i > 1)
+          const major = i === 0 || (date.getHours() % 3 === 0 && i > 1)
+          const marks = passing.get(i)
           const cls = [
             s.hour,
             hour.count ? s.busy : '',
@@ -85,6 +92,7 @@ export default function Forecast({ hours, due, nextAt }: Props) {
             >
               <span className={s.stack}>
                 {midnight && i < hours.length - 3 ? <b className={s.day}>tomorrow</b> : null}
+                {marks ? <span className={s.mark} aria-hidden>{'●'.repeat(Math.min(3, marks.length))}</span> : null}
                 {hour.count ? (
                   <span className={s.n}>
                     {hour.count}
@@ -93,15 +101,21 @@ export default function Forecast({ hours, due, nextAt }: Props) {
                 ) : null}
                 <i style={{ height: `calc(${height} * var(--tallest))` }} />
               </span>
-              <span className={s.at}>{named ? String(date.getHours()).padStart(2, '0') : ''}</span>
+              <span className={`${s.at} ${major ? '' : s.minor}`}>{String(date.getHours()).padStart(2, '0')}</span>
             </span>
           )
         })}
       </div>
       <p className={s.readout} aria-live="polite">
         {at === null ? resting(hours, due, nextAt) : reading(hours[at], at, today)}
+        {at !== null && passing.get(at) ? (
+          <span className={s.pass}>
+            {' · '}
+            <span lang="ja">{passing.get(at)!.join(' ')}</span> pass to Guru if right
+          </span>
+        ) : null}
       </p>
-    </>
+    </div>
   )
 }
 

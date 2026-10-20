@@ -156,3 +156,169 @@
     font-size: 9.5px;
   }
 }
+
+/* One column on a phone and an iPad in portrait; in landscape on an iPad or Mac, two:
+   what to do and when on the left, where things stand on the right. */
+.cols,
+.main,
+.side {
+  display: contents;
+}
+
+@media (min-width: 1100px) and (orientation: landscape) {
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 12px 20px;
+  }
+
+  .main,
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+}
+
+/* The level-up line on the meter, and the earliest it can happen. */
+.meterTrack {
+  position: relative;
+}
+
+.goal {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--text);
+}
+
+.goalNote {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.levelUp {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.levelUpWhen {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: 7px;
+  background: var(--s2);
+  font-family: var(--font-ja);
+  font-size: 14px;
+}
+
+/* One right answer in the next 24 hours passes it. */
+.chipPass {
+  box-shadow: inset 0 0 0 1px var(--st-guru);
+}
+
+/* Past 7 days */
+.moves {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.move {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.move b {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.acc {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.accRow {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.accRow b {
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  margin: 0;
+}
+
+/* Coming up */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.liWord {
+  font-family: var(--font-ja);
+  font-size: 17px;
+}
+
+.liBar {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.subhead {
+  margin: 14px 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

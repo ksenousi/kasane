@@ -81,6 +81,18 @@ body,
   }
 }
 
+/* Home spreads to two columns in landscape on an iPad or Mac (Home.module.css), so the column widens there. */
+@media (min-width: 1100px) and (orientation: landscape) {
+  #root:has([data-wide]) {
+    --col: min(100vw, 1180px);
+    max-width: 1180px;
+  }
+
+  #root:has([data-wide])::before {
+    width: 1182px;
+  }
+}
+
 /* Home Screen app on iPhone: with the black-translucent status bar the page draws under the
    status bar, but iOS still sizes it as if the status bar weren't there, leaving a gap that
    tall below the tab bar. Add it back. */

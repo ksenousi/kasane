@@ -46,12 +46,18 @@ export function forecast(progress: Iterable<Progress>, now: number, hours = 25):
   })
   for (const p of progress) {
     if (p.dueAt === null || p.stage === 0 || p.stage === 9) continue
-    let h = 0
-    while (h + 1 < hours && buckets[h + 1].at <= p.dueAt) h++
-    if (h === hours - 1 && p.dueAt >= buckets[h].at + 3_600_000) continue
-    buckets[h].count++
+    const h = hourOf(buckets, p.dueAt)
+    if (h !== null) buckets[h].count++
   }
   return buckets
+}
+
+/** Which forecast hour a due time falls in: the first for anything already due, null past the last. */
+export function hourOf(hours: readonly Hour[], at: number): number | null {
+  if (hours.length === 0 || at >= hours[hours.length - 1].at + 3_600_000) return null
+  let h = 0
+  while (h + 1 < hours.length && hours[h + 1].at <= at) h++
+  return h
 }
 
 export function stageCounts(progress: Iterable<Progress>): Record<StageGroup, number> {

@@ -1,5 +1,9 @@
 /* One column per hour, no gaps, so the baselines join into one hairline and
    every hour is a full-height target for a finger. */
+.wrap {
+  container-type: inline-size;
+}
+
 .hours {
   --tallest: 72px;
   display: grid;
@@ -99,6 +103,19 @@
   opacity: 0.35;
 }
 
+/* The level's words that pass to Guru on a right answer in this hour. */
+.mark {
+  font-size: 6px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--st-guru);
+  white-space: nowrap;
+}
+
+.pass {
+  color: var(--st-guru);
+}
+
 /* Every hour named: bright when reviews arrive, dim when empty. */
 .at {
   padding-top: 5px;
@@ -125,4 +142,28 @@
   font-size: 13px;
   color: var(--muted);
   min-height: 1.3em;
+}
+
+/* A phone has room for every third hour only; from about 24px a column, name them all. */
+.minor {
+  visibility: hidden;
+}
+
+@container (min-width: 600px) {
+  .minor {
+    visibility: visible;
+  }
+
+  .hours {
+    --tallest: 96px;
+  }
+
+  .stack {
+    height: 120px;
+  }
+
+  .at,
+  .n {
+    font-size: 10px;
+  }
 }

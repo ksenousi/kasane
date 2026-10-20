@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react'
-import { ITEMS } from '../content'
+import { useEffect, useRef, useState } from 'react'
+import { ITEMS, ITEMS_BY_ID } from '../content'
+import { loadAnswers, type Answer } from '../db'
 import { formatIn } from '../lib/clock'
-import { forecast, stageCounts } from '../srs/queue'
+import { burnsSoon, earliestLevelUp, milestones, passingNext, pastWeek } from '../srs/insights'
+import { forecast, hourOf, stageCounts } from '../srs/queue'
 import { useStore } from '../state/store'
 import { ROUND } from './RoundDone'
 import Diagnostics from '../ui/Diagnostics'
@@ -24,6 +26,13 @@ export default function Home({ onLessons, onReviews }: Props) {
 
   const inLevel = ITEMS.filter((i) => i.level === level)
   const passed = inLevel.filter((i) => progress.get(i.id)?.passedAt != null).length
+  const levelUp = earliestLevelUp(ITEMS, level, progress, now)
+  const passing = new Map<number, string[]>()
+  for (const { item, dueAt } of passingNext(ITEMS, level, progress)) {
+    const h = hourOf(hours, dueAt)
+    if (h !== null) passing.set(h, [...(passing.get(h) ?? []), item.word])
+  }
+  const passingSoon = new Set([...passing.values()].flat())
   // Long-pressing the logo opens layout diagnostics (for iPhone Home Screen quirks).
   const [diag, setDiag] = useState(false)
   const press = useRef<number | undefined>(undefined)
@@ -33,7 +42,7 @@ export default function Home({ onLessons, onReviews }: Props) {
   const pressEnd = () => window.clearTimeout(press.current)
 
   return (
-    <div className={s.page}>
+    <div className={s.page} data-wide>
       {diag && <Diagnostics onClose={() => setDiag(false)} />}
       <header className={s.header}>
         <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width={40} height={40} className={s.logo} draggable={false} onPointerDown={pressStart} onPointerUp={pressEnd} onPointerLeave={pressEnd} onContextMenu={(e) => e.preventDefault()} />
@@ -44,6 +53,8 @@ export default function Home({ onLessons, onReviews }: Props) {
         <ReloadButton />
       </header>
 
+      <div className={s.cols}>
+      <div className={s.main}>
       <NextUp
         reviews={reviews.length}
         lessons={Math.min(lessons.length, settings.lessonBatch)}
@@ -56,7 +67,7 @@ export default function Home({ onLessons, onReviews }: Props) {
         <div className={s.cardHead}>
           <span className={s.cardTitle}>Next 24 hours</span>
         </div>
-        <Forecast hours={hours} due={reviews.length} nextAt={nextDue?.dueAt ?? null} />
+        <Forecast hours={hours} due={reviews.length} nextAt={nextDue?.dueAt ?? null} passing={passing} />
       </section>
 
       <section className={ui.card}>
@@ -64,8 +75,25 @@ export default function Home({ onLessons, onReviews }: Props) {
           <span className={s.cardTitle}>Level {level}</span>
           <span className={s.muted}>Level up at 90% Guru</span>
         </div>
-        <Meter label="Words passed" value={passed} max={inLevel.length} color="var(--vocab)" />
+        <Meter label="Words passed" value={passed} max={inLevel.length} color="var(--vocab)" goal={Math.ceil(inLevel.length * 0.9)} />
+        {levelUp.at !== null && (
+          <div className={s.levelUp}>
+            <span className={s.levelUpWhen}>Earliest level-up: {when(levelUp.at, now)}</span>
+            <span className={s.muted}>
+              If every answer from here is right. {levelUp.need} more {levelUp.need === 1 ? 'word needs' : 'words need'} Guru
+              {passingSoon.size ? `; ${passingSoon.size} can get there in the next 24 hours` : ''}.
+            </span>
+            <span className={s.chips} lang="ja">
+              {levelUp.waitingOn.map((i) => (
+                <span key={i.id} className={`${s.chip} ${passingSoon.has(i.word) ? s.chipPass : ''}`}>{i.word}</span>
+              ))}
+            </span>
+          </div>
+        )}
       </section>
+      </div>
+
+      <div className={s.side}>
 
       <div className={s.stages}>
         <Stage n={counts.apprentice} label="Apprentice" color="var(--st-apprentice)" />
@@ -74,7 +102,114 @@ export default function Home({ onLessons, onReviews }: Props) {
         <Stage n={counts.enlightened} label="Enlight." color="var(--st-enlightened)" />
         <Stage n={counts.burned} label="Burned" color="var(--st-burned)" />
       </div>
+      <PastWeek />
+      <ComingUp />
+      </div>
+      </div>
     </div>
+  )
+}
+
+/** "today 18:00", "tomorrow 07:00", or "Fri 07:00" within the week, else "23 Oct". */
+function when(at: number, now: number): string {
+  const d = new Date(at)
+  const clock = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+  const days = Math.round((new Date(d).setHours(0, 0, 0, 0) - new Date(now).setHours(0, 0, 0, 0)) / 86_400_000)
+  if (days <= 0) return `today ${clock}`
+  if (days === 1) return `tomorrow ${clock}`
+  if (days < 7) return `${d.toLocaleDateString('en-GB', { weekday: 'short' })} ${clock}`
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+}
+
+const pct = (x: number) => `${Math.round(x * 100)}%`
+
+/** What moved this week, and accuracy split into meaning and reading. */
+function PastWeek() {
+  const { progress, now } = useStore()
+  const [answers, setAnswers] = useState<Answer[] | null>(null)
+  useEffect(() => {
+    loadAnswers().then(setAnswers, () => setAnswers([]))
+  }, [])
+  const w = pastWeek(progress, answers ?? [], now)
+  const moves = [
+    { n: w.guru, label: 'reached Guru', color: 'var(--st-guru)' },
+    { n: w.master, label: 'reached Master', color: 'var(--st-master)' },
+    { n: w.enlightened, label: 'reached Enlightened', color: 'var(--st-enlightened)' },
+    { n: w.burned, label: 'burned', color: 'var(--muted)' },
+  ].filter((m) => m.n > 0)
+  const quiet = !moves.length && !w.dropped && !w.answers
+  return (
+    <section className={ui.card}>
+      <div className={s.cardHead}>
+        <span className={s.cardTitle}>Past 7 days</span>
+        {w.answers > 0 && <span className={s.muted}>{w.answers} answers</span>}
+      </div>
+      {quiet ? (
+        <p className={`${s.muted} ${s.empty}`}>{answers ? 'No reviews this week yet.' : 'Loading…'}</p>
+      ) : (
+        <>
+          <div className={s.moves}>
+            {moves.map((m) => (
+              <div key={m.label} className={s.move}><b style={{ color: m.color }}>+{m.n}</b><span>{m.label}</span></div>
+            ))}
+            {w.dropped > 0 && <div className={s.move}><b style={{ color: 'var(--bad)' }}>−{w.dropped}</b><span>dropped back a stage</span></div>}
+          </div>
+          {(w.meaning !== null || w.reading !== null) && (
+            <div className={s.acc}>
+              {w.meaning !== null && <Accuracy label="Meaning" value={w.meaning} color="var(--prompt-meaning-bg)" />}
+              {w.reading !== null && <Accuracy label="Reading" value={w.reading} color="var(--vocab)" />}
+            </div>
+          )}
+        </>
+      )}
+    </section>
+  )
+}
+
+function Accuracy({ label, value, color }: { label: string; value: number; color: string }) {
+  return (
+    <div className={s.accRow}>
+      <span>{label}</span>
+      <div className={ui.bar}><div className={ui.barFill} style={{ width: pct(value), background: color }} /></div>
+      <b>{pct(value)}</b>
+    </div>
+  )
+}
+
+/** Words burning this week, and the next round numbers. */
+function ComingUp() {
+  const { progress, now } = useStore()
+  const burns = burnsSoon(progress, now)
+  const goals = milestones(progress, ITEMS.length)
+  return (
+    <section className={ui.card}>
+      <div className={s.cardHead}>
+        <span className={s.cardTitle}>Coming up</span>
+      </div>
+      {burns.length > 0 && (
+        <div className={s.list}>
+          {burns.map((p) => {
+            const item = ITEMS_BY_ID.get(p.itemId)
+            return (
+              <div key={p.itemId} className={s.li}>
+                <span><span className={s.liWord} lang="ja">{item?.word}</span> <span className={s.muted}>{item?.meanings[0]}</span></span>
+                <span className={s.muted}>burns {when(p.dueAt!, now)}</span>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      {burns.length > 0 && <div className={s.subhead}>Next milestones</div>}
+      <div className={s.list}>
+        {goals.map((m) => (
+          <div key={m.label} className={s.li}>
+            <span>{m.goal} {m.label}</span>
+            <span className={s.muted}>{m.goal - m.have} to go</span>
+            <div className={`${ui.bar} ${s.liBar}`}><div className={ui.barFill} style={{ width: pct(m.have / m.goal), background: 'var(--st-guru)' }} /></div>
+          </div>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -137,11 +272,15 @@ function ReloadButton() {
   )
 }
 
-function Meter({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+function Meter({ label, value, max, color, goal }: { label: string; value: number; max: number; color: string; goal?: number }) {
   return (
     <div className={s.meter}>
       <div className={s.meterHead}><span>{label}</span><span className={s.muted}>{value} / {max}</span></div>
-      <div className={ui.bar}><div className={ui.barFill} style={{ width: `${max ? (value / max) * 100 : 0}%`, background: color }} /></div>
+      <div className={s.meterTrack}>
+        <div className={ui.bar}><div className={ui.barFill} style={{ width: `${max ? (value / max) * 100 : 0}%`, background: color }} /></div>
+        {goal !== undefined && max > 0 && <span className={s.goal} style={{ left: `${(goal / max) * 100}%` }} />}
+      </div>
+      {goal !== undefined && value < goal && <div className={s.goalNote}>{goal} to level up</div>}
     </div>
   )
 }
