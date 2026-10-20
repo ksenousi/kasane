@@ -218,26 +218,6 @@
   font-weight: 600;
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.chip {
-  padding: 2px 8px;
-  border-radius: 7px;
-  background: var(--s2);
-  font-family: var(--font-ja);
-  font-size: 14px;
-}
-
-/* One right answer in the next 24 hours passes it. */
-.chipPass {
-  box-shadow: inset 0 0 0 1px var(--st-guru);
-}
-
 /* Past 7 days */
 .moves {
   display: flex;

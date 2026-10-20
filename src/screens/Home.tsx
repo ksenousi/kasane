@@ -32,7 +32,6 @@ export default function Home({ onLessons, onReviews }: Props) {
     const h = hourOf(hours, dueAt)
     if (h !== null) passing.set(h, [...(passing.get(h) ?? []), item.word])
   }
-  const passingSoon = new Set([...passing.values()].flat())
   // Long-pressing the logo opens layout diagnostics (for iPhone Home Screen quirks).
   const [diag, setDiag] = useState(false)
   const press = useRef<number | undefined>(undefined)
@@ -79,15 +78,6 @@ export default function Home({ onLessons, onReviews }: Props) {
         {levelUp.at !== null && (
           <div className={s.levelUp}>
             <span className={s.levelUpWhen}>Earliest level-up: {when(levelUp.at, now)}</span>
-            <span className={s.muted}>
-              If every answer from here is right. {levelUp.need} more {levelUp.need === 1 ? 'word needs' : 'words need'} Guru
-              {passingSoon.size ? `; ${passingSoon.size} can get there in the next 24 hours` : ''}.
-            </span>
-            <span className={s.chips} lang="ja">
-              {levelUp.waitingOn.map((i) => (
-                <span key={i.id} className={`${s.chip} ${passingSoon.has(i.word) ? s.chipPass : ''}`}>{i.word}</span>
-              ))}
-            </span>
           </div>
         )}
       </section>
