@@ -36,7 +36,7 @@ export default function Levels({ onOpen }: { onOpen: (item: Item) => void }) {
             {!locked && (
                 <div className={s.group}>
                   <div className={s.chips} lang="ja">
-                    {l.items.map((i) => {
+                    {[...l.items].sort((a, b) => (progress.get(b.id)?.stage ?? 0) - (progress.get(a.id)?.stage ?? 0)).map((i) => {
                       const stage = progress.get(i.id)?.stage ?? 0
                       const g = stageGroup(stage)
                       return (
