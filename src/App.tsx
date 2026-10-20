@@ -15,7 +15,7 @@ import * as I from './ui/icons'
 import ui from './ui/ui.module.css'
 
 type Tab = 'home' | 'levels' | 'weak' | 'settings'
-type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review'; items: Item[] } | { name: 'roundDone'; summary: Summary } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item }
+type Screen = { name: Tab } | { name: 'lesson' } | { name: 'review'; items: Item[] } | { name: 'roundDone'; summary: Summary } | { name: 'drill'; items: Item[] } | { name: 'item'; item: Item; back?: Screen }
 
 const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'home', label: 'Home', icon: <I.Home /> },
@@ -48,9 +48,9 @@ export default function App() {
   if (screen.name === 'review') {
     return <Session items={screen.items} mode="review" onExit={home} onComplete={(summary) => setScreen({ name: 'roundDone', summary })} onFinished={(f) => void finishReview(f)} />
   }
-  if (screen.name === 'roundDone') return <RoundDone summary={screen.summary} left={reviews.length} onMore={review} onDone={home} />
+  if (screen.name === 'roundDone') return <RoundDone summary={screen.summary} left={reviews.length} onMore={review} onDone={home} onOpen={(item) => setScreen({ name: 'item', item, back: screen })} />
 
-  if (screen.name === 'item') return <ItemPage item={screen.item} onBack={() => setScreen({ name: 'levels' })} />
+  if (screen.name === 'item') return <ItemPage item={screen.item} onBack={() => setScreen(screen.back ?? { name: 'levels' })} />
 
   if (screen.name === 'drill') {
     const back = () => setScreen({ name: 'weak' })

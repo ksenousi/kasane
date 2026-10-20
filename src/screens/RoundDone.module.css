@@ -62,3 +62,72 @@
   max-width: 320px;
   margin-top: 8px;
 }
+
+/* What moved this round: the missed words first, each opening its page. */
+.moves {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+  text-align: left;
+}
+
+.movesHead {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.missed {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--s1);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+.word {
+  font-family: var(--font-ja);
+  font-size: 22px;
+}
+
+.reading {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.move {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.meaning {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tally span {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--s1);
+  font-size: 12px;
+}

@@ -5,7 +5,7 @@ import { checkAnswer, finishKana, imeKana, type Verdict } from '../srs/answer'
 import { nextStage } from '../srs/engine'
 import type { Part } from '../srs/queue'
 import { answer, currentTask, finishedCount, startSession, type Finished, type SessionState } from '../srs/session'
-import { STAGES } from '../srs/stages'
+import { STAGES, type Stage } from '../srs/stages'
 import { useStore } from '../state/store'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
@@ -26,6 +26,16 @@ export interface Summary {
   items: number
   /** Longest run of correct answers in a row. */
   best: number
+  /** Reviews only: each word's stage change, in the order they finished. */
+  moves: Move[]
+}
+
+export interface Move {
+  itemId: string
+  from: Stage
+  to: Stage
+  /** Parts answered wrong at least once this round. */
+  missed: Part[]
 }
 
 /** How long a correct answer stays on screen before the next prompt. */
@@ -44,11 +54,13 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
   const [streak, setStreak] = useState(0)
   const [best, setBest] = useState(0)
   const input = useRef<HTMLInputElement>(null)
+  const moves = useRef<Move[]>([])
+  const missed = useRef(new Map<string, Set<Part>>())
   const task = currentTask(state)
   const item = task ? ITEMS_BY_ID.get(task.itemId) : undefined
 
   useEffect(() => {
-    if (!task) onComplete({ answered: state.answered, correct: state.correct, items: state.total, best })
+    if (!task) onComplete({ answered: state.answered, correct: state.correct, items: state.total, best, moves: moves.current })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task])
 
@@ -95,7 +107,12 @@ export default function Session({ items, mode, onExit, onComplete, onFinished }:
     const run = correct ? streak + 1 : 0
     setStreak(run)
     setBest(Math.max(best, run))
+    if (!correct) missed.current.set(task.itemId, new Set(missed.current.get(task.itemId)).add(part))
     const r = answer(state, correct)
+    if (r.finished && mode === 'review') {
+      const from = progress.get(r.finished.itemId)?.stage ?? 0
+      moves.current.push({ itemId: r.finished.itemId, from, to: nextStage(from, r.finished.misses), missed: [...(missed.current.get(r.finished.itemId) ?? [])] })
+    }
     if (r.finished) onFinished?.(r.finished)
     setState(r.state)
     setText('')
