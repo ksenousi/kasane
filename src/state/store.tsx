@@ -48,6 +48,9 @@ const StoreContext = createContext<Store | null>(null)
  * because WaniKani covers them), so they don't show up in counts or forecasts.
  * The rows stay in the database and in backups.
  */
+/** Away from the app this long, progress is re-read on return. */
+const STALE_AFTER = 5 * 60_000
+
 export function currentOnly(p: ReadonlyMap<string, Progress>): Map<string, Progress> {
   return new Map([...p].filter(([id]) => ITEMS_BY_ID.has(id)))
 }
@@ -159,13 +162,24 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     void refresh()
-    // Keep counts fresh while the app stays open, and when it returns from the background.
+    // Keep counts fresh while the app stays open. Coming back after a while (another device may
+    // have done reviews meanwhile) reloads progress too, so the Reload button isn't needed for that.
     const tick = () => setNow(clockNow())
+    let hiddenAt: number | null = null
+    const onVisibility = () => {
+      if (document.hidden) {
+        hiddenAt = Date.now()
+        return
+      }
+      if (hiddenAt !== null && Date.now() - hiddenAt >= STALE_AFTER) void refresh()
+      else tick()
+      hiddenAt = null
+    }
     const id = window.setInterval(tick, 60_000)
-    document.addEventListener('visibilitychange', tick)
+    document.addEventListener('visibilitychange', onVisibility)
     return () => {
       window.clearInterval(id)
-      document.removeEventListener('visibilitychange', tick)
+      document.removeEventListener('visibilitychange', onVisibility)
     }
   }, [refresh])
 
