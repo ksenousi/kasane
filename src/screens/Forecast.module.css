@@ -1,0 +1,128 @@
+/* One column per hour, no gaps, so the baselines join into one hairline and
+   every hour is a full-height target for a finger. */
+.hours {
+  --tallest: 72px;
+  display: grid;
+  outline: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hour {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3px;
+  height: 92px;
+  padding-inline: 1px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stack i {
+  display: block;
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  background: var(--muted);
+  opacity: 0.5;
+}
+
+.busy .stack i {
+  min-height: 3px;
+}
+
+.n {
+  font-size: 9px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* The current hour: the accent, the one thing on the chart asking for you now. */
+.now .stack i {
+  background: var(--accent);
+  opacity: 1;
+}
+
+.now .n {
+  color: var(--accent-text);
+}
+
+/* From midnight on, a faint tint and a dashed rule where the next day begins. */
+.nextDay .stack {
+  background: color-mix(in srgb, var(--line) 40%, transparent);
+}
+
+.midnight .stack {
+  border-left: 1px dashed var(--line);
+}
+
+/* The day's name, hanging from the midnight rule over the hours after it. */
+.day {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Under the finger: neutral, so it doesn't claim the accent's meaning. */
+.reading .stack {
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+}
+
+.reading .stack i {
+  background: var(--text);
+  opacity: 1;
+}
+
+.reading .n {
+  color: var(--text);
+}
+
+.aside .stack i,
+.aside .n {
+  opacity: 0.35;
+}
+
+/* Every hour named: bright when reviews arrive, dim when empty. */
+.at {
+  padding-top: 5px;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  text-align: center;
+  min-height: 1.2em;
+  white-space: nowrap;
+  overflow: visible;
+  color: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+.busy .at {
+  color: var(--text);
+}
+
+.now .at {
+  color: var(--accent-text);
+}
+
+.readout {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 1.3em;
+}

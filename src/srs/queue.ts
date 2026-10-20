@@ -26,12 +26,30 @@ export function reviewQueue(items: readonly Item[], progress: ReadonlyMap<string
 }
 
 /** How many reviews become due in each of the next `hours` hours (index 0 = due now or overdue). */
-export function forecast(progress: Iterable<Progress>, now: number, hours = 24): number[] {
-  const buckets = new Array<number>(hours).fill(0)
+export interface Hour {
+  /** Start of the clock hour (ms). */
+  at: number
+  count: number
+}
+
+/**
+ * Reviews per clock hour: the current hour (with everything already overdue) and the
+ * `hours - 1` after it. Aligned to the hour so each column can be named, like Kanigami's.
+ */
+export function forecast(progress: Iterable<Progress>, now: number, hours = 25): Hour[] {
+  const start = new Date(now)
+  start.setMinutes(0, 0, 0)
+  const buckets: Hour[] = Array.from({ length: hours }, (_, i) => {
+    const at = new Date(start)
+    at.setHours(start.getHours() + i)
+    return { at: at.getTime(), count: 0 }
+  })
   for (const p of progress) {
     if (p.dueAt === null || p.stage === 0 || p.stage === 9) continue
-    const h = Math.max(0, Math.floor((p.dueAt - now) / 3_600_000))
-    if (h < hours) buckets[h]++
+    let h = 0
+    while (h + 1 < hours && buckets[h + 1].at <= p.dueAt) h++
+    if (h === hours - 1 && p.dueAt >= buckets[h].at + 3_600_000) continue
+    buckets[h].count++
   }
   return buckets
 }

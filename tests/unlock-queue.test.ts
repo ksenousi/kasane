@@ -55,16 +55,19 @@ describe('queues', () => {
     expect(reviewQueue(items, p, NOW).map((i) => i.id)).toEqual(['v0'])
   })
 
-  it('buckets the 24h forecast by hour, overdue in hour 0', () => {
+  it('buckets the forecast by clock hour, overdue in the current hour', () => {
+    const now = NOW + 20 * 60_000 // 20 past the hour
     const p = prog([
-      ['v0', { stage: 2, dueAt: NOW - 5_000 }],
-      ['v1', { stage: 2, dueAt: NOW + 90 * 60_000 }],
-      ['v2', { stage: 2, dueAt: NOW + 30 * 3_600_000 }],
+      ['v0', { stage: 2, dueAt: now - 5_000 }],
+      ['v1', { stage: 2, dueAt: now + 30 * 60_000 }], // 50 past: still this hour
+      ['v2', { stage: 2, dueAt: now + 50 * 60_000 }], // 10 past the next hour
+      ['v3', { stage: 2, dueAt: now + 30 * 3_600_000 }], // off the chart
     ])
-    const f = forecast(p.values(), NOW)
-    expect(f[0]).toBe(1)
-    expect(f[1]).toBe(1)
-    expect(f.reduce((a, b) => a + b)).toBe(2)
+    const f = forecast(p.values(), now)
+    expect(f).toHaveLength(25)
+    expect(f[0]).toEqual({ at: NOW, count: 2 })
+    expect(f[1]).toEqual({ at: NOW + 3_600_000, count: 1 })
+    expect(f.reduce((a, h) => a + h.count, 0)).toBe(3)
   })
 
   it('counts items per stage group', () => {

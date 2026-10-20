@@ -5,6 +5,7 @@ import { forecast, stageCounts } from '../srs/queue'
 import { useStore } from '../state/store'
 import { ROUND } from './RoundDone'
 import Diagnostics from '../ui/Diagnostics'
+import Forecast from './Forecast'
 import * as I from '../ui/icons'
 import ui from '../ui/ui.module.css'
 import s from './Home.module.css'
@@ -17,10 +18,8 @@ interface Props {
 export default function Home({ onLessons, onReviews }: Props) {
   const { progress, level, lessons, reviews, now, settings } = useStore()
   const all = [...progress.values()]
-  const hours = forecast(all, now, 24)
-  const upcoming = hours.slice(1).reduce((a, b) => a + b, 0)
+  const hours = forecast(all, now)
   const nextDue = all.filter((p) => p.dueAt !== null && p.dueAt > now && p.stage > 0 && p.stage < 9).sort((a, b) => a.dueAt! - b.dueAt!)[0]
-  const peak = Math.max(1, ...hours)
   const counts = stageCounts(all.filter((p) => p.stage > 0))
 
   const inLevel = ITEMS.filter((i) => i.level === level)
@@ -56,16 +55,8 @@ export default function Home({ onLessons, onReviews }: Props) {
       <section className={ui.card}>
         <div className={s.cardHead}>
           <span className={s.cardTitle}>Next 24 hours</span>
-          <span className={s.muted}>{upcoming} coming up</span>
         </div>
-        <div className={s.bars} aria-label={`Reviews by hour: ${hours.join(', ')}`}>
-          {hours.map((n, i) => (
-            <div key={i} className={s.barCol}>
-              <div className={`${s.hourBar} ${i === 0 && n > 0 ? s.now : ''}`} style={{ height: `${Math.max(4, (n / peak) * 100)}%`, opacity: n ? 1 : 0.35 }} />
-            </div>
-          ))}
-        </div>
-        <div className={s.axis}><span>Now</span><span>+12h</span><span>+24h</span></div>
+        <Forecast hours={hours} due={reviews.length} nextAt={nextDue?.dueAt ?? null} />
       </section>
 
       <section className={ui.card}>

@@ -115,38 +115,6 @@
   font-weight: 600;
 }
 
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 56px;
-}
-
-.barCol {
-  flex: 1;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-}
-
-.hourBar {
-  width: 100%;
-  border-radius: 2px;
-  background: var(--line);
-}
-
-.now {
-  background: var(--accent);
-}
-
-.axis {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-  font-size: 11px;
-  color: var(--muted);
-}
-
 .meter + .meter {
   margin-top: 12px;
 }
