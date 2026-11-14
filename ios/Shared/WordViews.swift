@@ -50,12 +50,44 @@ struct InlineView: View {
     }
 }
 
-/// Home screen small square.
+/// Home screen small square, which is also what StandBy shows (scaled up, often in pairs).
+/// Centered and large so it reads from across a room.
 struct SmallView: View {
     let word: Word
+    @Environment(\.showsWidgetContainerBackground) private var hasBackground
+
     var body: some View {
-        WordLines(word: word, wordSize: 40, readingSize: 15, meaningSize: 17)
-            .frame(maxHeight: .infinity, alignment: .center)
+        VStack(spacing: 2) {
+            Spacer(minLength: 0)
+            Text(word.word)
+                .font(.system(size: 44, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.4)
+            if !word.isKanaOnly {
+                Text(word.reading)
+                    .font(.system(size: 15, weight: .medium))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .opacity(0.8)
+            }
+            Text(word.meaning)
+                .font(.system(size: 17, weight: .semibold))
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+                .multilineTextAlignment(.center)
+            Spacer(minLength: 0)
+            if !word.example.isEmpty {
+                Text(word.example)
+                    .font(.system(size: 11, weight: .medium))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.center)
+                    .opacity(0.65)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(hasBackground ? 0 : 4)
+        .widgetAccentable()
     }
 }
 

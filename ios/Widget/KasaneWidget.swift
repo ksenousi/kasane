@@ -46,7 +46,7 @@ struct KasaneWidget: Widget {
                 .containerBackground(for: .widget) { Color(red: 0.086, green: 0.086, blue: 0.094) }
         }
         .configurationDisplayName("Word of the hour")
-        .description("A new Kasane word every hour.")
+        .description("A new Kasane word every hour. The small size also works in StandBy.")
         .supportedFamilies([.accessoryRectangular, .accessoryInline, .systemSmall])
     }
 }
@@ -60,5 +60,11 @@ struct KasaneWidgetBundle: WidgetBundle {
     KasaneWidget()
 } timeline: {
     WordEntry(date: .now, word: Word(id: "a", word: "山", reading: "やま", meaning: "mountain", example: "山に登った。"))
+    WordEntry(date: .now, word: Word(id: "b", word: "奨学金", reading: "しょうがくきん", meaning: "scholarship", example: "奨学金をもらった。"))
+}
+
+#Preview(as: .systemSmall) {
+    KasaneWidget()
+} timeline: {
     WordEntry(date: .now, word: Word(id: "b", word: "奨学金", reading: "しょうがくきん", meaning: "scholarship", example: "奨学金をもらった。"))
 }

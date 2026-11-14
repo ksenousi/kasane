@@ -19,7 +19,7 @@ struct ContentView: View {
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Add the widget").font(.headline)
-                    Text("Touch and hold the lock screen, tap Customize, pick the lock screen, then tap the box under the clock and choose Kasane.")
+                    Text("Touch and hold the lock screen, tap Customize, pick the lock screen, then tap the box under the clock and choose Kasane.\n\nFor StandBy, add the small Kasane widget to the home screen, then charge the phone on its side while locked.")
                         .foregroundStyle(.secondary)
                     Text("\(Words.all.count) words, a new one every hour.")
                         .font(.footnote).foregroundStyle(.secondary)
@@ -32,3 +32,4 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
     }
 }
+

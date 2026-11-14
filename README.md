@@ -22,7 +22,7 @@ Scan with your iPhone camera to open it:
 
 `ios/` is a small native app that carries a WidgetKit widget: a different Kasane word every hour on
 the hour (word, hiragana, meaning, short example), walking all words in a fixed shuffled order.
-It works as a lock screen box, a line above the clock, and a small home screen widget.
+It works as a lock screen box, a line above the clock, and a small home screen widget, which StandBy also shows (large and centered so it reads from across a room).
 
 - After changing content, regenerate its word list: `npm run widget:words`.
 - After changing `ios/project.yml`, regenerate the Xcode project: `cd ios && xcodegen generate`.
