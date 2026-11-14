@@ -4,7 +4,15 @@ import WidgetKit
 @main
 struct KasaneApp: App {
     var body: some Scene {
-        WindowGroup { ContentView() }
+        WindowGroup {
+            #if DEBUG
+            if let i = CommandLine.arguments.firstIndex(of: "-preview"), i + 1 < CommandLine.arguments.count {
+                PreviewGallery(page: CommandLine.arguments[i + 1])
+            } else { ContentView() }
+            #else
+            ContentView()
+            #endif
+        }
     }
 }
 
@@ -15,7 +23,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 28) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("This hour").font(.subheadline).foregroundStyle(.secondary)
-                    WordLines(word: Words.word(at: context.date), wordSize: 56, readingSize: 20, meaningSize: 24)
+                    WordHero(word: Words.word(at: context.date))
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Add the widget").font(.headline)

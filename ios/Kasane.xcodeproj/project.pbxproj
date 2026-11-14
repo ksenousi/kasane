@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2BC641ABB5C0F5C59B71AC /* PreviewGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC8633C75A51F8C953098A3 /* PreviewGallery.swift */; };
 		167E2A256E6DEE519978813C /* KasaneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159E2DB94F56CB65F1D883EC /* KasaneApp.swift */; };
 		1A20AC46C5288AD3CCA714EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BD91766C97481FA58D29096 /* Assets.xcassets */; };
 		33192F24CB0106A730B74678 /* WordViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8717E7BDE4330F70E61C81F6 /* WordViews.swift */; };
@@ -53,6 +54,7 @@
 		8717E7BDE4330F70E61C81F6 /* WordViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViews.swift; sourceTree = "<group>"; };
 		9A9A8C69A99B8654FBD53877 /* Kasane.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Kasane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7DC4B8DCDC06C401BB1B016 /* KasaneWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KasaneWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC8633C75A51F8C953098A3 /* PreviewGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGallery.swift; sourceTree = "<group>"; };
 		F20021E54400AE464A32BA73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +65,7 @@
 				0BD91766C97481FA58D29096 /* Assets.xcassets */,
 				62D7E22BA3A87D3EC3ECFBC6 /* Info.plist */,
 				159E2DB94F56CB65F1D883EC /* KasaneApp.swift */,
+				ADC8633C75A51F8C953098A3 /* PreviewGallery.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				167E2A256E6DEE519978813C /* KasaneApp.swift in Sources */,
+				0E2BC641ABB5C0F5C59B71AC /* PreviewGallery.swift in Sources */,
 				33192F24CB0106A730B74678 /* WordViews.swift in Sources */,
 				832A0E111C493FB7CC2FBB1A /* Words.swift in Sources */,
 			);
