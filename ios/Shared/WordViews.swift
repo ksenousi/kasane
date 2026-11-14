@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import WidgetKit
 
 // Every layout here offers SwiftUI a list of options via ViewThatFits, biggest first, and
@@ -28,36 +29,78 @@ private struct Line: View {
 
 // MARK: - Lock screen
 
-/// Lock screen box under the clock (about 160–172 × 72–76 pt): word, hiragana, meaning,
-/// example. Sizes keep all four lines inside 72 pt so nothing clips on smaller iPhones.
+/// Lock screen box under the clock (about 160–172 × 72–76 pt). Sizes keep everything inside
+/// 72 pt so nothing clips on smaller iPhones.
 struct RectangularView: View {
     let word: Word
-
     var body: some View {
-        ViewThatFits {
-            lines(example: true)
-            lines(example: false)
-            // Long meanings (about 1 in 70) wrap onto a second line instead of shrinking.
-            VStack(alignment: .leading, spacing: 0) {
-                Line(word.word, 22)
-                if !word.isKanaOnly { Line(word.reading, 12, .medium) }
-                Text(word.meaning)
-                    .font(.system(size: 13, weight: .semibold))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .widgetAccentable()
+        besideWord
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .widgetAccentable()
     }
 
-    private func lines(example: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Line(word.word, 22)
-            if !word.isKanaOnly { Line(word.reading, 12, .medium) }
-            Line(word.meaning, 14)
-            if example && !word.example.isEmpty { Line(word.example, 11, .medium, opacity: 0.8) }
+    // Word and hiragana share the first line, which leaves room for a 12–13 pt example.
+    private var besideWord: some View {
+        GeometryReader { geo in
+            let plan = Self.plan(word, width: geo.size.width, height: geo.size.height)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Line(word.word, 22)
+                    if !word.isKanaOnly {
+                        Text(word.reading).font(.system(size: 13, weight: .medium)).lineLimit(1).minimumScaleFactor(0.8)
+                    }
+                }
+                Text(word.meaning)
+                    .font(.system(size: 14, weight: .semibold))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+                if let size = plan.exampleSize {
+                    Text(word.example)
+                        .font(.system(size: size, weight: .medium))
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .leading)
         }
+    }
+
+    /// Measures with the real fonts to decide whether the example fits (and at what size)
+    /// under the word line and the meaning, in at most two lines.
+    static func plan(_ word: Word, width: CGFloat, height: CGFloat) -> (meaningLines: Int, exampleSize: CGFloat?) {
+        let meaningLines = Measure.lines(word.meaning, 14, .semibold, width: width)
+        var used = Measure.lineHeight(22, .semibold) + CGFloat(min(meaningLines, 2)) * Measure.lineHeight(14, .semibold)
+        used += 1 // rounding slack
+        guard !word.example.isEmpty else { return (meaningLines, nil) }
+        for size: CGFloat in [13, 12] {
+            let lines = Measure.lines(word.example, size, .medium, width: width)
+            if lines <= 2 && used + CGFloat(lines) * Measure.lineHeight(size, .medium) <= height {
+                return (meaningLines, size)
+            }
+        }
+        return (meaningLines, nil)
+    }
+}
+
+/// Text measurement with the system font, for layout decisions SwiftUI can't make itself.
+enum Measure {
+    static func font(_ size: CGFloat, _ weight: Font.Weight) -> UIFont {
+        let w: UIFont.Weight = weight == .semibold ? .semibold : weight == .medium ? .medium : .regular
+        return UIFont.systemFont(ofSize: size, weight: w)
+    }
+
+    /// Height of one line, measured on Japanese text since its fallback font sets the height.
+    static func lineHeight(_ size: CGFloat, _ weight: Font.Weight) -> CGFloat {
+        ceil(("あA" as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: [.usesLineFragmentOrigin],
+                                              attributes: [.font: font(size, weight)], context: nil).height)
+    }
+
+    /// Lines the text wraps to at this width.
+    static func lines(_ text: String, _ size: CGFloat, _ weight: Font.Weight, width: CGFloat) -> Int {
+        let h = (text as NSString).boundingRect(with: CGSize(width: width, height: 1000), options: [.usesLineFragmentOrigin],
+                                                attributes: [.font: font(size, weight)], context: nil).height
+        return max(1, Int((h / lineHeight(size, weight)).rounded()))
     }
 }
 
@@ -80,8 +123,9 @@ struct SmallView: View {
         GeometryReader { geo in
             let example = Self.fitsTwoLines(word.example, width: geo.size.width)
             ViewThatFits(in: .vertical) {
-                content(wordSize: 42, example: example)
-                content(wordSize: 34, example: example)
+                content(wordSize: 40, example: example)
+                content(wordSize: 32, example: example)
+                content(wordSize: 26, example: example)
                 content(wordSize: 42, example: false)
                 content(wordSize: 34, example: false)
                 content(wordSize: 28, example: false)
@@ -91,7 +135,7 @@ struct SmallView: View {
         .widgetAccentable()
     }
 
-    static let exampleSize: CGFloat = 12
+    static let exampleSize: CGFloat = 15
 
     /// Japanese glyphs are all one em wide, so the character count says how many lines the
     /// sentence takes. Three lines leaves a stray word or two on the last, so stop at two.
@@ -112,7 +156,7 @@ struct SmallView: View {
                     .font(.system(size: Self.exampleSize, weight: .medium))
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                    .opacity(0.7)
+                    .opacity(0.85)
                     .padding(.top, 3)
             }
         }

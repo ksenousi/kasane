@@ -35,7 +35,7 @@ struct PreviewGallery: View {
                 .foregroundStyle(.white.opacity(0.9))
                 .padding(.top, 20)
             }
-            .frame(height: 240).clipShape(RoundedRectangle(cornerRadius: 20))
+            .frame(height: 250).clipShape(RoundedRectangle(cornerRadius: 20))
             Text("Hard cases · left 160×72 (smaller iPhones) · right 172×76 (Pro Max)").font(.caption).foregroundStyle(.secondary)
             ForEach(hard.dropFirst(), id: \.self) { w in
                 HStack(spacing: 12) {
