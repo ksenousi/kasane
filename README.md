@@ -17,3 +17,14 @@ Scan with your iPhone camera to open it:
 - `npm run dev:api` runs the Worker with a local D1 on port 8787. Put `PASSPHRASE=...` in `.dev.vars` first.
 - `npm run dev` runs the app on 5173 and proxies `/api` to the Worker.
 - `npm run deploy` builds, applies D1 migrations and deploys. Set the passphrase once with `npx wrangler secret put PASSPHRASE`. Changing it signs every device out.
+
+## Lock screen widget (iOS)
+
+`ios/` is a small native app that carries a WidgetKit widget: a different Kasane word every hour on
+the hour (word, hiragana, meaning, short example), walking all words in a fixed shuffled order.
+It works as a lock screen box, a line above the clock, and a small home screen widget.
+
+- After changing content, regenerate its word list: `npm run widget:words`.
+- After changing `ios/project.yml`, regenerate the Xcode project: `cd ios && xcodegen generate`.
+- Install: open `ios/Kasane.xcodeproj`, pick your team under Signing & Capabilities for both
+  targets, plug in the iPhone and press Run. With a free Apple ID the install lasts 7 days.

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "deploy": "npm run build && wrangler d1 migrations apply kasane --remote && wrangler deploy",
-    "icons": "node scripts/icons.mjs"
+    "icons": "node scripts/icons.mjs",
+    "widget:words": "node scripts/widget-words.mjs"
   },
   "dependencies": {
     "react": "^19.3.0",
