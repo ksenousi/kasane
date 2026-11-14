@@ -3,6 +3,8 @@ import WidgetKit
 
 @main
 struct KasaneApp: App {
+    @Environment(\.scenePhase) private var phase
+
     var body: some Scene {
         WindowGroup {
             #if DEBUG
@@ -12,6 +14,11 @@ struct KasaneApp: App {
             #else
             ContentView()
             #endif
+        }
+        // A new build or word list should show on the widget right away, not at its next
+        // scheduled refresh (up to a day later).
+        .onChange(of: phase) { _, now in
+            if now == .active { WidgetCenter.shared.reloadAllTimelines() }
         }
     }
 }
