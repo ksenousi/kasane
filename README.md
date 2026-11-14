@@ -27,6 +27,7 @@ It works as a lock screen box, a line above the clock, and a small home screen w
 - After changing content, regenerate its word list: `npm run widget:words`.
 - After changing `ios/project.yml`, regenerate the Xcode project: `cd ios && xcodegen generate`.
 - Layout check: debug builds launched with `-preview lock` or `-preview small` show the hardest
-  words (longest meanings, sentences and words) at real widget sizes for small and large iPhones.
+  words (longest meanings, sentences and words) at real widget sizes, and `-plan-audit` prints how
+  many words get an example at each lock screen size.
 - Install: open `ios/Kasane.xcodeproj`, pick your team under Signing & Capabilities for both
   targets, plug in the iPhone and press Run. With a free Apple ID the install lasts 7 days.

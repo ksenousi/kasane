@@ -39,23 +39,23 @@ struct RectangularView: View {
             .widgetAccentable()
     }
 
-    // Word and hiragana share the first line, which leaves room for a 12–13 pt example.
+    // Word and hiragana share the first line, then the meaning, then the example.
     private var besideWord: some View {
         GeometryReader { geo in
-            let plan = Self.plan(word, width: geo.size.width, height: geo.size.height)
+            let p = Self.plan(word, width: geo.size.width, height: geo.size.height)
             VStack(alignment: .leading, spacing: 0) {
-                HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    Line(word.word, 22)
+                HStack(alignment: .firstTextBaseline, spacing: 5) {
+                    Line(word.word, p.word)
                     if !word.isKanaOnly {
-                        Text(word.reading).font(.system(size: 13, weight: .medium)).lineLimit(1).minimumScaleFactor(0.8)
+                        Text(word.reading).font(.system(size: p.reading, weight: .medium)).lineLimit(1).minimumScaleFactor(0.8)
                     }
                 }
                 Text(word.meaning)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: p.meaning, weight: .semibold))
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
-                if let size = plan.exampleSize {
+                if let size = p.example {
                     Text(word.example)
                         .font(.system(size: size, weight: .medium))
                         .lineLimit(2)
@@ -66,20 +66,44 @@ struct RectangularView: View {
         }
     }
 
-    /// Measures with the real fonts to decide whether the example fits (and at what size)
-    /// under the word line and the meaning, in at most two lines.
-    static func plan(_ word: Word, width: CGFloat, height: CGFloat) -> (meaningLines: Int, exampleSize: CGFloat?) {
-        let meaningLines = Measure.lines(word.meaning, 14, .semibold, width: width)
-        var used = Measure.lineHeight(22, .semibold) + CGFloat(min(meaningLines, 2)) * Measure.lineHeight(14, .semibold)
-        used += 1 // rounding slack
-        guard !word.example.isEmpty else { return (meaningLines, nil) }
-        for size: CGFloat in [13, 12] {
-            let lines = Measure.lines(word.example, size, .medium, width: width)
-            if lines <= 2 && used + CGFloat(lines) * Measure.lineHeight(size, .medium) <= height {
-                return (meaningLines, size)
-            }
+    struct Plan: Equatable { var word: CGFloat; var reading: CGFloat; var meaning: CGFloat; var example: CGFloat? }
+
+    /// Picks font sizes for the box iOS actually gives the widget (it differs by iPhone and iOS
+    /// version: 148×58 on an iPhone 18 Pro with iOS 27, up to 172×76 elsewhere). Options run
+    /// biggest first; the first where every line fits is used. Nothing is shrunk to fit.
+    static func plan(_ word: Word, width: CGFloat, height: CGFloat) -> Plan {
+        let withExample: [Plan] = [
+            Plan(word: 22, reading: 13, meaning: 14, example: 13),
+            Plan(word: 20, reading: 13, meaning: 14, example: 13),
+            Plan(word: 20, reading: 12, meaning: 13, example: 12),
+        ]
+        let without: [Plan] = [
+            Plan(word: 24, reading: 14, meaning: 15, example: nil),
+            Plan(word: 22, reading: 13, meaning: 14, example: nil),
+            Plan(word: 20, reading: 12, meaning: 13, example: nil),
+            Plan(word: 18, reading: 11, meaning: 12, example: nil),
+        ]
+        for p in (word.example.isEmpty ? [] : withExample) + without where fits(p, word, width, height) { return p }
+        return without.last!
+    }
+
+    static func fits(_ p: Plan, _ word: Word, _ width: CGFloat, _ height: CGFloat) -> Bool {
+        // First line: the word and its reading side by side.
+        var top = Measure.width(word.word, p.word, .semibold)
+        if !word.isKanaOnly { top += 5 + Measure.width(word.reading, p.reading, .medium) }
+        guard top <= width else { return false }
+        let meaningLines = Measure.lines(word.meaning, p.meaning, .semibold, width: width)
+        guard meaningLines <= 2 else { return false }
+        var used = Measure.lineHeight(p.word, .semibold) + CGFloat(meaningLines) * Measure.lineHeight(p.meaning, .semibold)
+        if let ex = p.example {
+            // With an example the meaning must stay on one line, and the example too when space
+            // is tight; a second example line only if it all still fits.
+            guard meaningLines == 1 else { return false }
+            let exLines = Measure.lines(word.example, ex, .medium, width: width)
+            guard exLines <= 2 else { return false }
+            used += CGFloat(exLines) * Measure.lineHeight(ex, .medium)
         }
-        return (meaningLines, nil)
+        return used <= height
     }
 }
 
@@ -94,6 +118,11 @@ enum Measure {
     static func lineHeight(_ size: CGFloat, _ weight: Font.Weight) -> CGFloat {
         ceil(("あA" as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: [.usesLineFragmentOrigin],
                                               attributes: [.font: font(size, weight)], context: nil).height)
+    }
+
+    /// Width of the text on one line.
+    static func width(_ text: String, _ size: CGFloat, _ weight: Font.Weight) -> CGFloat {
+        ceil((text as NSString).size(withAttributes: [.font: font(size, weight)]).width)
     }
 
     /// Lines the text wraps to at this width.

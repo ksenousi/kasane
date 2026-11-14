@@ -5,6 +5,12 @@ import WidgetKit
 struct KasaneApp: App {
     @Environment(\.scenePhase) private var phase
 
+    init() {
+        #if DEBUG
+        if CommandLine.arguments.contains("-plan-audit") { PlanAudit.run() }
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             #if DEBUG
